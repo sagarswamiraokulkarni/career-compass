@@ -1,32 +1,17 @@
 package com.ivanfranchin.orderapi.rest;
 
-import com.ivanfranchin.orderapi.mapper.UserMapper;
-import com.ivanfranchin.orderapi.security.CustomUserDetails;
 import com.ivanfranchin.orderapi.service.UserService;
-import com.ivanfranchin.orderapi.model.User;
-import com.ivanfranchin.orderapi.rest.dto.UserDto;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.ivanfranchin.orderapi.config.SwaggerConfig.BEARER_KEY_SECURITY_SCHEME;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserService userService;
-    private final UserMapper userMapper;
+//    private final UserService userService;
+//    private final UserMapper userMapper;
 
 //    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 //    @GetMapping("/me")

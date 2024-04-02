@@ -34,6 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         customUserDetails.setName(user.getFirstName());
         customUserDetails.setEmail(user.getEmail());
         customUserDetails.setAuthorities(authorities);
+        customUserDetails.setIsAccountNonLocked(user.isVerified());
         return customUserDetails;
     }
 }

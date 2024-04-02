@@ -1,27 +1,23 @@
 package com.ivanfranchin.orderapi.rest;
 
 import com.ivanfranchin.orderapi.exception.DuplicatedUserInfoException;
+import com.ivanfranchin.orderapi.factory.NotificationFactory;
 import com.ivanfranchin.orderapi.model.User;
-import com.ivanfranchin.orderapi.rest.dto.AuthResponse;
-import com.ivanfranchin.orderapi.rest.dto.GenericResponse;
-import com.ivanfranchin.orderapi.rest.dto.LoginRequest;
-import com.ivanfranchin.orderapi.rest.dto.SignUpRequest;
+import com.ivanfranchin.orderapi.rest.dto.*;
 import com.ivanfranchin.orderapi.security.TokenProvider;
 import com.ivanfranchin.orderapi.security.WebSecurityConfig;
+import com.ivanfranchin.orderapi.service.AccountService;
 import com.ivanfranchin.orderapi.service.UserService;
+import com.ivanfranchin.orderapi.service.VerificationService;
 import com.ivanfranchin.orderapi.utils.CareerCompassUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -29,14 +25,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
 
+    private final AccountService accountService;
     @PostMapping("/authenticate")
-    public AuthResponse login(@Valid @RequestBody LoginRequest loginRequest) {
-        String token = authenticateAndGetToken(loginRequest.getUsername(), loginRequest.getPassword());
-        return new AuthResponse(token);
+    public AuthResponse login(@Valid @RequestBody LoginRequest loginRequest) throws Exception {
+        try {
+            String token = authenticateAndGetToken(loginRequest.getUsername(), loginRequest.getPassword());
+            return new AuthResponse(token);
+        }catch (Exception e){
+//            e.printStackTrace();
+            throw new Exception(e.getMessage());
+        }
     }
 
 //    @ResponseStatus(HttpStatus.CREATED)
@@ -72,6 +73,25 @@ public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
     genericResponse.setMessage("Account Registered");
     return genericResponse;
 }
+
+    @GetMapping("/sendVerificationChallenge")
+    public GenericResponse sendVerificationChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
+        if (userService.checkIfUserExistsAndRegistrationIsCompleted(verificationRequest.getEmail()).isAccountVerified()) {
+            throw new DuplicatedUserInfoException(String.format("Email %s is already verified", verificationRequest.getEmail()));
+        }
+//        TODO: FACADE PATTERN
+        return accountService.sendVerificationChallenge(verificationRequest);
+    }
+
+    @GetMapping("/validateChallenge")
+    public GenericResponse validateChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
+        if (userService.checkIfUserExistsAndRegistrationIsCompleted(verificationRequest.getEmail()).isAccountVerified()) {
+            throw new DuplicatedUserInfoException(String.format("Email %s is already verified", verificationRequest.getEmail()));
+        }
+//        TODO: FACADE PATTERN
+        return accountService.validateVerificationChallenge(verificationRequest);
+    }
+
     private String authenticateAndGetToken(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         return tokenProvider.generate(authentication);
@@ -79,7 +99,7 @@ public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
 
     private User mapSignUpRequestToUser(SignUpRequest signUpRequest) {
         User user = new User();
-        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        user.setPassword(CareerCompassUtils.getInstance().encodeString(signUpRequest.getPassword()));
         user.setFirstName(signUpRequest.getFirstName());
         user.setLastName(signUpRequest.getLastName());
         user.setEmail(signUpRequest.getEmail());
