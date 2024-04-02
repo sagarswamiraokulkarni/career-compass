@@ -12,9 +12,18 @@ export const orderApi = {
   getOrders,
   deleteOrder,
   createOrder,
-  getUserMe
+  getUserMe,
+  postApiCall
 }
-
+async function postApiCall(path, body) {
+  const response = await instance.post(path, body, {
+    headers: {'Content-type': 'application/json'}
+  })
+  console.log(response)
+  if (response.status == 201) {
+    return response.data;
+  }
+}
 function authenticate(username, password) {
   return instance.post('/auth/authenticate', { username, password }, {
     headers: { 'Content-type': 'application/json' }

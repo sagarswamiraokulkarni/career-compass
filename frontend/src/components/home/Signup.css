@@ -1,0 +1,109 @@
+/*.signup-container {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    padding-top: 50px;*/
+/*}*/
+
+
+/*.signup-form {*/
+/*    width: 400px;*/
+/*    padding: 20px;*/
+/*    background-color: #f8f9fa;*/
+/*    border-radius: 5px;*/
+/*}*/
+
+
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 50px;
+    /*background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');*/
+    background-image: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1544&q=80');
+    /*background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80');*/
+    /*background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');*/
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.signup-form,
+.verification-options,
+.otp-form,
+.email-toast{
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+}
+
+.signup-form .form-label {
+    font-weight: bold;
+}
+
+.signup-form .form-control {
+    border-radius: 3px;
+}
+
+.signup-form .btn-primary {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.signup-form .alert {
+    margin-top: 20px;
+}
+
+.signup-form .text-center {
+    margin-top: 20px;
+}
+
+.signup-form .text-center a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.signup-form .text-center a:hover {
+    text-decoration: underline;
+}
+
+.password-input {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: #6c757d;
+}
+
+.password-toggle:hover svg {
+    fill: #000;
+}
+
+.verification-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.verification-options .btn {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.verification-options .divider-text {
+    margin: 10px 0;
+    text-align: center;
+}

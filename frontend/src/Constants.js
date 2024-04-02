@@ -9,5 +9,9 @@ const dev = {
     API_BASE_URL: 'http://localhost:8080'
   }
 }
+export const urlPaths={
+  SIGNUP:'/auth/signup',
+
+}
 
 export const config = process.env.NODE_ENV === 'development' ? dev : prod

@@ -4,7 +4,7 @@ import { Container, Navbar as BootstrapNavbar, Nav } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css'; // Import your custom CSS file for styling
 
-function Navbar({ handleLoginShow, handleSignupShow }) {
+function Navbar({ onSignupClick }) {
   const { getUser, userIsAuthenticated, userLogout } = useAuth();
 
   const logout = () => {
@@ -53,8 +53,8 @@ function Navbar({ handleLoginShow, handleSignupShow }) {
                   </>
               ) : (
                   <>
-                    <Nav.Link as={Link} to="/login" onClick={handleLoginShow} style={enterMenuStyle()}>Login</Nav.Link>
-                    <Nav.Link as={Link} to="/signup" onClick={handleSignupShow} style={enterMenuStyle()}>Sign Up</Nav.Link>
+                    <Nav.Link as={Link} to="/login" onClick={onSignupClick} style={enterMenuStyle()}>Login</Nav.Link>
+                    <Nav.Link as={Link} to="/signup" onClick={onSignupClick} style={enterMenuStyle()}>Sign Up</Nav.Link>
                   </>
               )}
             </Nav>
