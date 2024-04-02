@@ -1,6 +1,5 @@
-package com.ivanfranchin.orderapi.notification;
+package com.ivanfranchin.orderapi.strategy;
 
-import com.ivanfranchin.orderapi.model.JobApplication;
 import com.ivanfranchin.orderapi.model.User;
 import com.ivanfranchin.orderapi.rest.dto.GenericResponse;
 

@@ -1,18 +1,15 @@
 package com.ivanfranchin.orderapi.rest;
 
 import com.ivanfranchin.orderapi.exception.DuplicatedUserInfoException;
-import com.ivanfranchin.orderapi.factory.NotificationFactory;
 import com.ivanfranchin.orderapi.model.User;
 import com.ivanfranchin.orderapi.rest.dto.*;
 import com.ivanfranchin.orderapi.security.TokenProvider;
 import com.ivanfranchin.orderapi.security.WebSecurityConfig;
 import com.ivanfranchin.orderapi.service.AccountService;
 import com.ivanfranchin.orderapi.service.UserService;
-import com.ivanfranchin.orderapi.service.VerificationService;
 import com.ivanfranchin.orderapi.utils.CareerCompassUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -74,16 +71,16 @@ public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
     return genericResponse;
 }
 
-    @GetMapping("/sendVerificationChallenge")
+    @PostMapping("/sendVerificationChallenge")
     public GenericResponse sendVerificationChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
-        if (userService.checkIfUserExistsAndRegistrationIsCompleted(verificationRequest.getEmail()).isAccountVerified()) {
+         if (userService.checkIfUserExistsAndRegistrationIsCompleted(verificationRequest.getEmail()).isAccountVerified()) {
             throw new DuplicatedUserInfoException(String.format("Email %s is already verified", verificationRequest.getEmail()));
         }
 //        TODO: FACADE PATTERN
         return accountService.sendVerificationChallenge(verificationRequest);
     }
 
-    @GetMapping("/validateChallenge")
+    @PostMapping("/validateChallenge")
     public GenericResponse validateChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
         if (userService.checkIfUserExistsAndRegistrationIsCompleted(verificationRequest.getEmail()).isAccountVerified()) {
             throw new DuplicatedUserInfoException(String.format("Email %s is already verified", verificationRequest.getEmail()));

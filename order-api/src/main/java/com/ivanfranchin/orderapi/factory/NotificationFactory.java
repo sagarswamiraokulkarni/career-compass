@@ -1,8 +1,8 @@
 package com.ivanfranchin.orderapi.factory;
 
-import com.ivanfranchin.orderapi.notification.EmailNotificationStrategy;
-import com.ivanfranchin.orderapi.notification.MessageNotificationStrategy;
-import com.ivanfranchin.orderapi.notification.NotificationStrategy;
+import com.ivanfranchin.orderapi.strategy.EmailNotificationStrategy;
+import com.ivanfranchin.orderapi.strategy.MessageNotificationStrategy;
+import com.ivanfranchin.orderapi.strategy.NotificationStrategy;
 
 public class NotificationFactory {
     public static NotificationStrategy getEmailNotificationStrategy(){

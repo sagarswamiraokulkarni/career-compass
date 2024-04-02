@@ -1,24 +1,9 @@
 package com.ivanfranchin.orderapi.twilio;
 
 
-import com.ivanfranchin.orderapi.model.User;
-import com.ivanfranchin.orderapi.notification.EmailNotificationStrategy;
-import com.ivanfranchin.orderapi.repository.UserRepository;
-import com.ivanfranchin.orderapi.utils.CareerCompassUtils;
-import com.twilio.Twilio;
-import com.twilio.rest.verify.v2.service.Verification;
-import com.twilio.rest.verify.v2.service.VerificationCheck;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/phoneNumber")
