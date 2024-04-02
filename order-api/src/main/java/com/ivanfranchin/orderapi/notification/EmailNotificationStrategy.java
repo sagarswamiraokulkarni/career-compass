@@ -46,15 +46,16 @@ public class EmailNotificationStrategy implements NotificationStrategy {
                             .put(new JSONObject()
                                     .put(Emailv31.Message.FROM, new JSONObject()
                                             .put("Email", "sagarswamirao@gmail.com")
-                                            .put("Name", "Sagar Swami Rao"))
+                                            .put("Name", "CareerCompass"))
                                     .put(Emailv31.Message.TO, new JSONArray()
                                             .put(new JSONObject()
                                                     .put("Email", user.getEmail())
                                                     .put("Name", user.getFirstName()+ " "+ user.getLastName())))
-                                    .put(Emailv31.Message.SUBJECT, "Greetings from Mailjet.")
-                                    .put(Emailv31.Message.TEXTPART, "My first Mailjet email")
-                                    .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!")
+                                    .put(Emailv31.Message.SUBJECT, "Greetings from Career-Compass")
+//                                    .put(Emailv31.Message.TEXTPART, "Dear "+user.getFirstName())
+                                    .put(Emailv31.Message.HTMLPART, "<h2>Dear "+user.getFirstName()+"</h2><br /><h3>Thanks for registering. Please click <a href='http://localhost:3000/verify/"+user.getEmail()+"/"+CareerCompassUtils.getInstance().encodeString(user.getVerifyHash())+"'>here</a> to verify your email.</h3>")
                                     .put(Emailv31.Message.CUSTOMID, "AppGettingStartedTest")));
+
             response = client.post(request);
             System.out.println(response.getStatus());
             System.out.println(response.getData());

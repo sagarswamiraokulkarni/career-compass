@@ -1,12 +1,14 @@
 package com.ivanfranchin.orderapi.service;
 
 import com.ivanfranchin.orderapi.model.User;
+import com.ivanfranchin.orderapi.rest.dto.GenericResponse;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
 
+    GenericResponse checkIfUserExistsAndRegistrationIsCompleted(String email);
     List<User> getUsers();
 
     Optional<User> getUserByEmail(String username);

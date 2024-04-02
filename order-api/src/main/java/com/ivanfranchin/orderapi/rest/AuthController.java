@@ -3,6 +3,7 @@ package com.ivanfranchin.orderapi.rest;
 import com.ivanfranchin.orderapi.exception.DuplicatedUserInfoException;
 import com.ivanfranchin.orderapi.model.User;
 import com.ivanfranchin.orderapi.rest.dto.AuthResponse;
+import com.ivanfranchin.orderapi.rest.dto.GenericResponse;
 import com.ivanfranchin.orderapi.rest.dto.LoginRequest;
 import com.ivanfranchin.orderapi.rest.dto.SignUpRequest;
 import com.ivanfranchin.orderapi.security.TokenProvider;
@@ -38,22 +39,39 @@ public class AuthController {
         return new AuthResponse(token);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/signup")
-    public AuthResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @PostMapping("/signup")
+//    public AuthResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
+////        if (userService.hasUserWithUsername(signUpRequest.getEmail())) {
+////            throw new DuplicatedUserInfoException(String.format("Username %s already been used", signUpRequest.getEmail()));
+////        }
+//        if (userService.hasUserWithEmail(signUpRequest.getEmail())) {
+//            throw new DuplicatedUserInfoException(String.format("Email %s is already registered", signUpRequest.getEmail()));
+//        }
+//
+//        userService.saveUser(mapSignUpRequestToUser(signUpRequest));
+//
+//        String token = authenticateAndGetToken(signUpRequest.getEmail(), signUpRequest.getPassword());
+//        return new AuthResponse(token);
+//    }
+@ResponseStatus(HttpStatus.CREATED)
+@PostMapping("/signup")
+public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
 //        if (userService.hasUserWithUsername(signUpRequest.getEmail())) {
 //            throw new DuplicatedUserInfoException(String.format("Username %s already been used", signUpRequest.getEmail()));
 //        }
-        if (userService.hasUserWithEmail(signUpRequest.getEmail())) {
-            throw new DuplicatedUserInfoException(String.format("Email %s is already registered", signUpRequest.getEmail()));
-        }
-
-        userService.saveUser(mapSignUpRequestToUser(signUpRequest));
-
-        String token = authenticateAndGetToken(signUpRequest.getEmail(), signUpRequest.getPassword());
-        return new AuthResponse(token);
+    GenericResponse genericResponse=new GenericResponse();
+    if (userService.hasUserWithEmail(signUpRequest.getEmail())) {
+        throw new DuplicatedUserInfoException(String.format("Email %s is already registered", signUpRequest.getEmail()));
     }
 
+    userService.saveUser(mapSignUpRequestToUser(signUpRequest));
+
+//    String token = authenticateAndGetToken(signUpRequest.getEmail(), signUpRequest.getPassword());
+    genericResponse.setStatus("Success");
+    genericResponse.setMessage("Account Registered");
+    return genericResponse;
+}
     private String authenticateAndGetToken(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         return tokenProvider.generate(authentication);
@@ -67,10 +85,8 @@ public class AuthController {
         user.setEmail(signUpRequest.getEmail());
         user.setRole(WebSecurityConfig.USER);
         user.setVerifyHash(CareerCompassUtils.getInstance().generateUniqueHash());
-
-//        TODO: VERIFY STRATEGY phoneNumber/email
         user.setPhoneNumber(signUpRequest.getPhoneNumber());
-        user.setVerified(true);
+        user.setVerified(false);
         return user;
     }
 }

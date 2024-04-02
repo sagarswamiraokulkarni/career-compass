@@ -1,5 +1,7 @@
 package com.ivanfranchin.orderapi.utils;
 import com.ivanfranchin.orderapi.model.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -9,18 +11,22 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 public class CareerCompassUtils {
     private static CareerCompassUtils careerCompassUtils;
-    private CareerCompassUtils(){
 
+    private static BCryptPasswordEncoder bCryptPasswordEncoder;
+    private CareerCompassUtils(){
+        bCryptPasswordEncoder=new BCryptPasswordEncoder();
     }
-    public static CareerCompassUtils getInstance(){
+    public static synchronized CareerCompassUtils getInstance(){
         if(careerCompassUtils==null) careerCompassUtils = new CareerCompassUtils();
         return careerCompassUtils;
     }
 
-    public String generateVerificationLink(User user){
-        return user.getVerifyHash();
+    public String encodeString(String unEncodedString){
+        return bCryptPasswordEncoder.encode(unEncodedString);
     }
-
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     public String convertToMD5(String password) {
         try {
             // Create an instance of MessageDigest with MD5 algorithm
