@@ -55,17 +55,12 @@ public class AuthController {
 @ResponseStatus(HttpStatus.CREATED)
 @PostMapping("/signup")
 public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
-//        if (userService.hasUserWithUsername(signUpRequest.getEmail())) {
-//            throw new DuplicatedUserInfoException(String.format("Username %s already been used", signUpRequest.getEmail()));
-//        }
     GenericResponse genericResponse=new GenericResponse();
     if (userService.hasUserWithEmail(signUpRequest.getEmail())) {
         throw new DuplicatedUserInfoException(String.format("Email %s is already registered", signUpRequest.getEmail()));
     }
 
     userService.saveUser(mapSignUpRequestToUser(signUpRequest));
-
-//    String token = authenticateAndGetToken(signUpRequest.getEmail(), signUpRequest.getPassword());
     genericResponse.setStatus("Success");
     genericResponse.setMessage("Account Registered");
     return genericResponse;
@@ -73,19 +68,20 @@ public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
 
     @PostMapping("/sendVerificationChallenge")
     public GenericResponse sendVerificationChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
-         if (userService.checkIfUserExistsAndRegistrationIsCompleted(verificationRequest.getEmail()).isAccountVerified()) {
-            throw new DuplicatedUserInfoException(String.format("Email %s is already verified", verificationRequest.getEmail()));
-        }
-//        TODO: FACADE PATTERN
+        //        TODO: FACADE PATTERN
+        checkIfRegistrationIsCompleted(verificationRequest);
         return accountService.sendVerificationChallenge(verificationRequest);
     }
 
-    @PostMapping("/validateChallenge")
-    public GenericResponse validateChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
+    public void checkIfRegistrationIsCompleted(VerificationRequest verificationRequest){
         if (userService.checkIfUserExistsAndRegistrationIsCompleted(verificationRequest.getEmail()).isAccountVerified()) {
             throw new DuplicatedUserInfoException(String.format("Email %s is already verified", verificationRequest.getEmail()));
         }
-//        TODO: FACADE PATTERN
+    }
+    @PostMapping("/validateChallenge")
+    public GenericResponse validateChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
+        //        TODO: FACADE PATTERN
+        checkIfRegistrationIsCompleted(verificationRequest);
         return accountService.validateVerificationChallenge(verificationRequest);
     }
 
