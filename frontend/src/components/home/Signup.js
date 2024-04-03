@@ -23,8 +23,8 @@ function Signup() {
     const [verificationMethod, setVerificationMethod] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [isError, setIsError] = useState(false);
-    const [showForm, setShowForm] = useState(false);
-    const [showVerification, setshowVerification] = useState(true);
+    const [showForm, setShowForm] = useState(true);
+    const [showVerification, setshowVerification] = useState(false);
     const [showNothing, setShowNothing] = useState(false);
     const [showOtp, setShowOtp] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -33,6 +33,7 @@ function Signup() {
     const [toastMsg, setToastMsg] = useState('');
     const notify = (message) => toast(message);
     const location = useLocation();
+    const [wrongOtpAttempts, setWrongOtpAttempts] = useState(0);
     const message = location.state?.email;
 
     const handleInputChange = (e) => {
@@ -49,6 +50,8 @@ function Signup() {
             setEmail(value);
         } else if (name === 'phoneNumber') {
             setPhoneNumber(value);
+        }else if(name==='otp'){
+            setOtp(value);
         }
     };
 
@@ -60,52 +63,90 @@ function Signup() {
         setShowConfirmPassword(!showConfirmPassword);
     };
     useEffect(() => {
+        console.log(message)
         if (message) {
-            handleVerification('email');
+            setEmail(message);
+            handleVerification('email',message);
         }
     }, [message]);
+
 
     function validatePhoneNumber(phoneNumber) {
         const phoneRegex = /^\d{10}$/;
         return phoneRegex.test(phoneNumber);
     }
 
-    const handleVerification = async (method) => {
+    const handleVerification = async (method,email) => {
         setVerificationMethod(method);
-        // const response = await orderApi.postApiCall(urlPaths.SIGNUP, 'user');
-        if (method === 'email') {
-            let message = 'Verification mail has been sent to your email.';
-            setToastMsg(message);
-            notify(message)
+        console.log(email)
+        const response = await orderApi.postApiCall(urlPaths.SEND_VERIFICATION, {
+            email,
+            verificationStrategyType: method
+        });
+        let errorMsg;
+        if (response.statusCode != 200) {
+            errorMsg = response.message;
+            setToastMsg(errorMsg);
+            notify(errorMsg);
             setShowForm(false);
             setshowVerification(false);
             setShowOtp(false);
             setShowNothing(true);
-        } else if (method === 'whatsapp') {
-            let message = 'OTP has been sent to your whatsapp.';
-            setToastMsg(message);
-            notify(message)
-            setShowForm(false);
-            setshowVerification(false);
-            setShowOtp(true);
         } else {
-            let message = 'OTP has been sent to your mobile.';
-            setToastMsg(message);
-            notify(message)
-            setShowForm(false);
-            setshowVerification(false);
-            setShowOtp(true);
+            if (method === 'email') {
+                let message = 'Verification mail has been sent to your email.';
+                setToastMsg(message);
+                notify(message)
+                setShowForm(false);
+                setshowVerification(false);
+                setShowOtp(false);
+                setShowNothing(true);
+            } else if (method === 'whatsapp') {
+                let message = 'OTP has been sent to your whatsapp.';
+                setToastMsg(message);
+                notify(message)
+                setShowForm(false);
+                setshowVerification(false);
+                setShowOtp(true);
+            } else {
+                let message = 'OTP has been sent to your mobile.';
+                setToastMsg(message);
+                notify(message)
+                setShowForm(false);
+                setshowVerification(false);
+                setShowOtp(true);
+            }
         }
     };
-    useEffect(() => {
-        console.log("Hello")
-    }, [])
-    const handleOtpSubmit = () => {
-        // const response = await orderApi.postApiCall(urlPaths.SIGNUP, 'user');
-        notify('Verification is successful. Login using your credentials!.')
-            setTimeout(() => {
-                navigate('/login');
-            }, 2000);
+    const handleOtpSubmit = async (e) => {
+        e.preventDefault();
+            const response = await orderApi.postApiCall(urlPaths.VALIDATE_VERIFICATION, {
+                email,
+                verificationStrategyType: verificationMethod,
+                verificationChallenge: otp
+            });
+
+            if (response.statusCode === 200 && response.data.status==='Success') {
+                notify('Verification is successful. Redirecting to login page..');
+                setTimeout(() => {
+                    navigate('/login');
+                }, 2000);
+                return;
+            } else {
+                setWrongOtpAttempts(prevAttempts => prevAttempts + 1);
+                if (wrongOtpAttempts < 2) {
+                    notify('Oops, you have entered the wrong OTP. Please enter a valid OTP.');
+                } else {
+                    notify("You have reached the maximum limit of OTP's. Please try again using below verification methods.");
+                    setOtp('');
+                    setWrongOtpAttempts(0);
+                    setShowForm(false);
+                    setShowOtp(false);
+                    setshowVerification(true);
+                    // return;
+                }
+            }
+
     }
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
@@ -117,7 +158,7 @@ function Signup() {
 
         if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
             setIsError(true);
-            setErrorMessage('Please, enter valid phone number!');
+            setErrorMessage('Please, enter valid phone number without extension code!');
             return;
         }
 
@@ -130,33 +171,32 @@ function Signup() {
         setIsError(false);
         setErrorMessage('');
 
-        const user = {firstName, lastName, password, email, phoneNumber, verifyByPhoneNumber: true};
+        const user = {firstName, lastName, password, email, phoneNumber: '+1' + phoneNumber, verifyByPhoneNumber: true};
 
         try {
-            //checkuserapi
-            // const response= await orderApi.postApiCall(urlPaths.SIGNUP, user);
-            // // const response = await orderApi.signup(user);
-            // console.log(response);
-            // if(response.userExists){
-            //     //redirect to login by toast msg already exists
-            // }else if (user.notExists){
-            //     //register api
-            //     const response= await orderApi.postApiCall(urlPaths.SIGNUP, user);
-            // }
+            const response = await orderApi.getApiCall(urlPaths.CHECK_USER_REGISTRATION_STATUS + email);
+            if (response.statusCode == 200) {
+                if (response.data.userAccountPresent && response.data.accountVerified) {
+                    notify(`Account with email:${email} already present, redirecting to Login page..`)
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 2000);
+                } else if (!response.data.userAccountPresent && !response.data.accountVerified) {
+                    const response = await orderApi.postApiCall(urlPaths.SIGNUP, user);
+                } else {
+                    notify(`Account with the email:${email} was already present but hasn't verified yet. Please verify`)
+                }
+            } else {
+                notify("Something went wrong. Please try again later.")
+                setTimeout(() => {
+                    navigate('/login');
+                }, 2000);
+            }
             setShowOtp(false);
             setShowForm(false);
             setshowVerification(true);
-            //     const {accessToken} = response.data;
-            //     const data = parseJwt(accessToken);
-            //     const authenticatedUser = {data, accessToken};
-            //     Auth.userLogin(authenticatedUser);
-            // setFirstname('');
-            //     setLastname('');
-            //     setPassword('');
-            //     setConfirmPassword('');
-            //     setEmail('');
-            //     setIsError(false);
-            //     setErrorMessage('');
+            setIsError(false);
+            setErrorMessage('');
         } catch (error) {
             handleLogError(error);
             if (error.response && error.response.data) {
@@ -184,18 +224,18 @@ function Signup() {
                 <div className="verification-options">
                     <Button variant="primary" type="submit" className="btn-block"
                             onClick={() =>
-                                handleVerification('email')
+                                handleVerification('email',email)
                             }>
                         Verify by Email
                     </Button>
                     <span className="divider-text">or</span>
                     <Button variant="primary" type="submit" className="btn-block"
-                            onClick={() => handleVerification('sms')}>
+                            onClick={() => handleVerification('sms',email)}>
                         Verify by SMS
                     </Button>
                     <span className="divider-text">or</span>
                     <Button variant="primary" type="submit" className="btn-block"
-                            onClick={() => handleVerification('whatsapp')}>
+                            onClick={() => handleVerification('whatsapp',email)}>
                         Verify by Whatsapp
                     </Button>
                 </div>
