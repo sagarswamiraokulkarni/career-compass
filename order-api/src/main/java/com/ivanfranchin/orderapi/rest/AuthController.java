@@ -69,19 +69,15 @@ public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
     @PostMapping("/sendVerificationChallenge")
     public GenericResponse sendVerificationChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
         //        TODO: FACADE PATTERN
-        checkIfRegistrationIsCompleted(verificationRequest);
+        accountService.checkIfRegistrationIsCompleted(verificationRequest);
         return accountService.sendVerificationChallenge(verificationRequest);
     }
 
-    public void checkIfRegistrationIsCompleted(VerificationRequest verificationRequest){
-        if (userService.checkIfUserExistsAndRegistrationIsCompleted(verificationRequest.getEmail()).isAccountVerified()) {
-            throw new DuplicatedUserInfoException(String.format("Email %s is already verified", verificationRequest.getEmail()));
-        }
-    }
+
     @PostMapping("/validateChallenge")
     public GenericResponse validateChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
         //        TODO: FACADE PATTERN
-        checkIfRegistrationIsCompleted(verificationRequest);
+        accountService.checkIfRegistrationIsCompleted(verificationRequest);
         return accountService.validateVerificationChallenge(verificationRequest);
     }
 
