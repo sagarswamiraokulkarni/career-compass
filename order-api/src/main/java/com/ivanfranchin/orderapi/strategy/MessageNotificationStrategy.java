@@ -29,7 +29,6 @@ public class MessageNotificationStrategy implements NotificationStrategy{
                         user.getPhoneNumber(),
                         this.strategyType)
                 .create();
-
         System.out.println(verification.getStatus());
         genericResponse.setStatus("Success");
         genericResponse.setMessage("OTP has been successfully sent, and awaits your verification");
@@ -45,12 +44,15 @@ public class MessageNotificationStrategy implements NotificationStrategy{
                     .setTo(user.getPhoneNumber())
                     .setCode(authSecret)
                     .create();
-
-            System.out.println(verificationCheck.getStatus());
-            user.setVerifyHash(CareerCompassUtils.getInstance().generateUniqueHash());
-            user.setVerified(true);
-            genericResponse.setStatus("Success");
-            genericResponse.setMessage("Hurray! Account Verified");
+//            pending, approved, or canceled
+            if(verificationCheck.getStatus().equals("approved")){
+                user.setVerifyHash(CareerCompassUtils.getInstance().generateUniqueHash());
+                user.setVerified(true);
+                genericResponse.setStatus("Success");
+                genericResponse.setMessage("Hurray! Account Verified");
+            }else {
+                throw new Exception(verificationCheck.getStatus());
+            }
         } catch (Exception e) {
             genericResponse.setStatus("Error");
             genericResponse.setMessage("Oops! Wrong OTP entered!");
