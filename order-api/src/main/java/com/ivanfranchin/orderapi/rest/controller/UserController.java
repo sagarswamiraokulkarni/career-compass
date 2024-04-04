@@ -1,6 +1,5 @@
-package com.ivanfranchin.orderapi.rest;
+package com.ivanfranchin.orderapi.rest.controller;
 
-import com.ivanfranchin.orderapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

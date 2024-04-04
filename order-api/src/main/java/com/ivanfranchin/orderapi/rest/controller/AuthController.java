@@ -1,4 +1,4 @@
-package com.ivanfranchin.orderapi.rest;
+package com.ivanfranchin.orderapi.rest.controller;
 
 import com.ivanfranchin.orderapi.exception.DuplicatedUserInfoException;
 import com.ivanfranchin.orderapi.model.User;

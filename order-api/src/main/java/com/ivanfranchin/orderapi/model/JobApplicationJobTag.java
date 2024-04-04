@@ -14,7 +14,7 @@ public class JobApplicationJobTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_app_tag_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "job_application_id", nullable = false)

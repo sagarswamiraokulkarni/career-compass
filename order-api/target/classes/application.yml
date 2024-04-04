@@ -1,9 +1,18 @@
 spring:
   application:
     name: order-api
-#  jpa:
+  devtools:
+    restart:
+      enabled: true
+  jpa:
+    show-sql: true
+  properties:
+    hibernate:
+      format_sql: true
+  #  jpa:
 #    hibernate:
 #      ddl-auto: create
+
   datasource:
     url: jdbc:mysql://sql3.freemysqlhosting.net:3306/sql3695075
     username: sql3695075

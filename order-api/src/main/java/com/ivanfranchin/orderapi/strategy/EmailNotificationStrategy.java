@@ -1,8 +1,6 @@
 package com.ivanfranchin.orderapi.strategy;
 import com.ivanfranchin.orderapi.model.User;
 import com.ivanfranchin.orderapi.rest.dto.GenericResponse;
-import com.ivanfranchin.orderapi.service.UserService;
-import com.ivanfranchin.orderapi.serviceimpl.UserServiceImpl;
 import com.ivanfranchin.orderapi.utils.CareerCompassUtils;
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
@@ -11,9 +9,7 @@ import com.mailjet.client.ClientOptions;
 import com.mailjet.client.resource.Emailv31;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class EmailNotificationStrategy implements NotificationStrategy {

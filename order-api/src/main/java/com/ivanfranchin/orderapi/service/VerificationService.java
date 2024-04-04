@@ -1,5 +1,6 @@
-package com.ivanfranchin.orderapi.serviceimpl;
+package com.ivanfranchin.orderapi.service;
 
+import com.ivanfranchin.orderapi.factory.NotificationFactory;
 import com.ivanfranchin.orderapi.model.User;
 import com.ivanfranchin.orderapi.rest.dto.VerificationRequest;
 import com.ivanfranchin.orderapi.strategy.NotificationStrategy;
@@ -30,7 +31,6 @@ public class VerificationService {
             throw new RuntimeException("User Not Found");
         }
     }
-
     public GenericResponse validateVerification(UserRepository userRepository, VerificationRequest verificationRequest){
         Optional<User> optionalUser=userRepository.findByEmail(verificationRequest.getEmail());
         if(optionalUser.isPresent()) {

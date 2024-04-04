@@ -17,7 +17,7 @@ import java.util.Set;
 public class JobApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -43,6 +43,9 @@ public class JobApplication {
     private String companyUrl;
 
     private boolean starred;
+
+    @Column(name= "is_deleted")
+    private boolean isDeleted;
 
     private String notes;
 

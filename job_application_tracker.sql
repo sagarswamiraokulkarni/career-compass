@@ -37,11 +37,15 @@ CREATE TABLE IF NOT EXISTS job_applications (
   application_date DATE NOT NULL,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   company_url VARCHAR(255),
+  is_deleted BOOLEAN,
   starred BOOLEAN DEFAULT FALSE,
   notes TEXT,
   created_at TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+# TODO: QUERY
+# SELECT * FROM job_applications WHERE user_id=:user_id AND is_deleted=FALSE
 
 -- CREATE TABLE IF NOT EXISTS job_application_job_tags (
 --   job_application_id INT NOT NULL,
@@ -60,4 +64,20 @@ CREATE TABLE IF NOT EXISTS job_application_job_tags (
   FOREIGN KEY (job_application_id) REFERENCES job_applications(id),
   FOREIGN KEY (job_tag_id) REFERENCES job_tags(id)
 );
+
+INSERT INTO `sql3695075`.`job_applications`
+(`user_id`,
+ `company`,
+ `position`,
+ `status`,
+ `application_date`,
+ `updated_at`,
+ `company_url`,
+ `is_deleted`,
+ `starred`,
+ `notes`,
+ `created_at`)
+VALUES
+    (3,"AWS","SDE","YET TO APPLY", curdate(), curdate(), "http://localhost:8080/swagger-ui/index.html#/public-controller/getNumberOfUsers",false,false,"NOTES",now()),
+    (3,"Amazon","SDE","APPLIED", curdate(), curdate(), "http://localhost:8080/swagger-ui/index.html#/public-controller/getNumberOfUsers",false,false,"NOTES",now());
 
