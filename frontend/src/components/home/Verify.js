@@ -3,26 +3,31 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Verify.css'
+import {urlPaths} from "../../Constants";
+import {orderApi} from "../misc/OrderApi";
 function Verify() {
-    const { email, hash2 } = useParams();
+    const { email, hash } = useParams();
     const notify = (message) => toast(message);
     const navigate = useNavigate();
-    const [verificationSuccess, setVerificationSuccess] = useState(true);
+    const [verificationSuccess, setVerificationSuccess] = useState(null);
     useEffect(() => {
         const handleVerification = async () => {
             try {
-                const body = { email, hash2 };
-                // const response = await orderApi.postApiCall(urlPaths.SIGNUP, body);
-                // if (response.success) {
-                //     notify('Verification is successful. Login using your credentials!.')
-                //     setTimeout(() => {
-                //         navigate('/login');
-                //     }, 2000);
-                //     setVerificationSuccess(true);
-                // } else {
-                //     notify('Verification failed. Do you want to send verification link again?')
-                //     setVerificationSuccess(false);
-                // }
+                const response = await orderApi.postApiCall(urlPaths.VALIDATE_VERIFICATION, {
+                    email,
+                    verificationStrategyType: 'email',
+                    verificationChallenge: hash
+                });
+                if (response.statusCode === 200 && response.data.status==='Success') {
+                    notify('Verification is successful. Redirecting to login page..')
+                    setVerificationSuccess(true);
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 2000);
+                } else {
+                    notify('Verification failed. Do you want to send verification link again?')
+                    setVerificationSuccess(false);
+                }
             } catch (error) {
                 console.error('Error verifying:', error);
                 setVerificationSuccess(false);

@@ -11,7 +11,9 @@ const dev = {
 }
 export const urlPaths={
   SIGNUP:'/auth/signup',
-
+  CHECK_USER_REGISTRATION_STATUS:'/public/checkUserRegistrationStatus/',
+  SEND_VERIFICATION:'/auth/sendVerificationChallenge',
+  VALIDATE_VERIFICATION:'/auth/validateChallenge'
 }
 
 export const config = process.env.NODE_ENV === 'development' ? dev : prod
