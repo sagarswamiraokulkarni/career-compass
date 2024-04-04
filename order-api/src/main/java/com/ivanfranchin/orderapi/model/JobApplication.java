@@ -3,7 +3,9 @@ package com.ivanfranchin.orderapi.model;
 import com.ivanfranchin.orderapi.utils.ApplicationStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -60,5 +62,108 @@ public class JobApplication {
     )
     private Set<JobTag> jobTags = new HashSet<>();
 
+    private JobApplication(Builder builder) {
+        this.id = builder.id;
+        this.user = builder.user;
+        this.company = builder.company;
+        this.position = builder.position;
+        this.status = builder.status;
+        this.applicationDate = builder.applicationDate;
+        this.updatedAt = builder.updatedAt;
+        this.companyUrl = builder.companyUrl;
+        this.starred = builder.starred;
+        this.isDeleted = builder.isDeleted;
+        this.notes = builder.notes;
+        this.createdAt = builder.createdAt;
+        this.jobTags = builder.jobTags;
+    }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private Integer id;
+        private User user;
+        private String company;
+        private String position;
+        private ApplicationStatus status;
+        private LocalDate applicationDate;
+        private Timestamp updatedAt;
+        private String companyUrl;
+        private boolean starred;
+        private boolean isDeleted;
+        private String notes;
+        private Timestamp createdAt;
+        private Set<JobTag> jobTags = new HashSet<>();
+
+        public Builder id(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder company(String company) {
+            this.company = company;
+            return this;
+        }
+
+        public Builder position(String position) {
+            this.position = position;
+            return this;
+        }
+
+        public Builder status(ApplicationStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder applicationDate(LocalDate applicationDate) {
+            this.applicationDate = applicationDate;
+            return this;
+        }
+
+        public Builder updatedAt(Timestamp updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public Builder companyUrl(String companyUrl) {
+            this.companyUrl = companyUrl;
+            return this;
+        }
+
+        public Builder starred(boolean starred) {
+            this.starred = starred;
+            return this;
+        }
+
+        public Builder isDeleted(boolean isDeleted) {
+            this.isDeleted = isDeleted;
+            return this;
+        }
+
+        public Builder notes(String notes) {
+            this.notes = notes;
+            return this;
+        }
+
+        public Builder createdAt(Timestamp createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder jobTags(Set<JobTag> jobTags) {
+            this.jobTags = jobTags;
+            return this;
+        }
+
+        public JobApplication build() {
+            return new JobApplication(this);
+        }
+    }
 }

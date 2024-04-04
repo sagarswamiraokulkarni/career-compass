@@ -97,15 +97,11 @@ public class JobApplicationService {
         requestJobApplicationDto.setId(null);
         JobApplication jobApplication = CareerCompassUtils.gsonMapper(requestJobApplicationDto, JobApplication.class);
         User user=userRepository.findById(requestJobApplicationDto.getUserId()).orElseThrow(()-> new Exception("User not found"));
-        jobApplication.setUser(user);
-        jobApplication.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        jobApplication.setStarred(false);
-
-        Date date = new Date();
-        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        jobApplication.setApplicationDate(localDate);
-        jobApplication.setDeleted(false);
+//        TODO: Builder Pattern
+        JobApplication.builder().applicationDate(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
+                .company(requestJobApplicationDto.getCompany()).createdAt(new Timestamp(System.currentTimeMillis())).isDeleted(false)
+                .companyUrl(requestJobApplicationDto.getCompanyUrl()).starred(false).position(requestJobApplicationDto.getPosition())
+                .user(user).position(requestJobApplicationDto.getPosition()).status(requestJobApplicationDto.getStatus()).build();
         jobApplication=jobApplicationRepository.save(jobApplication);
         List<JobTag> jobTagsList=jobTagRepository.findAllById(requestJobApplicationDto.getJobTagIds());
         for(JobTag jobTag:jobTagsList){
