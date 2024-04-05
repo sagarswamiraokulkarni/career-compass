@@ -1,0 +1,45 @@
+/* Container */
+.table-container {
+    margin: 20px auto; /* Center the container */
+    max-width: 800px; /* Set maximum width */
+}
+
+/* Table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Header */
+.table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    padding: 12px;
+    text-align: left;
+}
+
+/* Table Body */
+.table td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Table Body Hover Effect */
+.table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Actions Icons */
+.action-icons {
+    display: flex;
+    gap: 8px; /* Adjust spacing between icons */
+}
+
+/* Individual Action Icon */
+.action-icon {
+    cursor: pointer;
+    font-size: 20px; /* Adjust icon size */
+}
