@@ -70,7 +70,7 @@ const EditForm = () => {
                             />
                         </Form.Group>
                         <Form.Group controlId="appliedOn">
-                            <Form.Label>Applied On</Form.Label>
+                            <Form.Label className="date-label">Applied On</Form.Label>
                             <DatePicker
                                 selected={formData.appliedOn}
                                 onChange={handleDateChange}

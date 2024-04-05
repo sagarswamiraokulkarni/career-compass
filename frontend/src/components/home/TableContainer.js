@@ -1,16 +1,45 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Table from './Table';
-import { AiOutlineEye, AiOutlineEdit, AiOutlineDelete, AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import {AiOutlineEye, AiOutlineEdit, AiOutlineDelete, AiFillStar, AiOutlineStar, AiOutlineSearch} from 'react-icons/ai';
+import Chips from 'react-chips';
+import './TableContainer.css';
 
 const TableContainer = () => {
     const navigate = useNavigate();
+    const [tags, setTags] = useState([]);
+    const [showSearchBar, setShowSearchBar] = useState(false);
+
+
 
     const data = [
-        { id: 1, star: true, companyName: 'Company A', role: 'Developer', appliedOn: '2024-03-01', status: 'Pending',field1:'field1', field2:'filed2' },
-        { id: 2, star: true, companyName: 'Company B', role: 'Tester', appliedOn: '2024-04-01', status: 'Pending',field1:'field1', field2:'filed2' },
+        {
+            id: 1,
+            star: true,
+            companyName: 'Company A',
+            role: 'Developer',
+            appliedOn: '2024-03-01',
+            status: 'Pending',
+            field1: 'field1',
+            field2: 'filed2',
+            tags: ['tag1', 'tag2'],
+            joburl: 'https://blog.logrocket.com/react-table-complete-guide/' // Add the joburl field
+        },
+        {
+            id: 2,
+            star: true,
+            companyName: 'Company B',
+            role: 'Tester',
+            appliedOn: '2024-04-01',
+            status: 'Pending',
+            field1: 'field1',
+            field2: 'filed2',
+            tags: ['tag3', 'tag4'],
+            joburl: 'https://www.npmjs.com/package/react-chips' // Add the joburl field
+        },
         // Add more data objects as needed
     ];
+
 
     const columns = [
         {
@@ -23,9 +52,31 @@ const TableContainer = () => {
             )
         },
         { Header: 'Company Name', accessor: 'companyName' },
+        {
+            Header: 'Job URL',
+            accessor: 'joburl',
+            Cell: ({ row }) => (
+                <a href={row.original.joburl} target="_blank" rel="noopener noreferrer">
+                    {row.original.companyName}
+                </a>
+            )
+        },
         { Header: 'Role', accessor: 'role' },
         { Header: 'Applied On', accessor: 'appliedOn' },
         { Header: 'Status', accessor: 'status' },
+        {
+            Header: 'Tags',
+            accessor: 'tags',
+            Cell: ({ value }) => (
+                <div className="tags-cell">
+                    {value.map((tag, index) => (
+                        <span key={index} className={`tag tag-${index % 4}`}>
+              {tag}
+            </span>
+                    ))}
+                </div>
+            ),
+        },
         {
             Header: 'Actions',
             accessor: 'actions',
@@ -54,7 +105,43 @@ const TableContainer = () => {
         console.log('Delete:', rowData);
     };
 
-    return <Table data={data} columns={columns} iconStyle={{ fontSize: '24px', marginRight: '12px' }} />;
+
+    const handleChange = (newTags) => {
+        setTags(newTags);
+    };
+
+    const toggleSearchBar = () => {
+        setShowSearchBar(!showSearchBar);
+    };
+
+    const filteredData = tags.length > 0
+        ? data.filter((item) => tags.every((tag) => item.tags.includes(tag)))
+        : data;
+
+    return (
+        <div className="search-table-container">
+            <div className="search-container">
+                <button className="search-button" onClick={toggleSearchBar}>
+                    <AiOutlineSearch className="search-icon"/>
+                    <span className="search-text">Search by Tags</span>
+                </button>
+                {showSearchBar && (
+                    <div className="search-bar">
+                        <Chips
+                            value={tags}
+                            onChange={handleChange}
+                            suggestions={['tag1', 'tag2', 'tag3', 'tag4']}
+                            placeholder="Type a tag and press enter..."
+                            className="react-chips"
+                        />
+                    </div>
+                )}
+            </div>
+            <div className="table-container">
+            <Table data={filteredData} columns={columns} iconStyle={{fontSize: '24px', marginRight: '12px'}}/>
+            </div>
+        </div>
+    );
 };
 
 export default TableContainer;

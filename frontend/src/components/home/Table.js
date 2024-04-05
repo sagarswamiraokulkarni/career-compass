@@ -38,7 +38,7 @@ const Table = ({ data, columns }) => {
     });
 
     return (
-        <div className="table-container">
+        <div >
             <table {...getTableProps()} className="table">
                 <thead>
                 {headerGroups.map(headerGroup => (
