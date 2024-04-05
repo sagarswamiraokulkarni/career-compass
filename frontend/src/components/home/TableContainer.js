@@ -4,15 +4,15 @@ import Table from './Table';
 import {AiOutlineEye, AiOutlineEdit, AiOutlineDelete, AiFillStar, AiOutlineStar, AiOutlineSearch} from 'react-icons/ai';
 import Chips from 'react-chips';
 import './TableContainer.css';
+import ConfirmationModal from "./ConfirmationModal";
 
 const TableContainer = () => {
     const navigate = useNavigate();
     const [tags, setTags] = useState([]);
     const [showSearchBar, setShowSearchBar] = useState(false);
-
-
-
-    const data = [
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [selectedRowData, setSelectedRowData] = useState(null);
+    const dataJson = [
         {
             id: 1,
             star: true,
@@ -23,7 +23,7 @@ const TableContainer = () => {
             field1: 'field1',
             field2: 'filed2',
             tags: ['tag1', 'tag2'],
-            joburl: 'https://blog.logrocket.com/react-table-complete-guide/' // Add the joburl field
+            joburl: 'https://blog.logrocket.com/react-table-complete-guide/'
         },
         {
             id: 2,
@@ -35,10 +35,13 @@ const TableContainer = () => {
             field1: 'field1',
             field2: 'filed2',
             tags: ['tag3', 'tag4'],
-            joburl: 'https://www.npmjs.com/package/react-chips' // Add the joburl field
+            joburl: 'https://www.npmjs.com/package/react-chips'
         },
-        // Add more data objects as needed
     ];
+    const [data, setData]=useState(dataJson);
+
+
+
 
 
     const columns = [
@@ -90,7 +93,6 @@ const TableContainer = () => {
         }
     ];
 
-    // Placeholder functions for handling actions
     const handleView = (rowData) => {
         console.log('View:', rowData);
         navigate('/details', { state: { rowData } });
@@ -102,7 +104,16 @@ const TableContainer = () => {
     };
 
     const handleDelete = (rowData) => {
-        console.log('Delete:', rowData);
+        setSelectedRowData(rowData); // Store the selected row data
+        setShowDeleteModal(true); // Open the delete modal
+    };
+
+    const confirmDelete = () => {
+        // Perform deletion logic
+        console.log('Delete:', selectedRowData);
+        const updatedData = data.filter(item => item.id !== selectedRowData.id);
+        setData(updatedData);
+        setShowDeleteModal(false); // Close the delete modal
     };
 
 
@@ -140,6 +151,7 @@ const TableContainer = () => {
             <div className="table-container">
             <Table data={filteredData} columns={columns} iconStyle={{fontSize: '24px', marginRight: '12px'}}/>
             </div>
+            <ConfirmationModal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} onConfirm={confirmDelete} rowData={selectedRowData} />
         </div>
     );
 };

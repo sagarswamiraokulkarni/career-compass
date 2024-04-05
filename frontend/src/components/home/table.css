@@ -1,9 +1,3 @@
-/* Container */
-/*.table-container {*/
-/*    margin: 20px auto; !* Center the container *!*/
-/*    max-width: 800px; !* Set maximum width *!*/
-/*}*/
-
 /* Table */
 .table {
     width: 100%;
@@ -35,11 +29,10 @@
 /* Actions Icons */
 .action-icons {
     display: flex;
-    gap: 8px; /* Adjust spacing between icons */
+    gap: 8px;
 }
 
-/* Individual Action Icon */
 .action-icon {
     cursor: pointer;
-    font-size: 20px; /* Adjust icon size */
+    font-size: 20px;
 }
