@@ -109,11 +109,10 @@ const TableContainer = () => {
     };
 
     const confirmDelete = () => {
-        // Perform deletion logic
         console.log('Delete:', selectedRowData);
         const updatedData = data.filter(item => item.id !== selectedRowData.id);
         setData(updatedData);
-        setShowDeleteModal(false); // Close the delete modal
+        setShowDeleteModal(false);
     };
 
 
