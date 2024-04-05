@@ -1,0 +1,36 @@
+/* RowDetails.css */
+.row-details-container {
+    margin-top: 2rem;
+}
+
+.row-details-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    background-color: #ffffff;
+}
+
+.row-details-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #333333;
+}
+
+.row-details-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.row-details-label {
+    font-weight: bold;
+    margin-right: 0.5rem;
+    color: #666666;
+}
+
+.star-icon {
+    color: #ffc107;
+    font-size: 1.5rem;
+}
