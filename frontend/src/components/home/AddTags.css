@@ -20,7 +20,7 @@
 
 .tag {
     display: inline-block;
-    background-color: #e0e0e0;
+    background-color: #8aaf5d;
     padding: 5px 10px;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -80,13 +80,37 @@
     flex-wrap: wrap;
 }
 
+/*.added-tag {*/
+/*    display: inline-block;*/
+/*    background-color: #28a745;*/
+/*    padding: 5px 10px;*/
+/*    margin-right: 10px;*/
+/*    margin-bottom: 10px;*/
+/*    border-radius: 3px;*/
+/*    font-size: 14px;*/
+/*    color: #fff;*/
+/*}*/
 .added-tag {
     display: inline-block;
-    background-color: #28a745;
     padding: 5px 10px;
     margin-right: 10px;
     margin-bottom: 10px;
     border-radius: 3px;
     font-size: 14px;
     color: #fff;
+}
+
+.added-tag:nth-child(odd) {
+    background-color: #007bff;
+}
+.added-tag:nth-child(even) {
+    background-color: #28a745;
+}
+
+.added-tag:nth-child(3n) {
+    background-color: #f0932b;
+}
+
+.added-tag:nth-child(4n) {
+    background-color: #eb4d4b;
 }

@@ -61,22 +61,24 @@ const AddTags = () => {
                 />
                 <button className="add-tag-btn" onClick={handleAddTag}>Add Tag</button>
             </div>
-            {addedTags.length>0&&<div className="added-tags-container">
-                <h4>Tags to be Added:</h4>
-                <div className="added-tag-list">
-                    {addedTags.map((tag, index) => (
-                        <span key={index} className="added-tag">
-                            {tag}
-                            <button className="remove-tag-btn" onClick={() => handleRemoveTag(tag,"new")}>x</button>
-                        </span>
-                    ))}
+            {addedTags.length > 0 && (
+                <div className="added-tags-container">
+                    <h4>Tags to be Added:</h4>
+                    <div className="added-tag-list">
+                        {addedTags.map((tag, index) => (
+                            <span key={index} className={`added-tag tag-${index}`}>
+                    {tag}
+                                <button className="remove-tag-btn" onClick={() => handleRemoveTag(tag, "new")}>x</button>
+                </span>
+                        ))}
+                    </div>
                 </div>
-            </div>}
+            )}
             {deletedTags.length>0&&<div className="added-tags-container">
                 <h4>Tags to be Deleted:</h4>
                 <div className="added-tag-list">
                     {deletedTags.map((tag, index) => (
-                        <span key={index} className="added-tag">
+                        <span key={index} className={`added-tag tag-${index}`}>
                             {tag}
                             <button className="remove-tag-btn" onClick={() => handleRemoveTag(tag,"delete")}>x</button>
                         </span>
