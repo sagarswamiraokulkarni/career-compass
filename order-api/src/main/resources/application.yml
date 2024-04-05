@@ -14,9 +14,9 @@ spring:
 #      ddl-auto: create
 
   datasource:
-    url: jdbc:mysql://sql3.freemysqlhosting.net:3306/sql3695075
-    username: sql3695075
-    password: ypQkLkA8hF
+    url: jdbc:mysql://sql3.freemysqlhosting.net:3306/sql3697032
+    username: sql3697032
+    password: etGymg6EjA
 
 app:
   jwt:
