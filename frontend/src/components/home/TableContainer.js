@@ -19,11 +19,11 @@ const TableContainer = () => {
             companyName: 'Company A',
             role: 'Developer',
             appliedOn: '2024-03-01',
-            status: 'Pending',
-            field1: 'field1',
+            status: 'Offer',
+            notes: 'notes1',
             field2: 'filed2',
             tags: ['tag1', 'tag2'],
-            joburl: 'https://blog.logrocket.com/react-table-complete-guide/'
+            jobUrl: 'https://blog.logrocket.com/react-table-complete-guide/'
         },
         {
             id: 2,
@@ -31,11 +31,11 @@ const TableContainer = () => {
             companyName: 'Company B',
             role: 'Tester',
             appliedOn: '2024-04-01',
-            status: 'Pending',
-            field1: 'field1',
+            status: 'Applied',
+            notes: 'notes2',
             field2: 'filed2',
             tags: ['tag3', 'tag4'],
-            joburl: 'https://www.npmjs.com/package/react-chips'
+            jobUrl: 'https://www.npmjs.com/package/react-chips'
         },
     ];
     const [data, setData]=useState(dataJson);
@@ -57,9 +57,9 @@ const TableContainer = () => {
         { Header: 'Company Name', accessor: 'companyName' },
         {
             Header: 'Job URL',
-            accessor: 'joburl',
+            accessor: 'jobUrl',
             Cell: ({ row }) => (
-                <a href={row.original.joburl} target="_blank" rel="noopener noreferrer">
+                <a href={row.original.jobUrl} target="_blank" rel="noopener noreferrer">
                     {row.original.companyName}
                 </a>
             )
