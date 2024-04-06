@@ -14,6 +14,7 @@ import TableContainer from "./components/home/TableContainer"; // Import the Tab
 import RowDetails from "./components/home/RowDetails";
 import EditForm from "./components/home/EditForm";
 import AddTags from "./components/home/AddTags";
+import AddJobApplication from "./components/home/AddJobApplication";
 
 function App() {
     const [signupKey, setSignupKey] = useState(0);
@@ -32,6 +33,7 @@ function App() {
                     <Route path="/details"  element={<RowDetails />} />
                     <Route path="/edit"  element={<EditForm />} />
                     <Route path="/addTags"  element={<AddTags />} />
+                    <Route path="/addJobApplication"  element={<AddJobApplication />} />
                     <Route path='/verify/:email/:hash' element={<Verify />} />
                     <Route path="/adminpage" element={<PrivateRoute><AdminPage /></PrivateRoute>} />
                     <Route path="/userpage" element={<PrivateRoute><UserPage /></PrivateRoute>} />
