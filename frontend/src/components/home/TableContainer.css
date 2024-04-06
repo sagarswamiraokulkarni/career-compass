@@ -56,8 +56,10 @@
 
 .tags-cell {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* Change this line */
     gap: 8px;
+    overflow-x: auto; /* Add this line */
+    white-space: nowrap; /* Add this line */
 }
 
 .tag {
@@ -65,6 +67,7 @@
     border-radius: 16px;
     font-size: 12px;
     color: white;
+    flex-shrink: 0; /* Add this line */
 }
 
 .tag-0 {
@@ -84,3 +87,13 @@
 }
 
 
+/* Actions Icons */
+.action-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.action-icon {
+    cursor: pointer;
+    font-size: 24px; /* Increase the font-size value */
+}

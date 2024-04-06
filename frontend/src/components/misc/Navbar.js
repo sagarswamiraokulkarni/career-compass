@@ -44,7 +44,7 @@ function Navbar({ onSignupClick }) {
               <Nav.Link as={Link} to="/" exact>Home</Nav.Link>
               <Nav.Link as={Link} to="/" exact>View Job Applications</Nav.Link>
               <Nav.Link as={Link} to="/" exact>Add Job Application</Nav.Link>
-              <Nav.Link as={Link} to="/" exact>Add Tag</Nav.Link>
+              <Nav.Link as={Link} to="/addTags" exact>Add Tag</Nav.Link>
               <Nav.Link as={Link} to="/adminpage" style={adminPageStyle()}>AdminPage</Nav.Link>
               <Nav.Link as={Link} to="/userpage" style={userPageStyle()}>UserPage</Nav.Link>
             </Nav>

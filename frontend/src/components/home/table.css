@@ -13,26 +13,18 @@
     font-weight: bold;
     padding: 12px;
     text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: max-content; /* Add this line */
 }
 
 /* Table Body */
 .table td {
     padding: 12px;
     border-bottom: 1px solid #e0e0e0;
-}
-
-/* Table Body Hover Effect */
-.table tbody tr:hover {
-    background-color: #f9f9f9;
-}
-
-/* Actions Icons */
-.action-icons {
-    display: flex;
-    gap: 8px;
-}
-
-.action-icon {
-    cursor: pointer;
-    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: max-content; /* Add this line */
 }
