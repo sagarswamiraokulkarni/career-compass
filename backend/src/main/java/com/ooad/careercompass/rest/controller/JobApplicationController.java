@@ -21,9 +21,14 @@ public class JobApplicationController {
 
     private final JobApplicationService jobApplicationService;
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-    @GetMapping("/getAllJobApplications/{userId}")
-    public List<JobApplicationsDto> getAllJobApplications(@PathVariable("userId") Integer userId) {
-        return jobApplicationService.getAllJobApplicationsByUserId(userId);
+    @GetMapping("/inbox/{userId}")
+    public List<JobApplicationsDto> getAllUnarchivedJobApplications(@PathVariable("userId") Integer userId) {
+        return jobApplicationService.getAllUnarchivedJobApplications(userId);
+    }
+
+    @GetMapping("/archive/{userId}")
+    public List<JobApplicationsDto> getAllArchivedJobApplications(@PathVariable("userId") Integer userId) {
+        return jobApplicationService.getAllArchivedJobApplications(userId);
     }
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @PostMapping("/createJobApplication")
@@ -43,9 +48,16 @@ public class JobApplicationController {
     }
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-    @DeleteMapping("/deleteJobApplication/{userId}/{jobApplicationId}")
-    public ResponseEntity<Void> deleteJobApplication(@PathVariable("userId") Integer userId, @PathVariable("jobApplicationId") Integer jobApplicationId) throws Exception {
-        jobApplicationService.deleteByUserIdAndJobApplicationId(userId,jobApplicationId);
+    @DeleteMapping("/archiveJobApplication/{userId}/{jobApplicationId}")
+    public ResponseEntity<Void> archiveJobApplication(@PathVariable("userId") Integer userId, @PathVariable("jobApplicationId") Integer jobApplicationId) throws Exception {
+        jobApplicationService.archiveByUserIdAndJobApplicationId(userId,jobApplicationId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @DeleteMapping("/unarchiveJobApplication/{userId}/{jobApplicationId}")
+    public ResponseEntity<Void> unarchiveJobApplication(@PathVariable("userId") Integer userId, @PathVariable("jobApplicationId") Integer jobApplicationId) throws Exception {
+        jobApplicationService.unarchiveByUserIdAndJobApplicationId(userId,jobApplicationId);
         return ResponseEntity.noContent().build();
     }
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})

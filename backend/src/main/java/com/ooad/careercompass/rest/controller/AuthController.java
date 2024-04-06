@@ -31,7 +31,6 @@ public class AuthController {
     public AuthResponse login(@Valid @RequestBody LoginRequest loginRequest) throws Exception {
         try {
             String token = authenticateAndGetToken(loginRequest.getUsername(), loginRequest.getPassword());
-            AuthResponse authResponse=userService.getUserLoginAuth(loginRequest.getUsername(),token);
             return userService.getUserLoginAuth(loginRequest.getUsername(),token);
         }catch (Exception e){
 //            e.printStackTrace();

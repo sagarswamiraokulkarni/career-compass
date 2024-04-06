@@ -30,35 +30,43 @@ public class JobApplicationService {
     private final JobTagRepository jobTagRepository;
     private final JobApplicationJobTagRepository jobApplicationJobTagRepository;
     private final UserService userService;
-    public List<JobApplicationsDto> getAllJobApplicationsByUserId(Integer userId){
-        System.out.println(ApplicationStatus.YetToApply.toString());
-        ArrayList<JobApplication> jobApplicationsList=jobApplicationRepository.getAllCurrentApplicationsByUserId(userId);
-//        ArrayList<JobApplicationsDto> jobApplicationsDtoList=new ArrayList<>();
-//        for(JobApplication jobApplication:jobApplicationsList){
-//            jobApplicationsDtoList.add(CareerCompassUtils.gsonMapper(jobApplication, JobApplicationsDto.class));
-//        }
-        List<JobApplicationsDto> jobApplicationsDtoList = CareerCompassUtils.gsonMapperList(jobApplicationsList, JobApplicationsDto.class);
+private List<JobApplicationsDto> getAllJobApplicationsByUserIdAndArchiveStatus(Integer userId,Boolean archiveStatus){
+    ArrayList<JobApplication> jobApplicationsList=jobApplicationRepository.getAllCurrentApplicationsByUserIdAndStatus(userId,archiveStatus);
+    List<JobApplicationsDto> jobApplicationsDtoList = CareerCompassUtils.gsonMapperList(jobApplicationsList, JobApplicationsDto.class);
 
 // Map the jobTags set for each JobApplicationDto
-        for (int i = 0; i < jobApplicationsList.size(); i++) {
-            JobApplication jobApplication = jobApplicationsList.get(i);
-            JobApplicationsDto jobApplicationDto = jobApplicationsDtoList.get(i);
+    for (int i = 0; i < jobApplicationsList.size(); i++) {
+        JobApplication jobApplication = jobApplicationsList.get(i);
+        JobApplicationsDto jobApplicationDto = jobApplicationsDtoList.get(i);
 
-            Set<JobTagDto> jobTagDtos = CareerCompassUtils.gsonMapperSet(jobApplication.getJobTags(), JobTagDto.class);
-            jobApplicationDto.setJobTags(jobTagDtos);
-        }
-//        System.out.println(jobApplicationsList.size());
-        return jobApplicationsDtoList;
+        Set<JobTagDto> jobTagDtos = CareerCompassUtils.gsonMapperSet(jobApplication.getJobTags(), JobTagDto.class);
+        jobApplicationDto.setJobTags(jobTagDtos);
+    }
+    return jobApplicationsDtoList;
+}
+    public List<JobApplicationsDto> getAllArchivedJobApplications(Integer userId){
+        return getAllJobApplicationsByUserIdAndArchiveStatus(userId,true);
+    }
+    public List<JobApplicationsDto> getAllUnarchivedJobApplications(Integer userId){
+        return getAllJobApplicationsByUserIdAndArchiveStatus(userId,false);
     }
 
-    public void deleteByUserIdAndJobApplicationId(Integer userId,Integer jobApplicationId) throws Exception {
+    public void archiveByUserIdAndJobApplicationId(Integer userId,Integer jobApplicationId) throws Exception {
+        updateArchiveStatusByUserIdAndJobApplicationIdAndArchiveStatus(userId,jobApplicationId,true);
+    }
+
+    public void unarchiveByUserIdAndJobApplicationId(Integer userId,Integer jobApplicationId) throws Exception {
+        updateArchiveStatusByUserIdAndJobApplicationIdAndArchiveStatus(userId,jobApplicationId,false);
+    }
+
+    public void updateArchiveStatusByUserIdAndJobApplicationIdAndArchiveStatus(Integer userId,Integer jobApplicationId, Boolean archiveStatus) throws Exception {
         // Retrieve the job application by ID
         JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
                 .orElseThrow(() -> new Exception("Job application not found with ID: " + jobApplicationId));
         if(!jobApplication.getUser().getId().equals(userId)){
             throw new Exception("Unauthorized Access");
         }
-        jobApplication.setDeleted(true);
+        jobApplication.setDeleted(archiveStatus);
         jobApplicationRepository.save(jobApplication);
     }
     public JobApplicationsDto getByUserIdAndJobApplicationId(Integer userId, Integer jobApplicationId) throws Exception {
