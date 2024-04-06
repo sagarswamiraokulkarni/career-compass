@@ -14,7 +14,7 @@ spring:
 #      ddl-auto: create
 
   datasource:
-    url: jdbc:mysql://sql3.freemysqlhosting.net:3306/sql3697032
+    url: jdbc:mysql://sql3.freesqldatabase.com:3306/sql3697032
     username: sql3697032
     password: etGymg6EjA
 
