@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/career-compass.iml" filepath="$PROJECT_DIR$/.idea/career-compass.iml" />
-      <module fileurl="file://$PROJECT_DIR$/order-api/order-api.iml" filepath="$PROJECT_DIR$/order-api/order-api.iml" />
     </modules>
   </component>
 </project>
