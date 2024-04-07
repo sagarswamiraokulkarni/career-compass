@@ -27,9 +27,6 @@ public class CareerCompassUtils {
             .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
             .create();
 
-//    public static <T> T gsonMapper(Object sourceObject, Class<T> targetClass) {
-//        return gson.fromJson(gson.toJson(sourceObject), targetClass);
-//    }
     private CareerCompassUtils(){
         bCryptPasswordEncoder=new BCryptPasswordEncoder();
     }
@@ -41,72 +38,43 @@ public class CareerCompassUtils {
     public String encodeString(String unEncodedString){
         return bCryptPasswordEncoder.encode(unEncodedString);
     }
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    public String convertToMD5(String password) {
-        try {
-            // Create an instance of MessageDigest with MD5 algorithm
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-
-            // Update the digest with the password bytes
-            digest.update(password.getBytes());
-
-            // Compute the hash
-            byte[] hashBytes = digest.digest();
-
-            // Convert the hash bytes to a hexadecimal string representation
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hashBytes) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
-            }
-
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-//    public static <T> Set<T> gsonMapperSet(Set<?> sourceSet, Class<T> targetClass) {
-//        // Create a TypeToken for the Set of target class
-//        Type setType = TypeToken.getParameterized(Set.class, targetClass).getType();
-//
-//        // Convert the source set to JSON
-//        String json = gson.toJson(sourceSet);
-//
-//        // Map the JSON to the Set of target class
-//        Set<T> targetSet = gson.fromJson(json, setType);
-//
-//        return targetSet;
+//    PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
 //    }
+//    public String convertToMD5(String password) {
+//        try {
+//            MessageDigest digest = MessageDigest.getInstance("MD5");
+//
+//            digest.update(password.getBytes());
+//
+//            byte[] hashBytes = digest.digest();
+//
+//            StringBuilder hexString = new StringBuilder();
+//            for (byte b : hashBytes) {
+//                String hex = Integer.toHexString(0xff & b);
+//                if (hex.length() == 1) {
+//                    hexString.append('0');
+//                }
+//                hexString.append(hex);
+//            }
+//
+//            return hexString.toString();
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+
     public static <T> T gsonMapper(Object sourceObject, Class<T> targetClass) {
-        // Convert the source object to JSON
         String json = gson.toJson(sourceObject);
-
-        // Create a TypeToken for the target class
         Type targetType = TypeToken.getParameterized(targetClass, sourceObject.getClass()).getType();
-
-        // Map the JSON to the target class
-        T targetObject = gson.fromJson(json, targetType);
-
-        return targetObject;
+        return gson.fromJson(json, targetType);
     }
 
     public static <T> Set<T> gsonMapperSet(Set<?> sourceSet, Class<T> targetClass) {
-        // Create a TypeToken for the Set of target class
         Type setType = TypeToken.getParameterized(Set.class, targetClass).getType();
-
-        // Convert the source set to JSON
         String json = gson.toJson(sourceSet);
-
-        // Map the JSON to the Set of target class
-        Set<T> targetSet = gson.fromJson(json, setType);
-
-        return targetSet;
+        return gson.fromJson(json, setType);
     }
 
     public static <T, U> List<U> gsonMapperList(List<T> sourceList, Class<U> targetClass) {
@@ -115,39 +83,8 @@ public class CareerCompassUtils {
                 .collect(Collectors.toList());
     }
     public String generateUniqueHash() {
-//            try {
-                // Get the current timestamp
                 long timestamp = System.currentTimeMillis();
-
-                // Generate a random UUID
                 UUID uuid = UUID.randomUUID();
-
-                // Combine the timestamp and UUID
                 return timestamp + uuid.toString();
-//
-//                // Create an instance of MessageDigest with SHA-256 algorithm
-//                MessageDigest digest = MessageDigest.getInstance("SHA-256");
-//
-//                // Update the digest with the input bytes
-//                digest.update(input.getBytes());
-//
-//                // Compute the hash
-//                byte[] hashBytes = digest.digest();
-//
-//                // Convert the hash bytes to a hexadecimal string representation
-//                StringBuilder hexString = new StringBuilder();
-//                for (byte b : hashBytes) {
-//                    String hex = Integer.toHexString(0xff & b);
-//                    if (hex.length() == 1) {
-//                        hexString.append('0');
-//                    }
-//                    hexString.append(hex);
-//                }
-//
-//                return hexString.toString();
-//            } catch (NoSuchAlgorithmException e) {
-//                e.printStackTrace();
-//                return null;
-//            }
         }
 }

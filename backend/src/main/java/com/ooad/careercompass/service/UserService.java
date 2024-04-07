@@ -53,10 +53,10 @@ public class UserService {
     }
 
 
-    public User validateAndGetUserByEmail(String email) {
-        return getUserByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with email %s not found", email)));
-    }
+//    public User validateAndGetUserByEmail(String email) {
+//        return getUserByEmail(email)
+//                .orElseThrow(() -> new UserNotFoundException(String.format("User with email %s not found", email)));
+//    }
 
 
     public User saveUser(User user) {
@@ -64,7 +64,7 @@ public class UserService {
     }
 
 
-    public void deleteUser(User user) {
-        userRepository.delete(user);
-    }
+//    public void deleteUser(User user) {
+//        userRepository.delete(user);
+//    }
 }

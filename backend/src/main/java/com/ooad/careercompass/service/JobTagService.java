@@ -27,8 +27,8 @@ public class JobTagService {
     private final UserRepository userRepository;
     private final JobApplicationRepository jobApplicationRepository;
     private final JobTagRepository jobTagRepository;
-    private final JobApplicationJobTagRepository jobApplicationJobTagRepository;
-    private final UserService userService;
+//    private final JobApplicationJobTagRepository jobApplicationJobTagRepository;
+//    private final UserService userService;
     public List<JobTagDto> getAllTagsByUserId(Integer userId) throws Exception {
         List<JobTag> jobTagList=jobTagRepository.findByUserId(userId);
         List<JobTagDto> jobTagDtoList=new ArrayList<>();

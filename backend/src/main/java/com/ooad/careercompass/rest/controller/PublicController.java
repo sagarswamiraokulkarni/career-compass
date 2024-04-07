@@ -16,7 +16,6 @@ public class PublicController {
 
     @GetMapping("/numberOfUsers")
     public Integer getNumberOfUsers() {
-        jobApplicationService.getAllJobApplicationsByUserId(3);
         return userService.getUsers().size();
     }
 

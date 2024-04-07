@@ -29,12 +29,10 @@ public class JobApplicationService {
     private final JobApplicationRepository jobApplicationRepository;
     private final JobTagRepository jobTagRepository;
     private final JobApplicationJobTagRepository jobApplicationJobTagRepository;
-    private final UserService userService;
+//    private final UserService userService;
 private List<JobApplicationsDto> getAllJobApplicationsByUserIdAndArchiveStatus(Integer userId,Boolean archiveStatus){
     ArrayList<JobApplication> jobApplicationsList=jobApplicationRepository.getAllCurrentApplicationsByUserIdAndStatus(userId,archiveStatus);
     List<JobApplicationsDto> jobApplicationsDtoList = CareerCompassUtils.gsonMapperList(jobApplicationsList, JobApplicationsDto.class);
-
-// Map the jobTags set for each JobApplicationDto
     for (int i = 0; i < jobApplicationsList.size(); i++) {
         JobApplication jobApplication = jobApplicationsList.get(i);
         JobApplicationsDto jobApplicationDto = jobApplicationsDtoList.get(i);
@@ -60,7 +58,6 @@ private List<JobApplicationsDto> getAllJobApplicationsByUserIdAndArchiveStatus(I
     }
 
     public void updateArchiveStatusByUserIdAndJobApplicationIdAndArchiveStatus(Integer userId,Integer jobApplicationId, Boolean archiveStatus) throws Exception {
-        // Retrieve the job application by ID
         JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
                 .orElseThrow(() -> new Exception("Job application not found with ID: " + jobApplicationId));
         if(!jobApplication.getUser().getId().equals(userId)){
