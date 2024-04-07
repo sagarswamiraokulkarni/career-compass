@@ -30,13 +30,18 @@ function AuthProvider({ children }) {
   }
 
   const userLogin = user => {
+    console.log(user)
     localStorage.setItem('user', JSON.stringify(user))
     setUser(user)
   }
 
   const userLogout = () => {
-    localStorage.removeItem('user')
-    setUser(null)
+    localStorage.removeItem('user');
+    localStorage.removeItem('userDetails');
+    localStorage.removeItem('allTags');
+    localStorage.removeItem('unArchivedJobs');
+    localStorage.removeItem('archivedJobs');
+    setUser(null);
   }
 
   const contextValue = {

@@ -15,6 +15,7 @@ import RowDetails from "./components/home/RowDetails";
 import EditForm from "./components/home/EditForm";
 import AddTags from "./components/home/AddTags";
 import AddJobApplication from "./components/home/AddJobApplication";
+import ArchivedTableContainer from "./components/home/ArchivedTableContainer";
 
 function App() {
     const [signupKey, setSignupKey] = useState(0);
@@ -27,7 +28,8 @@ function App() {
             <Router>
                 <Navbar onSignupClick={handleSignupClick} />
                 <Routes>
-                    <Route path='/' element={<TableContainer />} /> {/* Render the TableContainer component */}
+                    <Route path='/' element={<TableContainer />} />
+                    <Route path='/archivedJobs' element={<ArchivedTableContainer />} />
                     <Route path='/login' element={<Login key={signupKey} />} />
                     <Route path='/signup' element={<Signup key={signupKey} />} />
                     <Route path="/details"  element={<RowDetails />} />

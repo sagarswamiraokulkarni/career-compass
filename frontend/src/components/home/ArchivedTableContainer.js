@@ -8,7 +8,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import {orderApi} from "../misc/OrderApi";
 import {urlPaths} from "../../Constants";
 
-const TableContainer = () => {
+const ArchivedTableContainer = () => {
     const navigate = useNavigate();
     const [tags, setTags] = useState([]);
     const [showSearchBar, setShowSearchBar] = useState(false);
@@ -19,18 +19,17 @@ const TableContainer = () => {
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
         setUser(storedUser)
         const userJson = JSON.parse(localStorage.getItem('user'))
-        const unArchivedJobs = JSON.parse(localStorage.getItem('unArchivedJobs'));
-        setData(unArchivedJobs);
-        // const fetchData = async () => {
-        //     try {
-        //         const response = await orderApi.getApiCall(userJson,urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
-        //         setData(response.data);
-        //         console.log('API Response:', response);
-        //     } catch (error) {
-        //         console.error('Error fetching data:', error);
-        //     }
-        // };
-        // fetchData();
+        const archivedJobs = JSON.parse(localStorage.getItem('archivedJobs'));
+        const fetchData = async () => {
+            try {
+                // const response = await orderApi.getApiCall(userJson,urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId);
+                setData(archivedJobs);
+                // console.log('API Response:', response);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
     }, []);
 
     const dataJson = [
@@ -60,6 +59,8 @@ const TableContainer = () => {
         },
     ];
     const [data, setData]=useState([]);
+
+
 
 
 
@@ -105,7 +106,6 @@ const TableContainer = () => {
             Cell: ({ row }) => (
                 <>
                     <AiOutlineEye onClick={() => handleView(row.original)} className="action-icon" />
-                    <AiOutlineEdit onClick={() => handleEdit(row.original)} className="action-icon" />
                     <AiOutlineDelete onClick={() => handleDelete(row.original)} className="action-icon" />
                 </>
             )
@@ -132,13 +132,13 @@ const TableContainer = () => {
         try {
             const storedUser = JSON.parse(localStorage.getItem('userDetails'))
             const userJson = JSON.parse(localStorage.getItem('user'))
-            const response = await orderApi.deleteApiCall(userJson, urlPaths.DELETE_JOB_APPLICATION + storedUser.userId+`/${selectedRowData.id}`);
+            const response = await orderApi.deleteApiCall(userJson, urlPaths.UNARCHIVE_JOB_APPLICATION + storedUser.userId+`/${selectedRowData.id}`);
             console.log('API Response:', response);
             const updatedData = data.filter(item => item.id !== selectedRowData.id);
-            localStorage.setItem('unArchivedJobs', JSON.stringify(updatedData));
-            const archivedJobs = JSON.parse(localStorage.getItem('archivedJobs'))
-            archivedJobs.push(selectedRowData);
-            localStorage.setItem('archivedJobs', JSON.stringify(archivedJobs));
+            localStorage.setItem('archivedJobs', JSON.stringify(updatedData));
+            const unArchivedJobs = JSON.parse(localStorage.getItem('unArchivedJobs'))
+            unArchivedJobs.push(selectedRowData);
+            localStorage.setItem('unArchivedJobs', JSON.stringify(unArchivedJobs));
             setData(updatedData);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -181,32 +181,9 @@ const TableContainer = () => {
             <div className="table-container">
             <Table data={filteredData} columns={columns} iconStyle={{fontSize: '24px', marginRight: '12px'}}/>
             </div>
-            <ConfirmationModal
-                show={showDeleteModal}
-                onHide={() => setShowDeleteModal(false)}
-                onConfirm={confirmDelete}
-                rowData={selectedRowData}
-                bodyContent={
-                    <>
-                        <p>Are you sure you want to delete this job application?</p>
-                        {selectedRowData && (
-                            <div>
-                                <p>
-                                    <strong>Job URL: </strong>
-                                    <a href={selectedRowData.companyUrl} target="_blank" rel="noopener noreferrer">
-                                        {selectedRowData.company}
-                                    </a>
-                                </p>
-                                <p><strong>Role: </strong> {selectedRowData.position}</p>
-                                <p><strong>Status : </strong> {selectedRowData.status}</p>
-                            </div>
-                        )}
-                    </>
-                }
-            />
-            {/*<ConfirmationModal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} onConfirm={confirmDelete} rowData={selectedRowData} />*/}
+            <ConfirmationModal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} onConfirm={confirmDelete} rowData={selectedRowData} />
         </div>
     );
 };
 
-export default TableContainer;
+export default ArchivedTableContainer;

@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import './AddTags.css';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {orderApi} from "../misc/OrderApi";
+import {urlPaths} from "../../Constants";
+import ConfirmationModal from './ConfirmationModal';
 
 const AddTags = () => {
-    const existingTags = ['tag1', 'tag2', 'tag3'];
+    const existingTags = JSON.parse(localStorage.getItem('allTags'))
     const [tags, setTags] = useState(existingTags);
     const [newTag, setNewTag] = useState('');
     const [addedTags, setAddedTags] = useState([]);
     const [deletedTags, setDeletedTags] = useState([]);
     const notify = (message) => toast(message);
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
     const handleAddTag = () => {
         if (newTag.trim() !== '' && !tags.includes(newTag.trim()) && !addedTags.includes(newTag.trim())) {
@@ -35,8 +39,48 @@ const AddTags = () => {
         }
     };
 
+    // const handleConfirm =  () => {
+    //     const storedUser = JSON.parse(localStorage.getItem('userDetails'));
+    //     const userJson = JSON.parse(localStorage.getItem('user'));
+    //     const allTags = JSON.parse(localStorage.getItem('allTags'));
+    //     addedTags.map(async (tag) => {
+    //         try {
+    //             const response = await orderApi.postApiCall(userJson, urlPaths.CREATE_TAG, {name: tag, userId:storedUser.userId});
+    //             console.log('API Response:', response);
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         }
+    //     })
+    //     console.log("begore")
+    //     allTags.push(...addedTags);
+    //     // allTags.push(addedTags);
+    //     localStorage.setItem('allTags', JSON.stringify(allTags));
+    //     console.log("after")
+    //     console.log('Selected tags:', addedTags);
+    // };
+
     const handleConfirm = () => {
-        console.log('Selected tags:', addedTags);
+        addedTags.length>0&&setShowConfirmationModal(true);
+    };
+    const confirmDelete = async () => {
+        const storedUser = JSON.parse(localStorage.getItem('userDetails'));
+        const userJson = JSON.parse(localStorage.getItem('user'));
+        const allTags = JSON.parse(localStorage.getItem('allTags'));
+
+        try {
+            await Promise.all(addedTags.map(async (tag) => {
+                const response = await orderApi.postApiCall(userJson, urlPaths.CREATE_TAG, {name: tag, userId:storedUser.userId});
+                console.log('API Response:', response);
+            }));
+
+            allTags.push(...addedTags);
+            localStorage.setItem('allTags', JSON.stringify(allTags));
+            console.log('Selected tags:', addedTags);
+            setAddedTags([]);
+            setShowConfirmationModal(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
 
     return (
@@ -47,7 +91,7 @@ const AddTags = () => {
                 {tags.map((tag, index) => (
                     <span key={index} className="tag">
                         {tag}
-                        <button className="remove-tag-btn" onClick={() => handleRemoveTag(tag,"existing")}>x</button>
+                        {/*<button className="remove-tag-btn" onClick={() => handleRemoveTag(tag,"existing")}>x</button>*/}
                     </span>
                 ))}
             </div>
@@ -86,6 +130,16 @@ const AddTags = () => {
                 </div>
             </div>}
             <button className="confirm-btn" onClick={handleConfirm}>Confirm</button>
+            <ConfirmationModal
+                show={showConfirmationModal}
+                onHide={() => setShowConfirmationModal(false)}
+                onConfirm={confirmDelete}
+                bodyContent={
+                    <>
+                        <p>Are you sure you want to add this tags</p>
+                    </>
+                }
+            />
         </div>
     );
 };

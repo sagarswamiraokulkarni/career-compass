@@ -6,18 +6,6 @@ import './table.css';
 const Table = ({ data, columns }) => {
     const [starredRows, setStarredRows] = useState([]);
 
-    const handleView = (rowData) => {
-        console.log('View:', rowData);
-    };
-
-    const handleEdit = (rowData) => {
-        console.log('Edit:', rowData);
-    };
-
-    const handleDelete = (rowData) => {
-        console.log('Delete:', rowData);
-    };
-
     const handleStarToggle = (rowId) => {
         if (starredRows.includes(rowId)) {
             setStarredRows(starredRows.filter((id) => id !== rowId));

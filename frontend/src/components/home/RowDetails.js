@@ -1,57 +1,63 @@
 // RowDetails.js
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { Container, Row, Col, Card } from 'react-bootstrap';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './RowDetails.css';
 
 const RowDetails = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const rowData = location.state?.rowData;
+    const tagNames = rowData.jobTags.map(tag => tag.name);
+
+    const handleEditClick = () => {
+        navigate('/edit', { state: { rowData } });
+    };
 
     return (
-        <Container className="row-details-container">
-            <Row className="justify-content-center">
-                <Col xs={12} md={8} lg={6}>
-                    <Card className="row-details-card">
-                        <Card.Body>
-                            <Card.Title className="row-details-title">Row Details</Card.Title>
-                            <Card.Text>
-                                <div className="row-details-item">
-                                    <span className="row-details-label">Starred:</span>
-                                    {rowData.star ? <AiFillStar className="star-icon"/> :
-                                        <AiOutlineStar className="star-icon"/>}
-                                </div>
-                                <div className="row-details-item">
-                                    <span className="row-details-label">Company Name:</span>
-                                    {rowData.companyName}
-                                </div>
-                                <div className="row-details-item">
-                                    <span className="row-details-label">Role:</span>
-                                    {rowData.role}
-                                </div>
-                                <div className="row-details-item">
-                                    <span className="row-details-label">Applied On:</span>
-                                    {rowData.appliedOn}
-                                </div>
-                                <div className="row-details-item">
-                                    <span className="row-details-label">Status:</span>
-                                    {rowData.status}
-                                </div>
-                                <div className="row-details-item">
-                                    <span className="row-details-label">Field1:</span>
-                                    {rowData.field1}
-                                </div>
-                                <div className="row-details-item">
-                                    <span className="row-details-label">Field2:</span>
-                                    {rowData.field2}
-                                </div>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+        <div className="row-details">
+            <h2>Job Application Details</h2>
+            <div className="form-group">
+                <label>Starred:</label>
+                <span>{rowData.starred ? 'Yes' : 'No'}</span>
+            </div>
+            <div className="form-row">
+                <div className="form-group">
+                    <label>Company Name:</label>
+                    <span>{rowData.company}</span>
+                </div>
+                <div className="form-group">
+                    <label>Role:</label>
+                    <span>{rowData.position}</span>
+                </div>
+            </div>
+            <div className="form-group">
+                <label>Job URL:</label>
+                <span>{rowData.companyUrl}</span>
+            </div>
+            <div className="form-row">
+                <div className="form-group">
+                    <label>Applied On:</label>
+                    <span>{rowData.applicationDate}</span>
+                </div>
+                <div className="form-group">
+                    <label>Status:</label>
+                    <span>{rowData.status}</span>
+                </div>
+            </div>
+            <div className="form-group">
+                <label>Tags:</label>
+                <div className="tags-container">
+                    {tagNames.map((tag, index) => (
+                        <span key={index} className="tag">{tag}</span>
+                    ))}
+                </div>
+            </div>
+            <div className="form-group">
+                <label>Notes:</label>
+                <p>{rowData.notes}</p>
+            </div>
+            <button className="edit-button" onClick={handleEditClick}>Edit</button>
+        </div>
     );
 };
 
