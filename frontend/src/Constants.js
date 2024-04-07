@@ -13,7 +13,14 @@ export const urlPaths={
   SIGNUP:'/auth/signup',
   CHECK_USER_REGISTRATION_STATUS:'/public/checkUserRegistrationStatus/',
   SEND_VERIFICATION:'/auth/sendVerificationChallenge',
-  VALIDATE_VERIFICATION:'/auth/validateChallenge'
+  VALIDATE_VERIFICATION:'/auth/validateChallenge',
+  GET_UNARCHIVED_JOB_APPLICATIONS:'/tracker/inbox/',
+  GET_ALL_TAGS:'/tags/getAllTags/',
+  CREATE_TAG:'/tags/createTag',
+  ARCHIVE_JOB_APPLICATION:'/tracker/archiveJobApplication/',
+  GET_ARCHIVED_JOB_APPLICATIONS:'/tracker/archive/',
+  UNARCHIVE_JOB_APPLICATION:'/tracker/unarchiveJobApplication/',
+
 }
 
 export const config = process.env.NODE_ENV === 'development' ? dev : prod

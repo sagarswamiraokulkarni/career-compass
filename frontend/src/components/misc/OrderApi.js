@@ -14,13 +14,14 @@ export const orderApi = {
     createOrder,
     getUserMe,
     postApiCall,
-    getApiCall
+    getApiCall,
+    deleteApiCall
 }
 
-async function postApiCall(path, body) {
+async function postApiCall(userJson,path, body) {
     try{
     const response = await instance.post(path, body, {
-        headers: {'Content-type': 'application/json'}
+        headers: {'Content-type': 'application/json', 'Authorization': bearerAuth(userJson)}
     })
     if (response.status == 201||response.status == 200) {
         return {
@@ -40,9 +41,30 @@ async function postApiCall(path, body) {
         }
     }
 }
-async function getApiCall(path) {
-    const response = await instance.get(path)
+async function getApiCall(userJson,path) {
+    const response = await instance.get(path, {
+        headers: {'Authorization': bearerAuth(userJson)}
+    })
+
     if (response.status == 200) {
+        return {
+            statusCode: response.status,
+            data: response.data
+        };
+    } else {
+        return{
+            statusCode:response.status,
+            message:response.message
+        }
+    }
+}
+
+async function deleteApiCall(userJson,path) {
+    const response = await instance.delete(path, {
+        headers: {'Authorization': bearerAuth(userJson)}
+    })
+
+    if (response.status == 200||response.status == 204) {
         return {
             statusCode: response.status,
             data: response.data

@@ -8,13 +8,14 @@ import {BsFillEyeFill, BsFillEyeSlashFill} from 'react-icons/bs';
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 import './Login.css';
+import {urlPaths} from "../../Constants";
 
 function Login() {
     const Auth = useAuth();
     const isLoggedIn = Auth.userIsAuthenticated();
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('fireflies186@gmail.com');
+    const [password, setPassword] = useState('Admin@123');
     const [isError, setIsError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     // const notify = () => toast("Wow so easy!");
@@ -38,28 +39,46 @@ function Login() {
             setIsError(true);
             return;
         }
-
         try {
             const response = await orderApi.authenticate(email, password);
+            console.log("hello");
+            console.log(response);
+            localStorage.setItem('userDetails', JSON.stringify({
+                userId: response.data.userId,
+                firstName: response.data.firstName,
+                email: response.data.email
+            }))
             const {accessToken} = response.data;
             const data = parseJwt(accessToken);
             const authenticatedUser = {data, accessToken};
-
             Auth.userLogin(authenticatedUser);
-
-            setEmail('');
-            setPassword('');
-            setIsError(false);
+            const userJson = JSON.parse(localStorage.getItem('user'));
+            const storedUser = JSON.parse(localStorage.getItem('userDetails'));
+            const [getAllTags, unarchivedJobs, archivedJobs] = await Promise.all([
+                orderApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId),
+                orderApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId),
+                orderApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId)
+            ]);
+            // const getAllTags = await orderApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId);
+            const tagNames = getAllTags.data.map(tag => tag.name);
+            localStorage.setItem('allTags', JSON.stringify(tagNames));
+            // const unarchivedJobs = await orderApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
+            localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
+            // const archivedJobs = await orderApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId);
+            localStorage.setItem('archivedJobs', JSON.stringify(archivedJobs.data));
+            // await new Promise(resolve => setTimeout(resolve, 5000));
             navigate('/');
+
+
         } catch (error) {
             handleLogError(error);
             setIsError(true);
         }
     };
 
-    if (isLoggedIn) {
-        return <Navigate to={'/'}/>;
-    }
+    // if (isLoggedIn) {
+    //     return <Navigate to={'/'}/>;
+    // }
 
     return (
         <div className="login-container">

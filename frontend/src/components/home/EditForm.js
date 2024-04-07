@@ -10,9 +10,9 @@ const EditForm = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const rowData = location.state?.rowData;
-
-    const [tags, setTags] = useState(rowData.tags || []);
-
+    const allTags = JSON.parse(localStorage.getItem('allTags'))
+    const tagNames = rowData.jobTags.map(tag => tag.name);
+    const [tags, setTags] = useState(tagNames || []);
     const validationSchema = Yup.object().shape({
         starred: Yup.boolean(),
         companyName: Yup.string().required('Company Name is required'),
@@ -22,6 +22,8 @@ const EditForm = () => {
         status: Yup.string().required('Status is required'),
         notes: Yup.string(),
     });
+
+    const applicationStatus=['YetToApply', 'Applied', 'WaitingToHearBack', 'NeedToFollowUp', 'Accepted', 'Rejected'];
 
     const handleSubmit = (values) => {
         const updatedData = {
@@ -33,15 +35,16 @@ const EditForm = () => {
     };
 
     return (
+        <div className="add-job-application-container">
         <div className="add-job-application">
             <h2>Edit Job Application</h2>
             <Formik
                 initialValues={{
                     starred: rowData.starred || false,
-                    companyName: rowData.companyName || '',
-                    jobUrl: rowData.jobUrl || '',
-                    role: rowData.role || '',
-                    appliedOn: rowData.appliedOn || '',
+                    companyName: rowData.company || '',
+                    jobUrl: rowData.companyUrl || '',
+                    role: rowData.position || '',
+                    appliedOn: rowData.applicationDate || '',
                     status: rowData.status || '',
                     notes: rowData.notes || '',
                 }}
@@ -86,17 +89,20 @@ const EditForm = () => {
                                 <Field as="select" id="status" name="status"
                                        className={errors.status && touched.status ? 'error' : ''}>
                                     <option value="">Select Status</option>
-                                    <option value="Applied">Applied</option>
-                                    <option value="Interview">Interview</option>
-                                    <option value="Offer">Offer</option>
-                                    <option value="Rejected">Rejected</option>
+                                    {applicationStatus.map((status) => (
+                                        <option key={status} value={status}>{status}</option>
+                                    ))}
                                 </Field>
                                 <ErrorMessage name="status" component="div" className="error-message"/>
                             </div>
                         </div>
                         <div className="form-group">
                             <label htmlFor="tags">Tags</label>
-                            <Chips value={tags} onChange={setTags} suggestions={['tag1', 'tag2', 'tag3', 'tag4']}/>
+                            <Chips
+                                value={tags}
+                                onChange={setTags}
+                                suggestions={allTags}
+                            />
                         </div>
                         <div className="form-group">
                             <label htmlFor="notes">Notes</label>
@@ -109,6 +115,7 @@ const EditForm = () => {
                     </Form>
                 )}
             </Formik>
+        </div>
         </div>
     );
 };

@@ -6,6 +6,7 @@ import './AddJobApplication.css';
 
 const AddJobApplication = () => {
     const [tags, setTags] = useState([]);
+    const applicationStatus=['YetToApply', 'Applied', 'WaitingToHearBack', 'NeedToFollowUp', 'Accepted', 'Rejected'];
 
     const validationSchema = Yup.object().shape({
         starred: Yup.boolean(),
@@ -28,6 +29,7 @@ const AddJobApplication = () => {
     };
 
     return (
+        <div className="add-job-application-container">
         <div className="add-job-application">
             <h2>Add Job Application</h2>
             <Formik
@@ -81,10 +83,9 @@ const AddJobApplication = () => {
                                 <Field as="select" id="status" name="status"
                                        className={errors.status && touched.status ? 'error' : ''}>
                                     <option value="">Select Status</option>
-                                    <option value="Applied">Applied</option>
-                                    <option value="Interview">Interview</option>
-                                    <option value="Offer">Offer</option>
-                                    <option value="Rejected">Rejected</option>
+                                    {applicationStatus.map((status) => (
+                                        <option key={status} value={status}>{status}</option>
+                                    ))}
                                 </Field>
                                 <ErrorMessage name="status" component="div" className="error-message"/>
                             </div>
@@ -101,6 +102,7 @@ const AddJobApplication = () => {
                     </Form>
                     )}
             </Formik>
+        </div>
         </div>
     );
 };
