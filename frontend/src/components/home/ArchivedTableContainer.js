@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Table from './Table';
-import {AiOutlineEye, AiOutlineEdit, AiOutlineDelete, AiFillStar, AiOutlineStar, AiOutlineSearch} from 'react-icons/ai';
+import {AiOutlineEye, AiOutlineEdit, AiOutlineCloudUpload, AiOutlineDelete, AiFillStar, AiOutlineStar, AiOutlineSearch} from 'react-icons/ai';
 import Chips from 'react-chips';
 import './TableContainer.css';
 import ConfirmationModal from "./ConfirmationModal";
 import {orderApi} from "../misc/OrderApi";
 import {urlPaths} from "../../Constants";
+import {BiSolidArchiveOut} from "react-icons/bi";
 
 const ArchivedTableContainer = () => {
     const navigate = useNavigate();
@@ -14,7 +15,11 @@ const ArchivedTableContainer = () => {
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState(null);
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null);
+    const allTags = JSON.parse(localStorage.getItem('allTags'));
+    const [data, setData]=useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
         setUser(storedUser)
@@ -32,33 +37,6 @@ const ArchivedTableContainer = () => {
         fetchData();
     }, []);
 
-    const dataJson = [
-        {
-            id: 1,
-            star: true,
-            companyName: 'Company A',
-            role: 'Developer',
-            appliedOn: '2024-03-01',
-            status: 'Offer',
-            notes: 'notes1',
-            field2: 'filed2',
-            tags: ['tag1', 'tag2'],
-            jobUrl: 'https://blog.logrocket.com/react-table-complete-guide/'
-        },
-        {
-            id: 2,
-            star: true,
-            companyName: 'Company B',
-            role: 'Tester',
-            appliedOn: '2024-04-01',
-            status: 'Applied',
-            notes: 'notes2',
-            field2: 'filed2',
-            tags: ['tag3', 'tag4'],
-            jobUrl: 'https://www.npmjs.com/package/react-chips'
-        },
-    ];
-    const [data, setData]=useState([]);
 
 
 
@@ -106,7 +84,7 @@ const ArchivedTableContainer = () => {
             Cell: ({ row }) => (
                 <>
                     <AiOutlineEye onClick={() => handleView(row.original)} className="action-icon" />
-                    <AiOutlineDelete onClick={() => handleDelete(row.original)} className="action-icon" />
+                    <BiSolidArchiveOut onClick={() => handleDelete(row.original)} className="action-icon" />
                 </>
             )
         }
@@ -155,9 +133,13 @@ const ArchivedTableContainer = () => {
         setShowSearchBar(!showSearchBar);
     };
 
-    const filteredData = tags.length > 0
-        ? data.filter((item) => tags.every((tag) => item.tags.includes(tag)))
-        : data;
+    useEffect(() => {
+        console.log(data)
+        const filtered = tags.length > 0
+            ? data.filter((item) => tags.every((tag) => item.jobTags.map(tagObj => tagObj.name).includes(tag)))
+            : data;
+        setFilteredData(filtered);
+    }, [tags, data]);
 
     return (
         <div className="search-table-container">
@@ -171,7 +153,7 @@ const ArchivedTableContainer = () => {
                         <Chips
                             value={tags}
                             onChange={handleChange}
-                            suggestions={['tag1', 'tag2', 'tag3', 'tag4']}
+                            suggestions={allTags}
                             placeholder="Type a tag and press enter..."
                             className="react-chips"
                         />
@@ -181,7 +163,30 @@ const ArchivedTableContainer = () => {
             <div className="table-container">
             <Table data={filteredData} columns={columns} iconStyle={{fontSize: '24px', marginRight: '12px'}}/>
             </div>
-            <ConfirmationModal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} onConfirm={confirmDelete} rowData={selectedRowData} />
+            <ConfirmationModal
+                show={showDeleteModal}
+                onHide={() => setShowDeleteModal(false)}
+                onConfirm={confirmDelete}
+                rowData={selectedRowData}
+                bodyContent={
+                    <>
+                        <p>Are you sure you want to unArchive this job application?</p>
+                        {selectedRowData && (
+                            <div>
+                                <p>
+                                    <strong>Job URL: </strong>
+                                    <a href={selectedRowData.companyUrl} target="_blank"
+                                       rel="noopener noreferrer">
+                                        {selectedRowData.company}
+                                    </a>
+                                </p>
+                                <p><strong>Role: </strong> {selectedRowData.position}</p>
+                                <p><strong>Status : </strong> {selectedRowData.status}</p>
+                            </div>
+                        )}
+                    </>
+                }
+            />
         </div>
     );
 };

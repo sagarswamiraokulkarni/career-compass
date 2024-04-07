@@ -29,6 +29,7 @@ const AddJobApplication = () => {
     };
 
     return (
+        <div className="add-job-application-container">
         <div className="add-job-application">
             <h2>Add Job Application</h2>
             <Formik
@@ -101,6 +102,7 @@ const AddJobApplication = () => {
                     </Form>
                     )}
             </Formik>
+        </div>
         </div>
     );
 };

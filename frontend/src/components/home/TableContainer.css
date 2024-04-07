@@ -2,7 +2,15 @@
     display: flex;
     flex-direction: column; /* Arrange children in a column */
     align-items: center; /* Center children horizontally */
+    min-height: 100vh;
+    background-image: url('../../../public/cool-background (2).png');
+    /*background-image: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1544&q=80');*/
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
+
+
 
 .search-container {
     display: flex;

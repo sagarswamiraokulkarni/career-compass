@@ -14,6 +14,7 @@ const RowDetails = () => {
     };
 
     return (
+        <div className="row-details-container">
         <div className="row-details">
             <h2>Job Application Details</h2>
             <div className="form-group">
@@ -57,6 +58,7 @@ const RowDetails = () => {
                 <p>{rowData.notes}</p>
             </div>
             <button className="edit-button" onClick={handleEditClick}>Edit</button>
+        </div>
         </div>
     );
 };

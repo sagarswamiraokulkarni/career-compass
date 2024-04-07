@@ -1,12 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Table from './Table';
-import {AiOutlineEye, AiOutlineEdit, AiOutlineDelete, AiFillStar, AiOutlineStar, AiOutlineSearch} from 'react-icons/ai';
+import {
+    AiOutlineEye,
+    AiOutlineEdit,
+    AiOutlineDelete,
+    AiFillStar,
+    AiOutlineStar,
+    AiOutlineSearch,
+    AiOutlineCloudDownload
+} from 'react-icons/ai';
 import Chips from 'react-chips';
 import './TableContainer.css';
 import ConfirmationModal from "./ConfirmationModal";
 import {orderApi} from "../misc/OrderApi";
 import {urlPaths} from "../../Constants";
+import {IoMdArchive} from "react-icons/io";
 
 const TableContainer = () => {
     const navigate = useNavigate();
@@ -17,6 +26,7 @@ const TableContainer = () => {
     const [data, setData] = useState([]);
     const [user, setUser] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
+    const allTags = JSON.parse(localStorage.getItem('allTags'))
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
@@ -73,7 +83,7 @@ const TableContainer = () => {
                 <>
                     <AiOutlineEye onClick={() => handleView(row.original)} className="action-icon"/>
                     <AiOutlineEdit onClick={() => handleEdit(row.original)} className="action-icon"/>
-                    <AiOutlineDelete onClick={() => handleDelete(row.original)} className="action-icon"/>
+                    <IoMdArchive onClick={() => handleDelete(row.original)} className="action-icon"/>
                 </>
             )
         }
@@ -99,7 +109,7 @@ const TableContainer = () => {
         try {
             const storedUser = JSON.parse(localStorage.getItem('userDetails'))
             const userJson = JSON.parse(localStorage.getItem('user'))
-            const response = await orderApi.deleteApiCall(userJson, urlPaths.DELETE_JOB_APPLICATION + storedUser.userId + `/${selectedRowData.id}`);
+            const response = await orderApi.deleteApiCall(userJson, urlPaths.ARCHIVE_JOB_APPLICATION + storedUser.userId + `/${selectedRowData.id}`);
             console.log('API Response:', response);
             const updatedData = data.filter(item => item.id !== selectedRowData.id);
             localStorage.setItem('unArchivedJobs', JSON.stringify(updatedData));
@@ -125,9 +135,8 @@ const TableContainer = () => {
     useEffect(() => {
         console.log(data)
         const filtered = tags.length > 0
-            ? data.filter((item) => tags.every((tag) => item.tags.includes(tag)))
+            ? data.filter((item) => tags.every((tag) => item.jobTags.map(tagObj => tagObj.name).includes(tag)))
             : data;
-        console.log(filtered);
         setFilteredData(filtered);
     }, [tags, data]);
 
@@ -137,7 +146,8 @@ const TableContainer = () => {
 
     return (
     <div className="search-table-container">
-        {filteredData&&filteredData.length > 0 && <div className="search-container">
+        {/*{filteredData&&filteredData.length > 0 && */}
+            <div className="search-container">
             <button className="search-button" onClick={toggleSearchBar}>
                 <AiOutlineSearch className="search-icon"/>
                 <span className="search-text">Search by Tags</span>
@@ -147,17 +157,19 @@ const TableContainer = () => {
                     <Chips
                         value={tags}
                         onChange={handleChange}
-                        suggestions={['tag1', 'tag2', 'tag3', 'tag4']}
+                        suggestions={allTags}
                         placeholder="Type a tag and press enter..."
                         className="react-chips"
                     />
                 </div>
             )}
-        </div>}
+        </div>
+    {/*}*/}
         <div className="table-container">
-            {filteredData&&filteredData.length > 0 ?
+            {/*{*/}
                 <Table data={filteredData} columns={columns}
-                       iconStyle={{fontSize: '24px', marginRight: '12px'}}/> : ''}
+                       iconStyle={{fontSize: '24px', marginRight: '12px'}}/>
+            {/*: ''}*/}
         </div>
         <ConfirmationModal
             show={showDeleteModal}
@@ -166,7 +178,7 @@ const TableContainer = () => {
             rowData={selectedRowData}
             bodyContent={
                 <>
-                    <p>Are you sure you want to delete this job application?</p>
+                    <p>Are you sure you want to Archive this job application?</p>
                     {selectedRowData && (
                         <div>
                             <p>

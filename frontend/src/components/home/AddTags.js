@@ -84,6 +84,7 @@ const AddTags = () => {
     };
 
     return (
+        <div className="add-tags-background-container">
         <div className="add-tags-container">
             <ToastContainer/>
             <h2 className="add-tags-title">Add Tags</h2>
@@ -146,6 +147,7 @@ const AddTags = () => {
                     </>
                 }
             />
+        </div>
         </div>
     );
 };
