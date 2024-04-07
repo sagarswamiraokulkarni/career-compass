@@ -136,7 +136,13 @@ const AddTags = () => {
                 onConfirm={confirmDelete}
                 bodyContent={
                     <>
-                        <p>Are you sure you want to add this tags</p>
+                        Are you sure you want to add this tags?:&nbsp;
+                        {addedTags.map((tag, index) => (
+                            <span key={index}>
+                            {index > 0 && ", "}
+                            {tag}
+                            </span>
+                        ))}
                     </>
                 }
             />

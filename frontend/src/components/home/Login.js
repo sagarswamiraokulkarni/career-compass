@@ -39,45 +39,46 @@ function Login() {
             setIsError(true);
             return;
         }
-
         try {
             const response = await orderApi.authenticate(email, password);
-            localStorage.setItem('userDetails', JSON.stringify({userId:response.data.userId,firstName:response.data.firstName,email:response.data.email}))
-            console.log(response)
+            console.log("hello");
+            console.log(response);
+            localStorage.setItem('userDetails', JSON.stringify({
+                userId: response.data.userId,
+                firstName: response.data.firstName,
+                email: response.data.email
+            }))
             const {accessToken} = response.data;
-            console.log(accessToken)
             const data = parseJwt(accessToken);
             const authenticatedUser = {data, accessToken};
-            console.log(authenticatedUser);
             Auth.userLogin(authenticatedUser);
             const userJson = JSON.parse(localStorage.getItem('user'));
             const storedUser = JSON.parse(localStorage.getItem('userDetails'));
-            const getAllTags = await orderApi.getApiCall(userJson,urlPaths.GET_ALL_TAGS + storedUser.userId);
+            const [getAllTags, unarchivedJobs, archivedJobs] = await Promise.all([
+                orderApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId),
+                orderApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId),
+                orderApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId)
+            ]);
+            // const getAllTags = await orderApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId);
             const tagNames = getAllTags.data.map(tag => tag.name);
-            console.log(tagNames);
             localStorage.setItem('allTags', JSON.stringify(tagNames));
-            try {
-                const unarchivedJobs = await orderApi.getApiCall(userJson,urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
-                localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
-                const archivedJobs = await orderApi.getApiCall(userJson,urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId);
-                localStorage.setItem('archivedJobs', JSON.stringify(archivedJobs.data));
-                console.log('API Response:', response);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-            setEmail('');
-            setPassword('');
-            setIsError(false);
+            // const unarchivedJobs = await orderApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
+            localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
+            // const archivedJobs = await orderApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId);
+            localStorage.setItem('archivedJobs', JSON.stringify(archivedJobs.data));
+            // await new Promise(resolve => setTimeout(resolve, 5000));
             navigate('/');
+
+
         } catch (error) {
             handleLogError(error);
             setIsError(true);
         }
     };
 
-    if (isLoggedIn) {
-        return <Navigate to={'/'}/>;
-    }
+    // if (isLoggedIn) {
+    //     return <Navigate to={'/'}/>;
+    // }
 
     return (
         <div className="login-container">
