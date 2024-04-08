@@ -1,18 +1,24 @@
-// EditForm.js
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Chips from 'react-chips';
 import './AddJobApplication.css';
+import {orderApi} from "../misc/OrderApi";
+import {urlPaths} from "../../Constants";
+import {AiFillStar, AiOutlineStar} from "react-icons/ai";
+import Select from 'react-select';
 
 const EditForm = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const rowData = location.state?.rowData;
     const allTags = JSON.parse(localStorage.getItem('allTags'))
+    const allTagsArray=allTags.map(tag => tag.name);
     const tagNames = rowData.jobTags.map(tag => tag.name);
+    const unarchivedJobs = JSON.parse(localStorage.getItem('unArchivedJobs'))
     const [tags, setTags] = useState(tagNames || []);
+
     const validationSchema = Yup.object().shape({
         starred: Yup.boolean(),
         companyName: Yup.string().required('Company Name is required'),
@@ -24,12 +30,48 @@ const EditForm = () => {
     });
 
     const applicationStatus=['YetToApply', 'Applied', 'WaitingToHearBack', 'NeedToFollowUp', 'Accepted', 'Rejected'];
-
-    const handleSubmit = (values) => {
+    const getTagIds=(tags)=>{
+        return tags.map(tagName => {
+            const tag = allTags.find(t => t.name === tagName);
+            return tag ? tag.id : null;
+        });
+    }
+    const getJobTags=(tags)=>{
+        return allTags.filter(tag => tags.includes(tag.name));
+    }
+    const replaceJobById = (id, replacementJob) => {
+        const index = unarchivedJobs.findIndex(job => job.id === id);
+        if (index !== -1) {
+            unarchivedJobs[index] = replacementJob;
+            localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs));
+            return true;
+        }
+        return false;
+    };
+    const handleSubmit = async (values) => {
+        console.log(values);
+        const storedUser = JSON.parse(localStorage.getItem('userDetails'));
+        const userJson = JSON.parse(localStorage.getItem('user'));
         const updatedData = {
-            ...values,
-            tags: tags,
-        };
+            userId: storedUser.userId,
+            company: values.companyName,
+            position: values.role,
+            status: values.status,
+            applicationDate: "2024-04-07",
+            companyUrl: values.jobUrl,
+            notes: values.notes,
+            jobTagIds: getTagIds(tags),
+            starred: values.starred,
+            id: rowData.id
+        }
+        const response = await orderApi.putApiCall(userJson, urlPaths.UPDATE_JOB_APPLICATION, updatedData);
+        // delete updatedData.jobTagIds;
+        // delete updatedData.userId;
+        const unarchivedJobs = await orderApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
+        console.log(unarchivedJobs)
+        localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
+        // replaceJobById(rowData.id, {...updatedData,jobTags:getJobTags(tags)});
+        console.log(response);
         console.log('Updated data:', updatedData);
         navigate('/');
     };
@@ -51,11 +93,22 @@ const EditForm = () => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
-                {({ errors, touched }) => (
+                {({values,setFieldValue, errors, touched }) => (
                     <Form>
                         <div className="form-group">
                             <label htmlFor="starred">Starred</label>
-                            <Field type="checkbox" id="starred" name="starred"/>
+                            {values.starred ? (
+                                <AiFillStar
+                                    className="action-icon"
+                                    onClick={() => setFieldValue('starred', !values.starred)}
+
+                                />
+                            ) : (
+                                <AiOutlineStar
+                                    className="action-icon"
+                                    onClick={() => setFieldValue('starred', !values.starred)}
+                                />
+                            )}
                         </div>
                         <div className="form-row">
                             <div className="form-group">
@@ -96,12 +149,23 @@ const EditForm = () => {
                                 <ErrorMessage name="status" component="div" className="error-message"/>
                             </div>
                         </div>
+                        {/*<div className="form-group">*/}
+                        {/*    <label htmlFor="tags">Tags</label>*/}
+                        {/*    <Chips*/}
+                        {/*        value={tags}*/}
+                        {/*        onChange={setTags}*/}
+                        {/*        suggestions={allTagsArray}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
                         <div className="form-group">
                             <label htmlFor="tags">Tags</label>
-                            <Chips
-                                value={tags}
-                                onChange={setTags}
-                                suggestions={allTags}
+                            <Select
+                                id="tags"
+                                isMulti
+                                options={allTagsArray.map((tag) => ({value: tag, label: tag}))}
+                                value={tags.map((tag) => ({value: tag, label: tag}))}
+                                onChange={(selectedOptions) => setTags(selectedOptions.map((option) => option.value))}
+
                             />
                         </div>
                         <div className="form-group">

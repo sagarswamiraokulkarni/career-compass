@@ -2,11 +2,13 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './RowDetails.css';
+import {AiFillStar, AiOutlineStar} from "react-icons/ai";
 
 const RowDetails = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const rowData = location.state?.rowData;
+    const showEdit=location.state?.showEdit??true;
     const tagNames = rowData.jobTags.map(tag => tag.name);
 
     const handleEditClick = () => {
@@ -18,8 +20,19 @@ const RowDetails = () => {
         <div className="row-details">
             <h2>Job Application Details</h2>
             <div className="form-group">
-                <label>Starred:</label>
-                <span>{rowData.starred ? 'Yes' : 'No'}</span>
+                {/*<label>*/}
+                    Starred:<space> </space>
+                {/*</label>*/}
+                {rowData.starred ? (
+                    <AiFillStar
+                        className="action-icon"
+                    />
+                ) : (
+                    <AiOutlineStar
+                        className="action-icon"
+                    />
+                )}
+                {/*<span>{rowData.starred ? 'Yes' : 'No'}</span>*/}
             </div>
             <div className="form-row">
                 <div className="form-group">
@@ -57,7 +70,7 @@ const RowDetails = () => {
                 <label>Notes:</label>
                 <p>{rowData.notes}</p>
             </div>
-            <button className="edit-button" onClick={handleEditClick}>Edit</button>
+            {showEdit&&<button className="edit-button" onClick={handleEditClick}>Edit</button>}
         </div>
         </div>
     );

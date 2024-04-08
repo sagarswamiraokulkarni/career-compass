@@ -17,10 +17,13 @@ export const urlPaths={
   GET_UNARCHIVED_JOB_APPLICATIONS:'/tracker/inbox/',
   GET_ALL_TAGS:'/tags/getAllTags/',
   CREATE_TAG:'/tags/createTag',
+  UPDATE_TAG:'/tags/updateTag',
   ARCHIVE_JOB_APPLICATION:'/tracker/archiveJobApplication/',
   GET_ARCHIVED_JOB_APPLICATIONS:'/tracker/archive/',
   UNARCHIVE_JOB_APPLICATION:'/tracker/unarchiveJobApplication/',
-
+  UPDATE_JOB_APPLICATION:'/tracker/updateJobApplication',
+  CREATE_JOB_APPLICATION:'/tracker/createJobApplication',
+  UPDATE_STAR:'/tracker/updateJobApplicationStarStatus/'
 }
 
 export const config = process.env.NODE_ENV === 'development' ? dev : prod

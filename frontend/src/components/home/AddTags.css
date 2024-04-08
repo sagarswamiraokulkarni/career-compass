@@ -40,9 +40,9 @@
 }
 
 .remove-tag-btn {
-    background-color: transparent;
+    /*background-color: transparent;*/
     border: none;
-    color: #999;
+    color: #da1818;
     margin-left: 5px;
     cursor: pointer;
 }

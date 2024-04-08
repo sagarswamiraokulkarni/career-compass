@@ -16,10 +16,10 @@ const ArchivedTableContainer = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState(null);
     const [user, setUser] = useState(null);
-    const allTags = JSON.parse(localStorage.getItem('allTags'));
     const [data, setData]=useState([]);
     const [filteredData, setFilteredData] = useState([]);
-
+    const existingTags = JSON.parse(localStorage.getItem('allTags'))
+    const allTags=existingTags.map(tag => tag.name);
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
         setUser(storedUser)
@@ -45,10 +45,10 @@ const ArchivedTableContainer = () => {
     const columns = [
         {
             Header: 'Starred',
-            accessor: 'star',
+            accessor: 'starred',
             Cell: ({ row }) => (
                 <div>
-                    {row.original.star ? <AiFillStar className="action-icon"/> : <AiOutlineStar className="action-icon"/>}
+                    {row.original.starred ? <AiFillStar className="action-icon"/> : <AiOutlineStar className="action-icon"/>}
                 </div>
             )
         },
@@ -92,7 +92,7 @@ const ArchivedTableContainer = () => {
 
     const handleView = (rowData) => {
         console.log('View:', rowData);
-        navigate('/details', { state: { rowData } });
+        navigate('/details', { state: { rowData,showEdit:false } });
     };
 
     const handleEdit = (rowData) => {

@@ -28,14 +28,14 @@ function App() {
             <Router>
                 <Navbar onSignupClick={handleSignupClick} />
                 <Routes>
-                    <Route path='/' element={<TableContainer />} />
-                    <Route path='/archivedJobs' element={<ArchivedTableContainer />} />
+                    <Route path='/' element={<PrivateRoute><TableContainer /></PrivateRoute>} />
+                    <Route path='/archivedJobs' element={<PrivateRoute><ArchivedTableContainer /></PrivateRoute>} />
                     <Route path='/login' element={<Login key={signupKey} />} />
                     <Route path='/signup' element={<Signup key={signupKey} />} />
-                    <Route path="/details"  element={<RowDetails />} />
-                    <Route path="/edit"  element={<EditForm />} />
-                    <Route path="/addTags"  element={<AddTags />} />
-                    <Route path="/addJobApplication"  element={<AddJobApplication />} />
+                    <Route path="/details"  element={<PrivateRoute><RowDetails /></PrivateRoute>} />
+                    <Route path="/edit"  element={<PrivateRoute><EditForm /></PrivateRoute>} />
+                    <Route path="/addTags"  element={<PrivateRoute><AddTags /></PrivateRoute>} />
+                    <Route path="/addJobApplication"  element={<PrivateRoute><AddJobApplication /></PrivateRoute>} />
                     <Route path='/verify/:email/:hash' element={<Verify />} />
                     <Route path="/adminpage" element={<PrivateRoute><AdminPage /></PrivateRoute>} />
                     <Route path="/userpage" element={<PrivateRoute><UserPage /></PrivateRoute>} />

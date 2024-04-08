@@ -15,7 +15,9 @@ export const orderApi = {
     getUserMe,
     postApiCall,
     getApiCall,
-    deleteApiCall
+    deleteApiCall,
+    putApiCall,
+    patchApiCall
 }
 
 async function postApiCall(userJson,path, body) {
@@ -41,6 +43,25 @@ async function postApiCall(userJson,path, body) {
         }
     }
 }
+
+async function patchApiCall(userJson,path) {
+    const response = await instance.patch(path,{},{
+        headers: {'Authorization': bearerAuth(userJson)}
+    })
+
+    if (response.status == 200) {
+        return {
+            statusCode: response.status,
+            data: response.data
+        };
+    } else {
+        return{
+            statusCode:response.status,
+            message:response.message
+        }
+    }
+}
+
 async function getApiCall(userJson,path) {
     const response = await instance.get(path, {
         headers: {'Authorization': bearerAuth(userJson)}
@@ -55,6 +76,30 @@ async function getApiCall(userJson,path) {
         return{
             statusCode:response.status,
             message:response.message
+        }
+    }
+}
+
+async function putApiCall(userJson,path, body) {
+    try{
+        const response = await instance.put(path, body, {
+            headers: {'Content-type': 'application/json', 'Authorization': bearerAuth(userJson)}
+        })
+        if (response.status == 201||response.status == 200) {
+            return {
+                statusCode: response.status,
+                data: response.data
+            };
+        } else {
+            return{
+                statusCode:response.status,
+                message:response.message
+            }
+        }}
+    catch (e) {
+        return{
+            statusCode:409,
+            message:e.message
         }
     }
 }

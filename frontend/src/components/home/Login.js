@@ -59,14 +59,10 @@ function Login() {
                 orderApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId),
                 orderApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId)
             ]);
-            // const getAllTags = await orderApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId);
-            const tagNames = getAllTags.data.map(tag => tag.name);
-            localStorage.setItem('allTags', JSON.stringify(tagNames));
-            // const unarchivedJobs = await orderApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
+            // const tagNames = getAllTags.data.map(tag => tag.name);
+            localStorage.setItem('allTags', JSON.stringify(getAllTags.data));
             localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
-            // const archivedJobs = await orderApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId);
             localStorage.setItem('archivedJobs', JSON.stringify(archivedJobs.data));
-            // await new Promise(resolve => setTimeout(resolve, 5000));
             navigate('/');
 
 
@@ -75,10 +71,6 @@ function Login() {
             setIsError(true);
         }
     };
-
-    // if (isLoggedIn) {
-    //     return <Navigate to={'/'}/>;
-    // }
 
     return (
         <div className="login-container">

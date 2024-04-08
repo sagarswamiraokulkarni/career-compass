@@ -16,6 +16,8 @@ import ConfirmationModal from "./ConfirmationModal";
 import {orderApi} from "../misc/OrderApi";
 import {urlPaths} from "../../Constants";
 import {IoMdArchive} from "react-icons/io";
+import Select from 'react-select';
+
 
 const TableContainer = () => {
     const navigate = useNavigate();
@@ -26,7 +28,9 @@ const TableContainer = () => {
     const [data, setData] = useState([]);
     const [user, setUser] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
-    const allTags = JSON.parse(localStorage.getItem('allTags'))
+    const existingTags = JSON.parse(localStorage.getItem('allTags'))
+    const allTags=existingTags.map(tag => tag.name);
+    // const allTags = JSON.parse(localStorage.getItem('allTags'))
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
@@ -37,17 +41,33 @@ const TableContainer = () => {
         setData(unArchivedJobs);
     }, []);
 
-
+    const handleStar = async (row) => {
+        const storedUser = JSON.parse(localStorage.getItem('userDetails'))
+        const userJson = JSON.parse(localStorage.getItem('user'))
+        console.log(data);
+        const response = await orderApi.patchApiCall(userJson,
+            urlPaths.UPDATE_STAR+storedUser.userId+`/${row.id}`);
+        console.log(response)
+        const allData = data.map((item) => {
+            if (item.id === row.id) {
+                return {...item, starred: !item.starred};
+            }
+            return item;
+        });
+        localStorage.setItem('unArchivedJobs', JSON.stringify(allData));
+        setData(allData);
+        console.log(row);
+    };
 
 
     const columns = [
         {
             Header: 'Starred',
-            accessor: 'star',
+            accessor: 'starred',
             Cell: ({row}) => (
                 <div>
-                    {row.original.star ? <AiFillStar className="action-icon"/> :
-                        <AiOutlineStar className="action-icon"/>}
+                    {row.original.starred ? <AiFillStar className="action-icon" onClick={() => handleStar(row.original)}/> :
+                        <AiOutlineStar className="action-icon" onClick={() => handleStar(row.original)}/>}
                 </div>
             )
         },
@@ -125,6 +145,7 @@ const TableContainer = () => {
 
 
     const handleChange = (newTags) => {
+        console.log(newTags)
         setTags(newTags);
     };
 
@@ -138,11 +159,8 @@ const TableContainer = () => {
             ? data.filter((item) => tags.every((tag) => item.jobTags.map(tagObj => tagObj.name).includes(tag)))
             : data;
         setFilteredData(filtered);
+        console.log(filtered);
     }, [tags, data]);
-
-    // const filteredData = tags.length > 0
-    //     ? data.filter((item) => tags.every((tag) => item.tags.includes(tag)))
-    //     : data;
 
     return (
     <div className="search-table-container">
@@ -152,17 +170,18 @@ const TableContainer = () => {
                 <AiOutlineSearch className="search-icon"/>
                 <span className="search-text">Search by Tags</span>
             </button>
-            {showSearchBar && (
-                <div className="search-bar">
-                    <Chips
-                        value={tags}
-                        onChange={handleChange}
-                        suggestions={allTags}
-                        placeholder="Type a tag and press enter..."
-                        className="react-chips"
-                    />
-                </div>
-            )}
+                {showSearchBar && (
+                    <div className="search-bar">
+                        <Select
+                            isMulti
+                            options={allTags.map((tag) => ({ value: tag, label: tag }))}
+                            value={tags.map((tag) => ({ value: tag, label: tag }))}
+                            onChange={(selectedOptions) => handleChange(selectedOptions.map((option) => option.value))}
+                            placeholder="Type a tag and press enter..."
+                            className="react-select"
+                        />
+                    </div>
+                )}
         </div>
     {/*}*/}
         <div className="table-container">

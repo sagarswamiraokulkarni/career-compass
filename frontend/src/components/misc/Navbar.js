@@ -41,24 +41,29 @@ function Navbar({ onSignupClick }) {
           <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
           <BootstrapNavbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              {/*<Nav.Link as={Link} to="/" exact>Home</Nav.Link>*/}
               <Nav.Link as={Link} to="/" exact>View Job Applications</Nav.Link>
               <Nav.Link as={Link} to="/addJobApplication" exact>Add Job Application</Nav.Link>
               <Nav.Link as={Link} to="/addTags" exact>Add Tag</Nav.Link>
               <Nav.Link as={Link} to="/archivedJobs" exact>View Archived Job Applications</Nav.Link>
-              {/*<Nav.Link as={Link} to="/adminpage" style={adminPageStyle()}>AdminPage</Nav.Link>*/}
-              {/*<Nav.Link as={Link} to="/userpage" style={userPageStyle()}>UserPage</Nav.Link>*/}
             </Nav>
             <Nav>
               {userIsAuthenticated() ? (
                   <>
-                    <Nav.Item style={logoutMenuStyle()}>{`Hi ${getUserName()}`}</Nav.Item>
-                    <Nav.Link as={Link} to="/" onClick={logout} style={logoutMenuStyle()}>Logout</Nav.Link>
+                    <Nav.Item className="user-name" style={logoutMenuStyle()}>
+                      {`Hi ${getUserName()}`}
+                    </Nav.Item>
+                    <Nav.Link as={Link} to="/" onClick={logout} style={logoutMenuStyle()}>
+                      Logout
+                    </Nav.Link>
                   </>
               ) : (
                   <>
-                    <Nav.Link as={Link} to="/login" onClick={onSignupClick} style={enterMenuStyle()}>Login</Nav.Link>
-                    <Nav.Link as={Link} to="/signup" onClick={onSignupClick} style={enterMenuStyle()}>Sign Up</Nav.Link>
+                    <Nav.Link as={Link} to="/login" onClick={onSignupClick} style={enterMenuStyle()}>
+                      Login
+                    </Nav.Link>
+                    <Nav.Link as={Link} to="/signup" onClick={onSignupClick} style={enterMenuStyle()}>
+                      Sign Up
+                    </Nav.Link>
                   </>
               )}
             </Nav>
