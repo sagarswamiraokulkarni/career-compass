@@ -97,11 +97,11 @@ private List<JobApplicationsDto> getAllJobApplicationsByUserIdAndArchiveStatus(I
     public GenericResponse addJobApplication(RequestJobApplicationDto requestJobApplicationDto) throws Exception {
         GenericResponse genericResponse=new GenericResponse();
         requestJobApplicationDto.setId(null);
-        JobApplication jobApplication = CareerCompassUtils.gsonMapper(requestJobApplicationDto, JobApplication.class);
+//        JobApplication jobApplication = CareerCompassUtils.gsonMapper(requestJobApplicationDto, JobApplication.class);
         System.out.println(requestJobApplicationDto.getUserId());
         User user=userRepository.findById(requestJobApplicationDto.getUserId()).orElseThrow(()-> new Exception("User not found"));
 //        TODO: Builder Pattern
-        JobApplication.builder().applicationDate(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
+        JobApplication jobApplication=JobApplication.builder().applicationDate(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
                 .company(requestJobApplicationDto.getCompany()).createdAt(new Timestamp(System.currentTimeMillis())).isDeleted(false)
                 .companyUrl(requestJobApplicationDto.getCompanyUrl()).starred(false).position(requestJobApplicationDto.getPosition())
                 .user(user).position(requestJobApplicationDto.getPosition()).status(requestJobApplicationDto.getStatus()).build();
