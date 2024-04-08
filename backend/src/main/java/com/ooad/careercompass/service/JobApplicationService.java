@@ -104,7 +104,7 @@ private List<JobApplicationsDto> getAllJobApplicationsByUserIdAndArchiveStatus(I
         JobApplication jobApplication=JobApplication.builder().applicationDate(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
                 .company(requestJobApplicationDto.getCompany()).createdAt(new Timestamp(System.currentTimeMillis())).isDeleted(false)
                 .companyUrl(requestJobApplicationDto.getCompanyUrl()).starred(false).position(requestJobApplicationDto.getPosition())
-                .user(user).position(requestJobApplicationDto.getPosition()).status(requestJobApplicationDto.getStatus()).build();
+                .user(user).position(requestJobApplicationDto.getPosition()).status(requestJobApplicationDto.getStatus()).starred(requestJobApplicationDto.getStarred()).build();
         jobApplication=jobApplicationRepository.save(jobApplication);
         List<JobTag> jobTagsList=jobTagRepository.findAllById(requestJobApplicationDto.getJobTagIds());
         for(JobTag jobTag:jobTagsList){
@@ -133,6 +133,7 @@ private List<JobApplicationsDto> getAllJobApplicationsByUserIdAndArchiveStatus(I
         jobApplication.setNotes(requestJobApplicationDto.getNotes());
         jobApplication.setStatus(requestJobApplicationDto.getStatus());
         jobApplication.setPosition(requestJobApplicationDto.getPosition());
+        jobApplication.setStarred(requestJobApplicationDto.getStarred());
         jobApplication=jobApplicationRepository.save(jobApplication);
 
         List<JobApplicationJobTag> jobApplicationJobTagsList=jobApplicationJobTagRepository.getAllAssociatedTagsByJobApplicationId(jobApplication.getId());

@@ -31,4 +31,6 @@ public class RequestJobApplicationDto {
 
         private Set<Integer> jobTagIds = new HashSet<>();
 
+        private Boolean starred;
+
 }
