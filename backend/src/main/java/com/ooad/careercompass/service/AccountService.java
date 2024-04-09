@@ -25,7 +25,7 @@ public class AccountService {
         VerificationService verificationService=new VerificationService(notificationStrategy);
         return verificationService.sendUserVerification(userRepository.findByEmail(verificationRequest.getEmail()));
     }
-    private NotificationStrategy getNotificationStrategy(String strategyType){
+    public NotificationStrategy getNotificationStrategy(String strategyType){
         return switch (strategyType) {
             case "sms" -> NotificationFactory.getSMSNotificationStrategy();
             case "whatsapp" -> NotificationFactory.getWhatsAppNotificationStrategy();
