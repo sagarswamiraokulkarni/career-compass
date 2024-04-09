@@ -28,27 +28,21 @@ class DatabaseInitializerTest {
 
     @Test
     void run_whenUsersExist_shouldNotInitializeDatabase() throws Exception {
-        // Arrange
         when(userService.getUsers()).thenReturn(Collections.singletonList(new User()));
 
-        // Act
         databaseInitializer.run();
 
-        // Assert
         verify(userService, times(1)).getUsers();
         verify(userService, never()).saveUser(any(User.class));
     }
 
     @Test
     void run_whenNoUsersExist_shouldInitializeDatabase() throws Exception {
-        // Arrange
         when(userService.getUsers()).thenReturn(Collections.emptyList());
         when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
 
-        // Act
         databaseInitializer.run();
 
-        // Assert
         verify(userService, times(1)).getUsers();
         verify(passwordEncoder, times(2)).encode(anyString());
         verify(userService, times(2)).saveUser(any(User.class));

@@ -34,7 +34,7 @@ class AccountServiceTest {
     @Test
     void checkIfRegistrationIsCompleted_WhenUserIsAlreadyVerified_ShouldThrowException() {
         VerificationRequest verificationRequest = new VerificationRequest();
-        verificationRequest.setEmail("test@example.com");
+        verificationRequest.setEmail("fireflies186@gmail.com");
 
         GenericResponse genericResponse = new GenericResponse();
         genericResponse.setAccountVerified(true);
@@ -48,7 +48,7 @@ class AccountServiceTest {
     @Test
     void sendVerificationChallenge_ShouldReturnGenericResponse() {
         VerificationRequest verificationRequest = new VerificationRequest();
-        verificationRequest.setEmail("test@example.com");
+        verificationRequest.setEmail("fireflies186@gmail.com");
         verificationRequest.setVerificationStrategyType("email");
 
         User user = new User();
@@ -66,12 +66,6 @@ class AccountServiceTest {
         Assertions.assertTrue(notificationStrategy instanceof MessageNotificationStrategy);
     }
 
-//    @Test
-//    void getNotificationStrategy_ShouldReturnWhatsAppNotificationStrategy() {
-//        NotificationStrategy notificationStrategy = accountService.getNotificationStrategy("whatsapp");
-//
-//        Assertions.assertTrue(notificationStrategy instanceof WhatsAppNotificationStrategy);
-//    }
 
     @Test
     void getNotificationStrategy_ShouldReturnEmailNotificationStrategy() {

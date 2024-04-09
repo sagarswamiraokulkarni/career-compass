@@ -27,7 +27,7 @@ class UserServiceTest {
 
     @Test
     void testCheckIfUserExistsAndRegistrationIsCompleted() {
-        String email = "test@example.com";
+        String email = "fireflies186@gmail.com";
         User user = new User();
         user.setEmail(email);
         user.setVerified(true);
@@ -55,7 +55,7 @@ class UserServiceTest {
 
     @Test
     void testGetUserByEmail() {
-        String email = "test@example.com";
+        String email = "fireflies186@gmail.com";
         User user = new User();
         user.setEmail(email);
 
@@ -68,13 +68,13 @@ class UserServiceTest {
 
     @Test
     void testGetUserLoginAuth() {
-        String email = "test@example.com";
+        String email = "fireflies186@gmail.com";
         String accessToken = "accessToken";
         User user = new User();
         user.setId(1);
         user.setEmail(email);
-        user.setFirstName("John");
-        user.setLastName("Doe");
+        user.setFirstName("Pavan");
+        user.setLastName("Sai");
         user.setVerifyHash("verifyHash");
         user.setRole("USER");
 
@@ -92,7 +92,7 @@ class UserServiceTest {
 
     @Test
     void testHasUserWithEmail() {
-        String email = "test@example.com";
+        String email = "fireflies186@gmail.com";
         Mockito.when(userRepository.existsByEmail(email)).thenReturn(true);
 
         boolean result = userService.hasUserWithEmail(email);

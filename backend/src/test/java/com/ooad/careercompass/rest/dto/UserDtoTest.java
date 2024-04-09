@@ -12,9 +12,9 @@ class UserDtoTest {
     @Test
     void testUserDto() {
         Long id = 1L;
-        String username = "johndoe";
-        String name = "John Doe";
-        String email = "john.doe@example.com";
+        String username = "fireflies186@gmail.com";
+        String name = "Pavan Sai";
+        String email = "fireflies186@gmail.com";
         String role = "USER";
         List<UserDto.OrderDto> orders = new ArrayList<>();
         orders.add(new UserDto.OrderDto("order1", "Order 1", ZonedDateTime.now()));

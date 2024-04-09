@@ -38,37 +38,17 @@ class WebSecurityConfigTest {
 
     @Test
     void authenticationManager_ShouldReturnAuthenticationManager() throws Exception {
-        // Arrange
         when(authenticationConfiguration.getAuthenticationManager()).thenReturn(mock(AuthenticationManager.class));
 
-        // Act
         AuthenticationManager authenticationManager = webSecurityConfig.authenticationManager(authenticationConfiguration);
 
-        // Assert
         assertNotNull(authenticationManager);
     }
 
-//    @Test
-//    void securityFilterChain_ShouldConfigureHttpSecurity() throws Exception {
-//        // Act
-//        SecurityFilterChain securityFilterChain = webSecurityConfig.securityFilterChain(httpSecurity);
-//
-//        // Assert
-//        assertNotNull(securityFilterChain);
-//        verify(httpSecurity).authorizeHttpRequests(any());
-//        verify(httpSecurity).addFilterBefore(eq(tokenAuthenticationFilter), eq(UsernamePasswordAuthenticationFilter.class));
-//        verify(httpSecurity).exceptionHandling(any());
-//        verify(httpSecurity).sessionManagement(any());
-//        verify(httpSecurity).cors(any());
-//        verify(httpSecurity).csrf(any());
-//    }
-
     @Test
     void passwordEncoder_ShouldReturnBCryptPasswordEncoder() {
-        // Act
         PasswordEncoder passwordEncoder = webSecurityConfig.passwordEncoder();
 
-        // Assert
         assertNotNull(passwordEncoder);
         assertTrue(passwordEncoder instanceof BCryptPasswordEncoder);
     }

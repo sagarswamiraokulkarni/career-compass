@@ -42,24 +42,20 @@ public class JobTagServiceTest {
 
     @Test
     public void testGetAllTagsByUserId() throws Exception {
-        // Arrange
         Integer userId = 1;
         List<JobTag> jobTags = new ArrayList<>();
         when(jobTagRepository.findByUserId(userId)).thenReturn((ArrayList<JobTag>) jobTags);
 
-        // Act
         List<JobTagDto> result = jobTagService.getAllTagsByUserId(userId);
 
-        // Assert
         assertEquals(jobTags.size(), result.size());
         verify(jobTagRepository, times(1)).findByUserId(userId);
     }
 
     @Test
     public void testCreateNewTagByUserIdAndTagName() throws Exception {
-        // Arrange
         Integer userId = 1;
-        String tagName = "Test Tag";
+        String tagName = "Tag";
         RequestJobTagDto requestJobTagDto = new RequestJobTagDto();
         requestJobTagDto.setUserId(userId);
         requestJobTagDto.setName(tagName);
@@ -68,10 +64,8 @@ public class JobTagServiceTest {
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(jobTagRepository.findByUserIdAndTagName(userId, tagName)).thenReturn(null);
 
-        // Act
         GenericResponse result = jobTagService.createNewTagByUserIdAndTagName(requestJobTagDto);
 
-        // Assert
         verify(userRepository, times(1)).findById(userId);
         verify(jobTagRepository, times(1)).findByUserIdAndTagName(userId, tagName);
         verify(jobTagRepository, times(1)).save(any(JobTag.class));
@@ -81,10 +75,9 @@ public class JobTagServiceTest {
 
     @Test
     public void testUpdateTagByUserIdAndTagId() throws Exception {
-        // Arrange
         Integer userId = 1;
         Integer tagId = 1;
-        String tagName = "Updated Tag";
+        String tagName = "UpdatedTag";
         RequestJobTagDto requestJobTagDto = new RequestJobTagDto();
         requestJobTagDto.setUserId(userId);
         requestJobTagDto.setId(tagId);
@@ -96,10 +89,8 @@ public class JobTagServiceTest {
         jobTag.setUser(user);
         when(jobTagRepository.findById(tagId)).thenReturn(Optional.of(jobTag));
 
-        // Act
         GenericResponse result = jobTagService.updateTagByUserIdAndTagId(requestJobTagDto);
 
-        // Assert
         verify(jobTagRepository, times(1)).findById(tagId);
         verify(jobTagRepository, times(1)).save(any(JobTag.class));
         assertEquals("Success", result.getStatus());
@@ -108,7 +99,6 @@ public class JobTagServiceTest {
 
     @Test
     public void testDeleteByUserIdAndJobApplicationId() throws Exception {
-        // Arrange
         Integer userId = 1;
         Integer jobApplicationId = 1;
         User user = new User();
@@ -118,10 +108,8 @@ public class JobTagServiceTest {
         jobApplication.setUser(user);
         when(jobApplicationRepository.findById(jobApplicationId)).thenReturn(Optional.of(jobApplication));
 
-        // Act
         jobTagService.deleteByUserIdAndJobApplicationId(userId, jobApplicationId);
 
-        // Assert
         verify(jobApplicationRepository, times(1)).findById(jobApplicationId);
         verify(jobApplicationRepository, times(1)).save(any(JobApplication.class));
         assertTrue(jobApplication.isDeleted());
@@ -129,7 +117,6 @@ public class JobTagServiceTest {
 
     @Test
     public void testGetByUserIdAndJobApplicationId() throws Exception {
-        // Arrange
         Integer userId = 1;
         Integer jobApplicationId = 1;
         User user = new User();
@@ -139,10 +126,8 @@ public class JobTagServiceTest {
         jobApplication.setUser(user);
         when(jobApplicationRepository.findById(jobApplicationId)).thenReturn(Optional.of(jobApplication));
 
-        // Act
         JobApplicationsDto result = jobTagService.getByUserIdAndJobApplicationId(userId, jobApplicationId);
 
-        // Assert
         verify(jobApplicationRepository, times(1)).findById(jobApplicationId);
         assertNotNull(result);
     }

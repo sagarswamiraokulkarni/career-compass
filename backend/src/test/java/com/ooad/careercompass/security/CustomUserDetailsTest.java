@@ -18,10 +18,10 @@ class CustomUserDetailsTest {
     void setUp() {
         userDetails = new CustomUserDetails();
         userDetails.setId(1);
-        userDetails.setUsername("john");
+        userDetails.setUsername("fireflies186@gmail.com");
         userDetails.setPassword("password");
-        userDetails.setName("John Doe");
-        userDetails.setEmail("john@example.com");
+        userDetails.setName("Pavan Sai");
+        userDetails.setEmail("fireflies186@gmail.com");
         userDetails.setIsAccountNonLocked(true);
         Collection<SimpleGrantedAuthority> authorities = Arrays.asList(
                 new SimpleGrantedAuthority("ROLE_USER"),
@@ -33,10 +33,10 @@ class CustomUserDetailsTest {
     @Test
     void testUserDetails() {
         assertEquals(1, userDetails.getId());
-        assertEquals("john", userDetails.getUsername());
+        assertEquals("fireflies186@gmail.com", userDetails.getUsername());
         assertEquals("password", userDetails.getPassword());
-        assertEquals("John Doe", userDetails.getName());
-        assertEquals("john@example.com", userDetails.getEmail());
+        assertEquals("Pavan Sai", userDetails.getName());
+        assertEquals("fireflies186@gmail.com", userDetails.getEmail());
         assertTrue(userDetails.isAccountNonExpired());
         assertTrue(userDetails.isAccountNonLocked());
         assertTrue(userDetails.isCredentialsNonExpired());
