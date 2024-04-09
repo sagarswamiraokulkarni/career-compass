@@ -20,7 +20,7 @@ public class PublicController {
     }
 
     @GetMapping("/checkUserRegistrationStatus/{email}")
-    public GenericResponse getNumberOfUsers(@PathVariable("email") String email) {
+    public GenericResponse checkIfUserExistsAndRegistrationIsCompleted(@PathVariable("email") String email) {
         return userService.checkIfUserExistsAndRegistrationIsCompleted(email);
     }
 }

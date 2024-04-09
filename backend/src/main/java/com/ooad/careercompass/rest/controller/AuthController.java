@@ -90,7 +90,7 @@ public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
 
 
 
-    private User mapSignUpRequestToUser(SignUpRequest signUpRequest) {
+    public User mapSignUpRequestToUser(SignUpRequest signUpRequest) {
         User user = new User();
         user.setPassword(CareerCompassUtils.getInstance().encodeString(signUpRequest.getPassword()));
         user.setFirstName(signUpRequest.getFirstName());
