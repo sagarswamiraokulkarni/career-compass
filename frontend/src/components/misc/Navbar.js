@@ -41,16 +41,16 @@ function Navbar({ onSignupClick }) {
           <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
           <BootstrapNavbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/" exact>View Job Applications</Nav.Link>
+              <Nav.Link as={Link} to="/" exact>Job Applications</Nav.Link>
               <Nav.Link as={Link} to="/addJobApplication" exact>Add Job Application</Nav.Link>
-              <Nav.Link as={Link} to="/addTags" exact>Add Tag</Nav.Link>
-              <Nav.Link as={Link} to="/archivedJobs" exact>View Archived Job Applications</Nav.Link>
+              <Nav.Link as={Link} to="/addTags" exact>Add/Update Tags</Nav.Link>
+              <Nav.Link as={Link} to="/archivedJobs" exact>Archived Job Applications</Nav.Link>
             </Nav>
             <Nav>
               {userIsAuthenticated() ? (
                   <>
                     <Nav.Item className="user-name" style={logoutMenuStyle()}>
-                      {`Hi ${getUserName()}`}
+                      {`Hey ${getUserName()}`}
                     </Nav.Item>
                     <Nav.Link as={Link} to="/" onClick={logout} style={logoutMenuStyle()}>
                       Logout
