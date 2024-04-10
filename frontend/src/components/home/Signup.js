@@ -79,7 +79,7 @@ function Signup() {
     const handleVerification = async (method,email) => {
         setVerificationMethod(method);
         console.log(email)
-        const response = await orderApi.postApiCall(urlPaths.SEND_VERIFICATION, {
+        const response = await orderApi.postApiCallWithoutToken(urlPaths.SEND_VERIFICATION, {
             email,
             verificationStrategyType: method
         });
@@ -150,6 +150,7 @@ function Signup() {
     }
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
+        console.log("coming")
         if (!(firstName && lastName && password && confirmPassword && email)) {
             setIsError(true);
             setErrorMessage('Please, fill in all fields!');
@@ -174,7 +175,7 @@ function Signup() {
         const user = {firstName, lastName, password, email, phoneNumber: '+1' + phoneNumber, verifyByPhoneNumber: true};
 
         try {
-            const response = await orderApi.getApiCall(urlPaths.CHECK_USER_REGISTRATION_STATUS + email);
+            const response = await orderApi.getApiCallWithoutToken(urlPaths.CHECK_USER_REGISTRATION_STATUS + email);
             if (response.statusCode == 200) {
                 if (response.data.userAccountPresent && response.data.accountVerified) {
                     notify(`Account with email:${email} already present, redirecting to Login page..`)
@@ -182,7 +183,7 @@ function Signup() {
                         navigate('/login');
                     }, 2000);
                 } else if (!response.data.userAccountPresent && !response.data.accountVerified) {
-                    const response = await orderApi.postApiCall(urlPaths.SIGNUP, user);
+                    const response = await orderApi.postApiCallWithoutToken(urlPaths.SIGNUP, user);
                 } else {
                     notify(`Account with the email:${email} was already present but hasn't verified yet. Please verify`)
                 }

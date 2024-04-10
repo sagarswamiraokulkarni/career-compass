@@ -8,6 +8,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import {orderApi} from "../misc/OrderApi";
 import {urlPaths} from "../../Constants";
 import {BiSolidArchiveOut} from "react-icons/bi";
+import Select from "react-select";
 
 const ArchivedTableContainer = () => {
     const navigate = useNavigate();
@@ -150,12 +151,13 @@ const ArchivedTableContainer = () => {
                 </button>
                 {showSearchBar && (
                     <div className="search-bar">
-                        <Chips
-                            value={tags}
-                            onChange={handleChange}
-                            suggestions={allTags}
+                        <Select
+                            isMulti
+                            options={allTags.map((tag) => ({ value: tag, label: tag }))}
+                            value={tags.map((tag) => ({ value: tag, label: tag }))}
+                            onChange={(selectedOptions) => handleChange(selectedOptions.map((option) => option.value))}
                             placeholder="Type a tag and press enter..."
-                            className="react-chips"
+                            className="react-select"
                         />
                     </div>
                 )}

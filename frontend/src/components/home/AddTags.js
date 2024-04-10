@@ -132,7 +132,7 @@ const AddTags = () => {
         <div className="add-tags-background-container">
         <div className="add-tags-container">
             <ToastContainer/>
-            <h2 className="add-tags-title">Existing Tags</h2>
+            {tags.length>0&&<h2 className="add-tags-title">Existing Tags</h2>}
             <div className="tag-list">
                 {tags.map((tag, index) => (
                     <span key={index} className={`added-tag tag-${index}`}>

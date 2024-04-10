@@ -13,7 +13,8 @@ function Verify() {
     useEffect(() => {
         const handleVerification = async () => {
             try {
-                const response = await orderApi.postApiCall(urlPaths.VALIDATE_VERIFICATION, {
+                console.log("coming here")
+                const response = await orderApi.postApiCallWithoutToken(urlPaths.VALIDATE_VERIFICATION, {
                     email,
                     verificationStrategyType: 'email',
                     verificationChallenge: hash

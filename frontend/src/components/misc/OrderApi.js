@@ -17,7 +17,9 @@ export const orderApi = {
     getApiCall,
     deleteApiCall,
     putApiCall,
-    patchApiCall
+    patchApiCall,
+    postApiCallWithoutToken,
+    getApiCallWithoutToken
 }
 
 async function postApiCall(userJson,path, body) {
@@ -36,6 +38,31 @@ async function postApiCall(userJson,path, body) {
             message:response.message
         }
     }}
+    catch (e) {
+        return{
+            statusCode:409,
+            message:e.message
+        }
+    }
+}
+
+async function postApiCallWithoutToken(path, body) {
+    try{
+        const response = await instance.post(path, body, {
+            headers: {'Content-type': 'application/json'}
+        })
+
+        if (response.status == 201||response.status == 200) {
+            return {
+                statusCode: response.status,
+                data: response.data
+            };
+        } else {
+            return{
+                statusCode:response.status,
+                message:response.message
+            }
+        }}
     catch (e) {
         return{
             statusCode:409,
@@ -63,9 +90,27 @@ async function patchApiCall(userJson,path) {
 }
 
 async function getApiCall(userJson,path) {
+    console.log("coming to get")
     const response = await instance.get(path, {
         headers: {'Authorization': bearerAuth(userJson)}
     })
+
+    if (response.status == 200) {
+        return {
+            statusCode: response.status,
+            data: response.data
+        };
+    } else {
+        return{
+            statusCode:response.status,
+            message:response.message
+        }
+    }
+}
+
+async function getApiCallWithoutToken(path) {
+    console.log("coming to get")
+    const response = await instance.get(path)
 
     if (response.status == 200) {
         return {
