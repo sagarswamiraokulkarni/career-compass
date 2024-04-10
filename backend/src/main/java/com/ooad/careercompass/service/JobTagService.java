@@ -77,7 +77,7 @@ public class JobTagService {
         if(!jobApplication.getUser().getId().equals(userId)){
             throw new Exception("Unauthorized Access");
         }
-        jobApplication.setDeleted(true);
+        jobApplication.setArchived(true);
         jobApplicationRepository.save(jobApplication);
     }
     public JobApplicationsDto getByUserIdAndJobApplicationId(Integer userId, Integer jobApplicationId) throws Exception {
@@ -93,87 +93,5 @@ public class JobTagService {
         jobApplicationDto.setJobTags(jobTagDtos);
         return jobApplicationDto;
     }
-//
-//    public GenericResponse updateStarredStatusByUserIdAndJobApplicationId(Integer userId, Integer jobApplicationId) throws Exception {
-//        GenericResponse genericResponse=new GenericResponse();
-//        JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
-//                .orElseThrow(() -> new Exception("Job application not found with ID: " + jobApplicationId));
-//        if(!jobApplication.getUser().getId().equals(userId)){
-//            throw new Exception("Unauthorized Access");
-//        }
-//        jobApplication.setStarred(!jobApplication.isStarred());
-//        jobApplicationRepository.save(jobApplication);
-//        genericResponse.setStatus("Success");
-//        genericResponse.setMessage("Updated Starred Status Successfully");
-//        return genericResponse;
-//    }
-//
-//    @Transactional
-//    public GenericResponse addJobApplication(RequestJobApplicationDto requestJobApplicationDto) throws Exception {
-//        GenericResponse genericResponse=new GenericResponse();
-//        requestJobApplicationDto.setId(null);
-//        JobApplication jobApplication = CareerCompassUtils.gsonMapper(requestJobApplicationDto, JobApplication.class);
-//        User user=userRepository.findById(requestJobApplicationDto.getUserId()).orElseThrow(()-> new Exception("User not found"));
-//        jobApplication.setUser(user);
-//        jobApplication.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-//        jobApplication.setStarred(false);
-//
-//        Date date = new Date();
-//        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//
-//        jobApplication.setApplicationDate(localDate);
-//        jobApplication.setDeleted(false);
-//        jobApplication=jobApplicationRepository.save(jobApplication);
-//        List<JobTag> jobTagsList=jobTagRepository.findAllById(requestJobApplicationDto.getJobTagIds());
-//        for(JobTag jobTag:jobTagsList){
-//            JobApplicationJobTag jobApplicationJobTag=new JobApplicationJobTag();
-//            jobApplicationJobTag.setJobApplication(jobApplication);
-//            jobApplicationJobTag.setJobTag(jobTag);
-//            jobApplicationJobTagRepository.save(jobApplicationJobTag);
-//        }
-//
-//        genericResponse.setStatus("Success");
-//        genericResponse.setMessage("Added Job Application Successfully");
-//        return genericResponse;
-//    }
-//
-//    @Transactional
-//    public GenericResponse updateJobApplication(RequestJobApplicationDto requestJobApplicationDto) throws Exception {
-//        GenericResponse genericResponse=new GenericResponse();
-//        User user=userRepository.findById(requestJobApplicationDto.getUserId()).orElseThrow(()-> new Exception("User not found"));
-//        JobApplication jobApplication = jobApplicationRepository.findById(requestJobApplicationDto.getId()).orElseThrow(()-> new Exception("Job Application not found"));
-//        if(!user.getId().equals(jobApplication.getUser().getId())){
-//            throw new Exception("Unauthorized");
-//        }
-//        jobApplication.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-//        jobApplication.setCompany(requestJobApplicationDto.getCompany());
-//        jobApplication.setCompanyUrl(requestJobApplicationDto.getCompanyUrl());
-//        jobApplication.setNotes(requestJobApplicationDto.getNotes());
-//        jobApplication.setStatus(requestJobApplicationDto.getStatus());
-//        jobApplication.setPosition(requestJobApplicationDto.getPosition());
-//        jobApplication=jobApplicationRepository.save(jobApplication);
-//
-//        List<JobApplicationJobTag> jobApplicationJobTagsList=jobApplicationJobTagRepository.getAllAssociatedTagsByJobApplicationId(jobApplication.getId());
-//
-//        for(JobApplicationJobTag jobApplicationJobTag:jobApplicationJobTagsList){
-//            if(!requestJobApplicationDto.getJobTagIds().contains(jobApplicationJobTag.getJobTag().getId())){
-//                jobApplicationJobTagRepository.delete(jobApplicationJobTag);
-//            }else{
-//                requestJobApplicationDto.getJobTagIds().remove(jobApplicationJobTag.getJobTag().getId());
-//            }
-//        }
-//
-//        List<JobTag> jobTagsList=jobTagRepository.findAllById(requestJobApplicationDto.getJobTagIds());
-//        for(JobTag jobTag:jobTagsList){
-//            JobApplicationJobTag jobApplicationJobTag=new JobApplicationJobTag();
-//            jobApplicationJobTag.setJobApplication(jobApplication);
-//            jobApplicationJobTag.setJobTag(jobTag);
-//            jobApplicationJobTagRepository.save(jobApplicationJobTag);
-//        }
-//
-//        genericResponse.setStatus("Success");
-//        genericResponse.setMessage("Updated Job Application Successfully");
-//        return genericResponse;
-//    }
 
 }

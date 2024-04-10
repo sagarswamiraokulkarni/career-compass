@@ -22,7 +22,7 @@ class JobApplicationsDtoTest {
         dto.setUpdatedAt(Timestamp.valueOf("2023-04-08 10:00:00"));
         dto.setCompanyUrl("https://aws.amazon.com/console/");
         dto.setStarred(true);
-        dto.setDeleted(false);
+        dto.setArchived(false);
         dto.setNotes("Applied through company website");
         dto.setCreatedAt(Timestamp.valueOf("2023-04-08 09:30:00"));
 
@@ -47,7 +47,7 @@ class JobApplicationsDtoTest {
         Assertions.assertEquals(Timestamp.valueOf("2023-04-08 10:00:00"), dto.getUpdatedAt());
         Assertions.assertEquals("https://aws.amazon.com/console/", dto.getCompanyUrl());
         Assertions.assertTrue(dto.isStarred());
-        Assertions.assertFalse(dto.isDeleted());
+        Assertions.assertFalse(dto.isArchived());
         Assertions.assertEquals("Applied through company website", dto.getNotes());
         Assertions.assertEquals(Timestamp.valueOf("2023-04-08 09:30:00"), dto.getCreatedAt());
         Assertions.assertEquals(2, dto.getJobTags().size());

@@ -84,7 +84,7 @@ public class JobApplicationServiceTest {
 
         verify(jobApplicationRepository, times(1)).findById(jobApplicationId);
         verify(jobApplicationRepository, times(1)).save(jobApplication);
-        assertTrue(jobApplication.isDeleted());
+        assertTrue(jobApplication.isArchived());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class JobApplicationServiceTest {
 
         verify(jobApplicationRepository, times(1)).findById(jobApplicationId);
         verify(jobApplicationRepository, times(1)).save(jobApplication);
-        assertFalse(jobApplication.isDeleted());
+        assertFalse(jobApplication.isArchived());
     }
 
     @Test

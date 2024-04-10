@@ -6,6 +6,7 @@ import com.ooad.careercompass.rest.dto.GenericResponse;
 import com.ooad.careercompass.rest.dto.LoginRequest;
 import com.ooad.careercompass.rest.dto.SignUpRequest;
 import com.ooad.careercompass.rest.dto.VerificationRequest;
+import com.ooad.careercompass.service.AuthService;
 import com.ooad.careercompass.service.JobApplicationService;
 import com.ooad.careercompass.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,9 @@ class PublicControllerTest {
     private PublicController publicController;
     @InjectMocks
     private AuthController authController;
+
+    @InjectMocks
+    private AuthService authService;
     private SignUpRequest signUpRequest;
     private List<User> registeredUsers;
 
@@ -51,7 +55,7 @@ class PublicControllerTest {
         signUpRequest.setEmail(email);
         signUpRequest.setPassword(password);
         signUpRequest.setPhoneNumber(phoneNumber);
-        registeredUsers.add(authController.mapSignUpRequestToUser(signUpRequest));
+        registeredUsers.add(authService.mapSignUpRequestToUser(signUpRequest));
     }
 
     @Test

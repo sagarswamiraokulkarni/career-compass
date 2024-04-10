@@ -136,6 +136,7 @@ import com.ooad.careercompass.rest.dto.*;
 import com.ooad.careercompass.security.TokenProvider;
 import com.ooad.careercompass.security.WebSecurityConfig;
 import com.ooad.careercompass.service.AccountService;
+import com.ooad.careercompass.service.AuthService;
 import com.ooad.careercompass.service.UserService;
 import com.ooad.careercompass.utils.CareerCompassUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -172,6 +173,9 @@ class AuthControllerTest {
     @InjectMocks
     private AuthController authController;
 
+    @Mock
+    private AuthService authService;
+
     private LoginRequest loginRequest;
     private SignUpRequest signUpRequest;
     private User registeredUser;
@@ -202,7 +206,7 @@ class AuthControllerTest {
     void signUp_NewUser_ReturnsGenericResponse() {
         when(userService.hasUserWithEmail(signUpRequest.getEmail())).thenReturn(false);
         GenericResponse result = authController.signUp(signUpRequest);
-        registeredUser=authController.mapSignUpRequestToUser(signUpRequest);
+        registeredUser=authService.mapSignUpRequestToUser(signUpRequest);
         registeredUser.setId(1);
         verify(userService).saveUser(any(User.class));
         assertEquals("Success", result.getStatus());

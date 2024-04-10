@@ -160,7 +160,7 @@ class JobApplicationControllerTest {
         archivedJobApplicationDto.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         archivedJobApplicationDto.setCompanyUrl("https://aws.amazon.com/console/");
         archivedJobApplicationDto.setStarred(false);
-        archivedJobApplicationDto.setDeleted(false);
+        archivedJobApplicationDto.setArchived(false);
         archivedJobApplicationDto.setNotes("notes");
         archivedJobApplicationDto.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         JobTagDto jobTag=new JobTagDto();
@@ -179,7 +179,7 @@ class JobApplicationControllerTest {
         unarchivedJobApplicationDto.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         unarchivedJobApplicationDto.setCompanyUrl("https://www.google.com/");
         unarchivedJobApplicationDto.setStarred(false);
-        unarchivedJobApplicationDto.setDeleted(true);
+        unarchivedJobApplicationDto.setArchived(true);
         unarchivedJobApplicationDto.setNotes("notes");
         unarchivedJobApplicationDto.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         unarchivedJobApplicationDto.setJobTags(jobTags);

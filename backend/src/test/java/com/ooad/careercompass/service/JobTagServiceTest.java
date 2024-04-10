@@ -112,7 +112,7 @@ public class JobTagServiceTest {
 
         verify(jobApplicationRepository, times(1)).findById(jobApplicationId);
         verify(jobApplicationRepository, times(1)).save(any(JobApplication.class));
-        assertTrue(jobApplication.isDeleted());
+        assertTrue(jobApplication.isArchived());
     }
 
     @Test

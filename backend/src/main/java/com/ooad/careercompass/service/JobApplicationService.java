@@ -63,7 +63,7 @@ private List<JobApplicationsDto> getAllJobApplicationsByUserIdAndArchiveStatus(I
         if(!jobApplication.getUser().getId().equals(userId)){
             throw new Exception("Unauthorized Access");
         }
-        jobApplication.setDeleted(archiveStatus);
+        jobApplication.setArchived(archiveStatus);
         jobApplicationRepository.save(jobApplication);
     }
     public JobApplicationsDto getByUserIdAndJobApplicationId(Integer userId, Integer jobApplicationId) throws Exception {

@@ -30,7 +30,7 @@ public class JobApplicationsDto {
 
         private boolean starred;
 
-        private boolean isDeleted;
+        private boolean isArchived;
 
         private String notes;
 

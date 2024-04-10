@@ -43,7 +43,7 @@ class JobApplicationTest {
         assertNotNull(application.getUpdatedAt());
         assertEquals("https://example.com", application.getCompanyUrl());
         assertTrue(application.isStarred());
-        assertFalse(application.isDeleted());
+        assertFalse(application.isArchived());
         assertEquals("Test notes", application.getNotes());
         assertNotNull(application.getCreatedAt());
         assertEquals(jobTags, application.getJobTags());
@@ -64,7 +64,7 @@ class JobApplicationTest {
         application.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
         application.setCompanyUrl("https://example.org");
         application.setStarred(false);
-        application.setDeleted(true);
+        application.setArchived(true);
         application.setNotes("Updated notes");
         application.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         application.setJobTags(jobTags);
@@ -78,7 +78,7 @@ class JobApplicationTest {
         assertNotNull(application.getUpdatedAt());
         assertEquals("https://example.org", application.getCompanyUrl());
         assertFalse(application.isStarred());
-        assertTrue(application.isDeleted());
+        assertTrue(application.isArchived());
         assertEquals("Updated notes", application.getNotes());
         assertNotNull(application.getCreatedAt());
         assertEquals(jobTags, application.getJobTags());

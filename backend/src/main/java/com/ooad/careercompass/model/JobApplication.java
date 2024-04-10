@@ -45,7 +45,7 @@ public class JobApplication {
     private boolean starred;
 
     @Column(name= "is_deleted")
-    private boolean isDeleted;
+    private boolean isArchived;
 
     private String notes;
 
@@ -70,7 +70,7 @@ public class JobApplication {
         this.updatedAt = builder.updatedAt;
         this.companyUrl = builder.companyUrl;
         this.starred = builder.starred;
-        this.isDeleted = builder.isDeleted;
+        this.isArchived = builder.isArchived;
         this.notes = builder.notes;
         this.createdAt = builder.createdAt;
         this.jobTags = builder.jobTags;
@@ -90,7 +90,7 @@ public class JobApplication {
         private Timestamp updatedAt;
         private String companyUrl;
         private boolean starred;
-        private boolean isDeleted;
+        private boolean isArchived;
         private String notes;
         private Timestamp createdAt;
         private Set<JobTag> jobTags = new HashSet<>();
@@ -141,7 +141,7 @@ public class JobApplication {
         }
 
         public Builder isDeleted(boolean isDeleted) {
-            this.isDeleted = isDeleted;
+            this.isArchived = isDeleted;
             return this;
         }
 
