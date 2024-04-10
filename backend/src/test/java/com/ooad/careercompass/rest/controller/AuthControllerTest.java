@@ -130,12 +130,164 @@ package com.ooad.careercompass.rest.controller;
 //    // Add more test cases for other methods...
 //}
 
+//import com.ooad.careercompass.exception.DuplicatedUserInfoException;
+//import com.ooad.careercompass.model.User;
+//import com.ooad.careercompass.rest.dto.*;
+//import com.ooad.careercompass.security.TokenProvider;
+//import com.ooad.careercompass.security.WebSecurityConfig;
+//import com.ooad.careercompass.service.AccountService;
+//import com.ooad.careercompass.service.AuthService;
+//import com.ooad.careercompass.service.UserService;
+//import com.ooad.careercompass.utils.CareerCompassUtils;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.extension.ExtendWith;
+//import org.mockito.InjectMocks;
+//import org.mockito.Mock;
+//import org.mockito.junit.jupiter.MockitoExtension;
+//import org.springframework.http.HttpStatus;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.core.Authentication;
+//
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertThrows;
+//import static org.mockito.ArgumentMatchers.any;
+//import static org.mockito.Mockito.*;
+//
+//@ExtendWith(MockitoExtension.class)
+//class AuthControllerTest {
+//
+//    @Mock
+//    private UserService userService;
+//
+//    @Mock
+//    private AuthenticationManager authenticationManager;
+//
+//    @Mock
+//    private TokenProvider tokenProvider;
+//
+//    @Mock
+//    private AccountService accountService;
+//
+//    @InjectMocks
+//    private AuthController authController;
+//
+//    @InjectMocks
+//    private AuthService authService;
+//
+//    private LoginRequest loginRequest;
+//    private SignUpRequest signUpRequest;
+//    private User registeredUser;
+//
+//    @BeforeEach
+//    void setUp() {
+//        String firstName="Pavan";
+//        String lastName="Sai";
+//        String password="Admin@123";
+//        String email="fireflies186@gmail.com";
+//        String phoneNumber="7222222222";
+//
+//        loginRequest = new LoginRequest();
+//        loginRequest.setUsername(email);
+//        loginRequest.setPassword(password);
+//
+//        signUpRequest = new SignUpRequest();
+//        signUpRequest.setFirstName(firstName);
+//        signUpRequest.setLastName(lastName);
+//        signUpRequest.setEmail(email);
+//        signUpRequest.setPassword(password);
+//        signUpRequest.setPhoneNumber(phoneNumber);
+//
+//
+//    }
+////Registration
+//    @Test
+//    void signUp_NewUser_ReturnsGenericResponse() {
+//        when(userService.hasUserWithEmail(signUpRequest.getEmail())).thenReturn(false);
+//        GenericResponse result = authController.signUp(signUpRequest);
+//        registeredUser=authController.mapSignUpRequestToUser(signUpRequest);
+//        registeredUser.setId(1);
+//        verify(userService).saveUser(any(User.class));
+//        assertEquals("Success", result.getStatus());
+//        verify(userService).hasUserWithEmail(signUpRequest.getEmail());
+//        assertEquals(registeredUser.getEmail(),signUpRequest.getEmail());
+//
+//    }
+////Login
+//    @Test
+//    void login_ValidCredentials_ReturnsAuthResponse() throws Exception {
+//        String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI2MjQzMzYsImlhdCI6MTcxMjYyMTYzNiwianRpIjoiMzRhMWVhMjktMDE4ZS00YzM3LTgzOTAtYTJmNDhjMTMwMmExIiwiaXNzIjoiY2FyZWVyY29tcGFzcy1hcGkiLCJhdWQiOlsiY2FyZWVyY29tcGFzcy1hcHAiXSwic3ViIjoiZmlyZWZsaWVzMTg2QGdtYWlsLmNvbSIsInJvbCI6WyJBRE1JTiJdLCJuYW1lIjoiQWRtaW5GTiIsInByZWZlcnJlZF91c2VybmFtZSI6ImZpcmVmbGllczE4NkBnbWFpbC5jb20iLCJlbWFpbCI6ImZpcmVmbGllczE4NkBnbWFpbC5jb20ifQ.wKEmyegr5MVlYln2WB3DvBBlATvik41PieuYO0nfvpLdbEr_fzKChi3TsPuxF07VIXu0YrL74nu96K5AiPOGnw";
+//        Integer userId = 1;
+//        AuthResponse authResponse = new AuthResponse(token, userId, loginRequest.getUsername(), signUpRequest.getFirstName(), signUpRequest.getLastName(), CareerCompassUtils.getInstance().generateUniqueHash(), "USER");
+//        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+//                .thenReturn(mock(Authentication.class));
+//        when(tokenProvider.generate(any(Authentication.class))).thenReturn(token);
+//        when(userService.getUserLoginAuth(loginRequest.getUsername(), token)).thenReturn(authResponse);
+//
+//        AuthResponse result = authController.login(loginRequest);
+//
+//        assertEquals(authResponse, result);
+//        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+//        verify(tokenProvider).generate(any(Authentication.class));
+//        verify(userService).getUserLoginAuth(loginRequest.getUsername(), token);
+//    }
+//
+//
+////Already Registered
+//    @Test
+//    void signUp_DuplicateEmail_ThrowsDuplicatedUserInfoException() {
+//        when(userService.hasUserWithEmail(signUpRequest.getEmail())).thenReturn(true);
+//        assertThrows(DuplicatedUserInfoException.class, () -> authController.signUp(signUpRequest));
+//        verify(userService).hasUserWithEmail(signUpRequest.getEmail());
+//        verify(userService, never()).saveUser(any(User.class));
+//    }
+//
+//
+//    @Test
+//    void sendVerificationChallenge_ValidRequest_ReturnsGenericResponse() {
+//        GenericResponse expectedResponse = new GenericResponse();
+//        VerificationRequest verificationRequest = new VerificationRequest();
+//        String email="fireflies186@gmail.com";
+//        String otp="123456";
+//        String verificationStrategyType="sms";
+//        verificationRequest.setEmail(email);
+//        verificationRequest.setVerificationStrategyType(verificationStrategyType);
+//        verificationRequest.setVerificationChallenge(otp);
+//        when(accountService.sendVerificationChallenge(verificationRequest)).thenReturn(expectedResponse);
+//
+//        GenericResponse result = authController.sendVerificationChallenge(verificationRequest);
+//        assertEquals(expectedResponse, result);
+//        verify(accountService).checkIfRegistrationIsCompleted(verificationRequest);
+//        verify(accountService).sendVerificationChallenge(verificationRequest);
+//    }
+//
+//    @Test
+//    void validateChallenge_ValidRequest_ReturnsGenericResponse() {
+//        GenericResponse expectedResponse = new GenericResponse();
+//        VerificationRequest verificationRequest = new VerificationRequest();
+//        String email="fireflies186@gmail.com";
+//        String otp="123456";
+//        String verificationStrategyType="sms";
+//        verificationRequest.setEmail(email);
+//        verificationRequest.setVerificationStrategyType(verificationStrategyType);
+//        verificationRequest.setVerificationChallenge(otp);
+//        when(accountService.validateVerificationChallenge(verificationRequest)).thenReturn(expectedResponse);
+//
+//        GenericResponse result = authController.validateChallenge(verificationRequest);
+//
+//        assertEquals(expectedResponse, result);
+//        verify(accountService).checkIfRegistrationIsCompleted(verificationRequest);
+//        verify(accountService).validateVerificationChallenge(verificationRequest);
+//    }
+//}
+
+
+
 import com.ooad.careercompass.exception.DuplicatedUserInfoException;
 import com.ooad.careercompass.model.User;
 import com.ooad.careercompass.rest.dto.*;
-import com.ooad.careercompass.security.TokenProvider;
-import com.ooad.careercompass.security.WebSecurityConfig;
-import com.ooad.careercompass.service.AccountService;
+        import com.ooad.careercompass.service.AccountService;
 import com.ooad.careercompass.service.AuthService;
 import com.ooad.careercompass.service.UserService;
 import com.ooad.careercompass.utils.CareerCompassUtils;
@@ -146,39 +298,28 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+        import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AuthControllerTest {
 
     @Mock
+    private AuthService authService;
+    @Mock
     private UserService userService;
-
-    @Mock
-    private AuthenticationManager authenticationManager;
-
-    @Mock
-    private TokenProvider tokenProvider;
-
     @Mock
     private AccountService accountService;
 
     @InjectMocks
     private AuthController authController;
 
-    @Mock
-    private AuthService authService;
-
     private LoginRequest loginRequest;
     private SignUpRequest signUpRequest;
-    private User registeredUser;
+    private VerificationRequest verificationRequest;
+
+
 
     @BeforeEach
     void setUp() {
@@ -199,84 +340,79 @@ class AuthControllerTest {
         signUpRequest.setPassword(password);
         signUpRequest.setPhoneNumber(phoneNumber);
 
+        verificationRequest = new VerificationRequest();
+        verificationRequest.setEmail("testuser");
+        verificationRequest.setVerificationChallenge("123456");
+        verificationRequest.setVerificationStrategyType("sms");
 
     }
-//Registration
-    @Test
-    void signUp_NewUser_ReturnsGenericResponse() {
-        when(userService.hasUserWithEmail(signUpRequest.getEmail())).thenReturn(false);
-        GenericResponse result = authController.signUp(signUpRequest);
-        registeredUser=authService.mapSignUpRequestToUser(signUpRequest);
-        registeredUser.setId(1);
-        verify(userService).saveUser(any(User.class));
-        assertEquals("Success", result.getStatus());
-        verify(userService).hasUserWithEmail(signUpRequest.getEmail());
-        assertEquals(registeredUser.getEmail(),signUpRequest.getEmail());
 
-    }
-//Login
     @Test
-    void login_ValidCredentials_ReturnsAuthResponse() throws Exception {
+    void login_Success() throws Exception {
         String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTI2MjQzMzYsImlhdCI6MTcxMjYyMTYzNiwianRpIjoiMzRhMWVhMjktMDE4ZS00YzM3LTgzOTAtYTJmNDhjMTMwMmExIiwiaXNzIjoiY2FyZWVyY29tcGFzcy1hcGkiLCJhdWQiOlsiY2FyZWVyY29tcGFzcy1hcHAiXSwic3ViIjoiZmlyZWZsaWVzMTg2QGdtYWlsLmNvbSIsInJvbCI6WyJBRE1JTiJdLCJuYW1lIjoiQWRtaW5GTiIsInByZWZlcnJlZF91c2VybmFtZSI6ImZpcmVmbGllczE4NkBnbWFpbC5jb20iLCJlbWFpbCI6ImZpcmVmbGllczE4NkBnbWFpbC5jb20ifQ.wKEmyegr5MVlYln2WB3DvBBlATvik41PieuYO0nfvpLdbEr_fzKChi3TsPuxF07VIXu0YrL74nu96K5AiPOGnw";
         Integer userId = 1;
         AuthResponse authResponse = new AuthResponse(token, userId, loginRequest.getUsername(), signUpRequest.getFirstName(), signUpRequest.getLastName(), CareerCompassUtils.getInstance().generateUniqueHash(), "USER");
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(mock(Authentication.class));
-        when(tokenProvider.generate(any(Authentication.class))).thenReturn(token);
-        when(userService.getUserLoginAuth(loginRequest.getUsername(), token)).thenReturn(authResponse);
+
+        when(authService.authenticateAndGetToken(loginRequest.getUsername(), loginRequest.getPassword()))
+                .thenReturn(token);
+        when(userService.getUserLoginAuth(loginRequest.getUsername(), token))
+                .thenReturn(authResponse);
 
         AuthResponse result = authController.login(loginRequest);
 
         assertEquals(authResponse, result);
-        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
-        verify(tokenProvider).generate(any(Authentication.class));
+        verify(authService).authenticateAndGetToken(loginRequest.getUsername(), loginRequest.getPassword());
         verify(userService).getUserLoginAuth(loginRequest.getUsername(), token);
     }
 
-
-//Already Registered
     @Test
-    void signUp_DuplicateEmail_ThrowsDuplicatedUserInfoException() {
-        when(userService.hasUserWithEmail(signUpRequest.getEmail())).thenReturn(true);
-        assertThrows(DuplicatedUserInfoException.class, () -> authController.signUp(signUpRequest));
-        verify(userService).hasUserWithEmail(signUpRequest.getEmail());
-        verify(userService, never()).saveUser(any(User.class));
+    void login_ThrowsException() {
+        String errorMessage = "Invalid credentials";
+        when(authService.authenticateAndGetToken(loginRequest.getUsername(), loginRequest.getPassword()))
+                .thenThrow(new RuntimeException(errorMessage));
+
+        Exception exception = assertThrows(Exception.class, () -> {
+            authController.login(loginRequest);
+        });
+
+        assertEquals(errorMessage, exception.getMessage());
+        verify(authService).authenticateAndGetToken(loginRequest.getUsername(), loginRequest.getPassword());
+        verify(userService, never()).getUserLoginAuth(anyString(), anyString());
     }
 
+    @Test
+    void signUp_Success() {
+        GenericResponse genericResponse = new GenericResponse();
+        when(authService.signUp(signUpRequest)).thenReturn(genericResponse);
+
+        GenericResponse result = authController.signUp(signUpRequest);
+
+        assertEquals(genericResponse, result);
+        verify(authService).signUp(signUpRequest);
+    }
 
     @Test
-    void sendVerificationChallenge_ValidRequest_ReturnsGenericResponse() {
-        GenericResponse expectedResponse = new GenericResponse();
-        VerificationRequest verificationRequest = new VerificationRequest();
-        String email="fireflies186@gmail.com";
-        String otp="123456";
-        String verificationStrategyType="sms";
-        verificationRequest.setEmail(email);
-        verificationRequest.setVerificationStrategyType(verificationStrategyType);
-        verificationRequest.setVerificationChallenge(otp);
-        when(accountService.sendVerificationChallenge(verificationRequest)).thenReturn(expectedResponse);
+    void sendVerificationChallenge_Success() {
+        GenericResponse genericResponse = new GenericResponse();
+        doNothing().when(accountService).checkIfRegistrationIsCompleted(verificationRequest);
+        when(accountService.sendVerificationChallenge(verificationRequest)).thenReturn(genericResponse);
 
         GenericResponse result = authController.sendVerificationChallenge(verificationRequest);
-        assertEquals(expectedResponse, result);
+
+        assertEquals(genericResponse, result);
         verify(accountService).checkIfRegistrationIsCompleted(verificationRequest);
         verify(accountService).sendVerificationChallenge(verificationRequest);
     }
 
     @Test
-    void validateChallenge_ValidRequest_ReturnsGenericResponse() {
-        GenericResponse expectedResponse = new GenericResponse();
-        VerificationRequest verificationRequest = new VerificationRequest();
-        String email="fireflies186@gmail.com";
-        String otp="123456";
-        String verificationStrategyType="sms";
-        verificationRequest.setEmail(email);
-        verificationRequest.setVerificationStrategyType(verificationStrategyType);
-        verificationRequest.setVerificationChallenge(otp);
-        when(accountService.validateVerificationChallenge(verificationRequest)).thenReturn(expectedResponse);
+    void validateChallenge_Success() {
+        GenericResponse genericResponse = new GenericResponse();
+        doNothing().when(accountService).checkIfRegistrationIsCompleted(verificationRequest);
+        when(accountService.validateVerificationChallenge(verificationRequest)).thenReturn(genericResponse);
 
         GenericResponse result = authController.validateChallenge(verificationRequest);
 
-        assertEquals(expectedResponse, result);
+        assertEquals(genericResponse, result);
         verify(accountService).checkIfRegistrationIsCompleted(verificationRequest);
         verify(accountService).validateVerificationChallenge(verificationRequest);
     }
