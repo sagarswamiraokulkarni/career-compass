@@ -10,13 +10,10 @@ class UserNotFoundExceptionTest {
 
     @Test
     void userNotFoundException_shouldHaveNotFoundStatusCode() {
-        // Arrange
         String message = "User not found";
 
-        // Act
         UserNotFoundException exception = new UserNotFoundException(message);
 
-        // Assert
         ResponseStatus responseStatus = exception.getClass().getAnnotation(ResponseStatus.class);
         assertEquals(HttpStatus.NOT_FOUND, responseStatus.value());
         assertEquals(message, exception.getMessage());

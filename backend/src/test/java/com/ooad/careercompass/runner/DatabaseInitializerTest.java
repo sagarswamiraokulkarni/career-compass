@@ -1,7 +1,6 @@
 package com.ooad.careercompass.runner;
 
 import com.ooad.careercompass.model.User;
-import com.ooad.careercompass.security.WebSecurityConfig;
 import com.ooad.careercompass.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
-import java.util.List;
 
 import static org.mockito.Mockito.*;
 

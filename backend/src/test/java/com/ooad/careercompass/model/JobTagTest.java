@@ -9,7 +9,7 @@ public class JobTagTest {
     public void testJobTagCreation() {
         User user = new User();
         user.setId(1);
-        user.setFirstName("testuser");
+        user.setFirstName("Pavan");
 
         JobTag jobTag = new JobTag();
         jobTag.setId(1);

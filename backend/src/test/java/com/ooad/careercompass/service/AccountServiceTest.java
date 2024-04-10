@@ -1,7 +1,6 @@
 package com.ooad.careercompass.service;
 
 import com.ooad.careercompass.exception.DuplicatedUserInfoException;
-import com.ooad.careercompass.factory.NotificationFactory;
 import com.ooad.careercompass.model.User;
 import com.ooad.careercompass.repository.UserRepository;
 import com.ooad.careercompass.rest.dto.GenericResponse;

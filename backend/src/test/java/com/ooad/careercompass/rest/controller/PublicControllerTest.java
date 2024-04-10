@@ -3,9 +3,7 @@ package com.ooad.careercompass.rest.controller;
 
 import com.ooad.careercompass.model.User;
 import com.ooad.careercompass.rest.dto.GenericResponse;
-import com.ooad.careercompass.rest.dto.LoginRequest;
 import com.ooad.careercompass.rest.dto.SignUpRequest;
-import com.ooad.careercompass.rest.dto.VerificationRequest;
 import com.ooad.careercompass.service.AuthService;
 import com.ooad.careercompass.service.JobApplicationService;
 import com.ooad.careercompass.service.UserService;
@@ -28,13 +26,9 @@ class PublicControllerTest {
     @Mock
     private UserService userService;
 
-    @Mock
-    private JobApplicationService jobApplicationService;
 
     @InjectMocks
     private PublicController publicController;
-    @InjectMocks
-    private AuthController authController;
 
     @InjectMocks
     private AuthService authService;

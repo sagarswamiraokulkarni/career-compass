@@ -9,11 +9,10 @@ public class UserTest {
 
     @Test
     public void testUserCreation() {
-        // Test creating a new user
-        String firstName = "John";
-        String lastName = "Doe";
-        String email = "john.doe@example.com";
-        String password = "password123";
+        String firstName = "Pavan";
+        String lastName = "Sai";
+        String email = "fireflies186@gmail.com";
+        String password = "Admin@123";
         String role = "USER";
 
         User user = new User(firstName, lastName, email, password, role);
@@ -30,13 +29,12 @@ public class UserTest {
 
     @Test
     public void testUserProperties() {
-        // Test user properties
         User user = new User();
         user.setId(1);
-        user.setFirstName("Jane");
-        user.setLastName("Smith");
-        user.setEmail("jane.smith@example.com");
-        user.setPassword("password456");
+        user.setFirstName("Pavan");
+        user.setLastName("Sai");
+        user.setEmail("fireflies186@gmail.com");
+        user.setPassword("Admin@123");
         user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         user.setVerifyHash("abcdefg");
         user.setVerified(false);
@@ -44,10 +42,10 @@ public class UserTest {
         user.setPhoneNumber("1234567890");
 
         Assertions.assertEquals(1, user.getId());
-        Assertions.assertEquals("Jane", user.getFirstName());
-        Assertions.assertEquals("Smith", user.getLastName());
-        Assertions.assertEquals("jane.smith@example.com", user.getEmail());
-        Assertions.assertEquals("password456", user.getPassword());
+        Assertions.assertEquals("Pavan", user.getFirstName());
+        Assertions.assertEquals("Sai", user.getLastName());
+        Assertions.assertEquals("fireflies186@gmail.com", user.getEmail());
+        Assertions.assertEquals("Admin@123", user.getPassword());
         Assertions.assertNotNull(user.getCreatedAt());
         Assertions.assertEquals("abcdefg", user.getVerifyHash());
         Assertions.assertFalse(user.isVerified());

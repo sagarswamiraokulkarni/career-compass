@@ -21,12 +21,12 @@ class JobApplicationTest {
         JobApplication application = JobApplication.builder()
                 .id(1)
                 .user(user)
-                .company("ABC Company")
+                .company("AWS")
                 .position("Software Engineer")
                 .status(ApplicationStatus.Applied)
                 .applicationDate(LocalDate.now())
                 .updatedAt(Timestamp.valueOf(LocalDateTime.now()))
-                .companyUrl("https://example.com")
+                .companyUrl("https://aws.amazon.com/")
                 .starred(true)
                 .isDeleted(false)
                 .notes("Test notes")
@@ -36,12 +36,12 @@ class JobApplicationTest {
 
         assertEquals(1, application.getId());
         assertEquals(user, application.getUser());
-        assertEquals("ABC Company", application.getCompany());
+        assertEquals("AWS", application.getCompany());
         assertEquals("Software Engineer", application.getPosition());
         assertEquals(ApplicationStatus.Applied, application.getStatus());
         assertEquals(LocalDate.now(), application.getApplicationDate());
         assertNotNull(application.getUpdatedAt());
-        assertEquals("https://example.com", application.getCompanyUrl());
+        assertEquals("https://aws.amazon.com/", application.getCompanyUrl());
         assertTrue(application.isStarred());
         assertFalse(application.isArchived());
         assertEquals("Test notes", application.getNotes());
@@ -57,12 +57,12 @@ class JobApplicationTest {
 
         application.setId(1);
         application.setUser(user);
-        application.setCompany("XYZ Company");
+        application.setCompany("AWS");
         application.setPosition("Data Analyst");
         application.setStatus(ApplicationStatus.NeedToFollowUp);
         application.setApplicationDate(LocalDate.now());
         application.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        application.setCompanyUrl("https://example.org");
+        application.setCompanyUrl("https://aws.amazon.com/");
         application.setStarred(false);
         application.setArchived(true);
         application.setNotes("Updated notes");
@@ -71,12 +71,12 @@ class JobApplicationTest {
 
         assertEquals(1, application.getId());
         assertEquals(user, application.getUser());
-        assertEquals("XYZ Company", application.getCompany());
+        assertEquals("AWS", application.getCompany());
         assertEquals("Data Analyst", application.getPosition());
         assertEquals(ApplicationStatus.NeedToFollowUp, application.getStatus());
         assertEquals(LocalDate.now(), application.getApplicationDate());
         assertNotNull(application.getUpdatedAt());
-        assertEquals("https://example.org", application.getCompanyUrl());
+        assertEquals("https://aws.amazon.com/", application.getCompanyUrl());
         assertFalse(application.isStarred());
         assertTrue(application.isArchived());
         assertEquals("Updated notes", application.getNotes());
