@@ -44,7 +44,6 @@ public class EmailNotificationStrategy implements NotificationStrategy {
                                     .put(Emailv31.Message.CUSTOMID, "AppGettingStartedTest")));
 
             response = client.post(request);
-            System.out.println(response.getStatus());
             genericResponse.setStatus("Success");
             genericResponse.setMessage("Successfully sent email");
         }catch (Exception e){

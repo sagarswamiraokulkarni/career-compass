@@ -22,12 +22,11 @@ public class MessageNotificationStrategy implements NotificationStrategy{
     public GenericResponse sendNotification(User user) {
         GenericResponse genericResponse=new GenericResponse();
         Twilio.init(CareerCompassUtils.getInstance().TWILIO_ACCOUNT_SID, CareerCompassUtils.getInstance().TWILIO_AUTH_TOKEN);
-        Verification verification = Verification.creator(
+        Verification.creator(
                         CareerCompassUtils.getInstance().TWILIO_AUTH_SERVICE_SID,
                         user.getPhoneNumber(),
                         this.strategyType)
                 .create();
-        System.out.println(verification.getStatus());
         genericResponse.setStatus("Success");
         genericResponse.setMessage("OTP has been successfully sent, and awaits your verification");
         return genericResponse;
