@@ -1,10 +1,9 @@
-// RowDetails.js
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './RowDetails.css';
+import './ViewJobApplication.css';
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
 
-const RowDetails = () => {
+const ViewJobApplication = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const rowData = location.state?.rowData;
@@ -32,7 +31,6 @@ const RowDetails = () => {
                         className="action-icon"
                     />
                 )}
-                {/*<span>{rowData.starred ? 'Yes' : 'No'}</span>*/}
             </div>
             <div className="form-row">
                 <div className="form-group">
@@ -76,4 +74,4 @@ const RowDetails = () => {
     );
 };
 
-export default RowDetails;
+export default ViewJobApplication;

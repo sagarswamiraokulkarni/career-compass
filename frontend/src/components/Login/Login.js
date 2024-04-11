@@ -2,11 +2,9 @@ import React, {useState} from 'react';
 import {NavLink, Navigate, useNavigate} from 'react-router-dom';
 import {Modal, Button, Form, Alert} from 'react-bootstrap';
 import {useAuth} from '../context/AuthContext';
-import {orderApi} from '../misc/OrderApi';
-import {parseJwt, handleLogError} from '../misc/Helpers';
+import {careerCompassApi} from '../Utils/CareerCompassApi';
+import {parseJwt, handleLogError} from '../Utils/Helpers';
 import {BsFillEyeFill, BsFillEyeSlashFill} from 'react-icons/bs';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import './Login.css';
 import {urlPaths} from "../../Constants";
 
@@ -18,7 +16,6 @@ function Login() {
     const [password, setPassword] = useState('Admin@123');
     const [isError, setIsError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    // const notify = () => toast("Wow so easy!");
     const handleInputChange = (e) => {
         const {name, value} = e.target;
         if (name === 'email') {
@@ -40,9 +37,7 @@ function Login() {
             return;
         }
         try {
-            const response = await orderApi.authenticate(email, password);
-            console.log("hello");
-            console.log(response);
+            const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.AUTHENTICATE,{username:email, password});
             localStorage.setItem('userDetails', JSON.stringify({
                 userId: response.data.userId,
                 firstName: response.data.firstName,
@@ -55,11 +50,10 @@ function Login() {
             const userJson = JSON.parse(localStorage.getItem('user'));
             const storedUser = JSON.parse(localStorage.getItem('userDetails'));
             const [getAllTags, unarchivedJobs, archivedJobs] = await Promise.all([
-                orderApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId),
-                orderApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId),
-                orderApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId)
+                careerCompassApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId),
+                careerCompassApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId),
+                careerCompassApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId)
             ]);
-            // const tagNames = getAllTags.data.map(tag => tag.name);
             localStorage.setItem('allTags', JSON.stringify(getAllTags.data));
             localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
             localStorage.setItem('archivedJobs', JSON.stringify(archivedJobs.data));

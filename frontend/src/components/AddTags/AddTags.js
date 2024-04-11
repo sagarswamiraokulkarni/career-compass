@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import './AddTags.css';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {orderApi} from "../misc/OrderApi";
+import {careerCompassApi} from "../Utils/CareerCompassApi";
 import {urlPaths} from "../../Constants";
-import ConfirmationModal from './ConfirmationModal';
+import ConfirmationModal from '../TableContainer/ConfirmationModal';
 import {AiOutlineEdit} from "react-icons/ai";
 import EditTagModal from "./EditTagModal";
 
@@ -46,25 +46,6 @@ const AddTags = () => {
         }
     };
 
-    // const handleConfirm =  () => {
-    //     const storedUser = JSON.parse(localStorage.getItem('userDetails'));
-    //     const userJson = JSON.parse(localStorage.getItem('user'));
-    //     const allTags = JSON.parse(localStorage.getItem('allTags'));
-    //     addedTags.map(async (tag) => {
-    //         try {
-    //             const response = await orderApi.postApiCall(userJson, urlPaths.CREATE_TAG, {name: tag, userId:storedUser.userId});
-    //             console.log('API Response:', response);
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     })
-    //     console.log("begore")
-    //     allTags.push(...addedTags);
-    //     // allTags.push(addedTags);
-    //     localStorage.setItem('allTags', JSON.stringify(allTags));
-    //     console.log("after")
-    //     console.log('Selected tags:', addedTags);
-    // };
 
     const handleConfirm = () => {
         addedTags.length>0&&setShowConfirmationModal(true);
@@ -75,10 +56,10 @@ const AddTags = () => {
         const allTags = JSON.parse(localStorage.getItem('allTags'));
         try {
             await Promise.all(addedTags.map(async (tag) => {
-                const response = await orderApi.postApiCall(userJson, urlPaths.CREATE_TAG, {name: tag, userId:storedUser.userId});
+                const response = await careerCompassApi.postApiCall(userJson, urlPaths.CREATE_TAG, {name: tag, userId:storedUser.userId});
                 console.log('API Response:', response);
             }));
-            const updatedTags = await orderApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId);
+            const updatedTags = await careerCompassApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId);
             const allTagsUpdated=updatedTags.data.map(tag => tag.name);
             setTags(allTagsUpdated);
             localStorage.setItem('allTags', JSON.stringify(updatedTags.data));
@@ -94,16 +75,16 @@ const AddTags = () => {
     const handleConfirmEdit = async (tag, editedTagName) => {
         try {
             const tagId = existingTags.find(tagObj => tagObj.name === tag)?.id;
-            const response = await orderApi.putApiCall(userJson, urlPaths.UPDATE_TAG, {
+            const response = await careerCompassApi.putApiCall(userJson, urlPaths.UPDATE_TAG, {
                 id: tagId,
                 name: editedTagName,
                 userId: storedUser.userId,
             });
             console.log('API Response:', response);
             const [getAllTags, unarchivedJobs, archivedJobs] = await Promise.all([
-                orderApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId),
-                orderApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId),
-                orderApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId)
+                careerCompassApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId),
+                careerCompassApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId),
+                careerCompassApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId)
             ]);
             // const tagNames = getAllTags.data.map(tag => tag.name);
             localStorage.setItem('allTags', JSON.stringify(getAllTags.data));

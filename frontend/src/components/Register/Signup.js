@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {NavLink, Navigate, useNavigate, useLocation} from 'react-router-dom';
 import {Modal, Button, Form, Alert} from 'react-bootstrap';
 import {useAuth} from '../context/AuthContext';
-import {orderApi} from '../misc/OrderApi';
-import {parseJwt, handleLogError} from '../misc/Helpers';
+import {careerCompassApi} from '../Utils/CareerCompassApi';
+import {parseJwt, handleLogError} from '../Utils/Helpers';
 import {BsFillEyeFill, BsFillEyeSlashFill} from 'react-icons/bs';
 import './Signup.css';
 import {ToastContainer, toast} from 'react-toastify';
@@ -78,8 +78,7 @@ function Signup() {
 
     const handleVerification = async (method,email) => {
         setVerificationMethod(method);
-        console.log(email)
-        const response = await orderApi.postApiCallWithoutToken(urlPaths.SEND_VERIFICATION, {
+        const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.SEND_VERIFICATION, {
             email,
             verificationStrategyType: method
         });
@@ -120,7 +119,7 @@ function Signup() {
     };
     const handleOtpSubmit = async (e) => {
         e.preventDefault();
-            const response = await orderApi.postApiCall(urlPaths.VALIDATE_VERIFICATION, {
+            const response = await careerCompassApi.postApiCall(urlPaths.VALIDATE_VERIFICATION, {
                 email,
                 verificationStrategyType: verificationMethod,
                 verificationChallenge: otp
@@ -143,14 +142,12 @@ function Signup() {
                     setShowForm(false);
                     setShowOtp(false);
                     setshowVerification(true);
-                    // return;
                 }
             }
 
     }
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
-        console.log("coming")
         if (!(firstName && lastName && password && confirmPassword && email)) {
             setIsError(true);
             setErrorMessage('Please, fill in all fields!');
@@ -175,7 +172,7 @@ function Signup() {
         const user = {firstName, lastName, password, email, phoneNumber: '+1' + phoneNumber, verifyByPhoneNumber: true};
 
         try {
-            const response = await orderApi.getApiCallWithoutToken(urlPaths.CHECK_USER_REGISTRATION_STATUS + email);
+            const response = await careerCompassApi.getApiCallWithoutToken(urlPaths.CHECK_USER_REGISTRATION_STATUS + email);
             if (response.statusCode == 200) {
                 if (response.data.userAccountPresent && response.data.accountVerified) {
                     notify(`Account with email:${email} already present, redirecting to Login page..`)
@@ -183,7 +180,7 @@ function Signup() {
                         navigate('/login');
                     }, 2000);
                 } else if (!response.data.userAccountPresent && !response.data.accountVerified) {
-                    const response = await orderApi.postApiCallWithoutToken(urlPaths.SIGNUP, user);
+                    const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.SIGNUP, user);
                 } else {
                     notify(`Account with the email:${email} was already present but hasn't verified yet. Please verify`)
                 }

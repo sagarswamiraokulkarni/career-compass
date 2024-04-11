@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Table from './Table';
-import {AiOutlineEye, AiOutlineEdit, AiOutlineCloudUpload, AiOutlineDelete, AiFillStar, AiOutlineStar, AiOutlineSearch} from 'react-icons/ai';
-import Chips from 'react-chips';
+import {AiOutlineEye, AiFillStar, AiOutlineStar, AiOutlineSearch} from 'react-icons/ai';
 import './TableContainer.css';
 import ConfirmationModal from "./ConfirmationModal";
-import {orderApi} from "../misc/OrderApi";
+import {careerCompassApi} from "../Utils/CareerCompassApi";
 import {urlPaths} from "../../Constants";
 import {BiSolidArchiveOut} from "react-icons/bi";
 import Select from "react-select";
@@ -28,9 +27,7 @@ const ArchivedTableContainer = () => {
         const archivedJobs = JSON.parse(localStorage.getItem('archivedJobs'));
         const fetchData = async () => {
             try {
-                // const response = await orderApi.getApiCall(userJson,urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId);
                 setData(archivedJobs);
-                // console.log('API Response:', response);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -53,7 +50,6 @@ const ArchivedTableContainer = () => {
                 </div>
             )
         },
-        // { Header: 'Company Name', accessor: 'company' },
         {
             Header: 'Company Name',
             accessor: 'companyUrl',
@@ -92,12 +88,10 @@ const ArchivedTableContainer = () => {
     ];
 
     const handleView = (rowData) => {
-        console.log('View:', rowData);
         navigate('/details', { state: { rowData,showEdit:false } });
     };
 
     const handleEdit = (rowData) => {
-        console.log('Edit:', rowData);
         navigate('/edit', { state: { rowData } });
     };
 
@@ -107,11 +101,10 @@ const ArchivedTableContainer = () => {
     };
 
     const confirmDelete = async () => {
-        console.log('Delete:', selectedRowData);
         try {
             const storedUser = JSON.parse(localStorage.getItem('userDetails'))
             const userJson = JSON.parse(localStorage.getItem('user'))
-            const response = await orderApi.deleteApiCall(userJson, urlPaths.UNARCHIVE_JOB_APPLICATION + storedUser.userId+`/${selectedRowData.id}`);
+            const response = await careerCompassApi.deleteApiCall(userJson, urlPaths.UNARCHIVE_JOB_APPLICATION + storedUser.userId+`/${selectedRowData.id}`);
             console.log('API Response:', response);
             const updatedData = data.filter(item => item.id !== selectedRowData.id);
             localStorage.setItem('archivedJobs', JSON.stringify(updatedData));

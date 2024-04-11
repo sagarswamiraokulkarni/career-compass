@@ -1,6 +1,6 @@
 const prod = {
   url: {
-    API_BASE_URL: 'https://myapp.herokuapp.com',
+    API_BASE_URL: 'https://someurl.com',
   }
 }
 
@@ -11,6 +11,7 @@ const dev = {
 }
 export const urlPaths={
   SIGNUP:'/auth/signup',
+  AUTHENTICATE:'/auth/authenticate',
   CHECK_USER_REGISTRATION_STATUS:'/public/checkUserRegistrationStatus/',
   SEND_VERIFICATION:'/auth/sendVerificationChallenge',
   VALIDATE_VERIFICATION:'/auth/validateChallenge',

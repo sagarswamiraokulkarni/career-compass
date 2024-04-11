@@ -38,32 +38,6 @@ public class CareerCompassUtils {
     public String encodeString(String unEncodedString){
         return bCryptPasswordEncoder.encode(unEncodedString);
     }
-//    PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//    public String convertToMD5(String password) {
-//        try {
-//            MessageDigest digest = MessageDigest.getInstance("MD5");
-//
-//            digest.update(password.getBytes());
-//
-//            byte[] hashBytes = digest.digest();
-//
-//            StringBuilder hexString = new StringBuilder();
-//            for (byte b : hashBytes) {
-//                String hex = Integer.toHexString(0xff & b);
-//                if (hex.length() == 1) {
-//                    hexString.append('0');
-//                }
-//                hexString.append(hex);
-//            }
-//
-//            return hexString.toString();
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
     public static <T> T gsonMapper(Object sourceObject, Class<T> targetClass) {
         String json = gson.toJson(sourceObject);

@@ -4,16 +4,13 @@ import Table from './Table';
 import {
     AiOutlineEye,
     AiOutlineEdit,
-    AiOutlineDelete,
     AiFillStar,
     AiOutlineStar,
     AiOutlineSearch,
-    AiOutlineCloudDownload
 } from 'react-icons/ai';
-import Chips from 'react-chips';
 import './TableContainer.css';
 import ConfirmationModal from "./ConfirmationModal";
-import {orderApi} from "../misc/OrderApi";
+import {careerCompassApi} from "../Utils/CareerCompassApi";
 import {urlPaths} from "../../Constants";
 import {IoMdArchive} from "react-icons/io";
 import Select from 'react-select';
@@ -30,24 +27,20 @@ const TableContainer = () => {
     const [filteredData, setFilteredData] = useState([]);
     const existingTags = JSON.parse(localStorage.getItem('allTags'))
     const allTags=existingTags.map(tag => tag.name);
-    // const allTags = JSON.parse(localStorage.getItem('allTags'))
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
         setUser(storedUser)
         const userJson = JSON.parse(localStorage.getItem('user'))
         const unArchivedJobs = JSON.parse(localStorage.getItem('unArchivedJobs'));
-        console.log(unArchivedJobs)
         setData(unArchivedJobs);
     }, []);
 
     const handleStar = async (row) => {
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
         const userJson = JSON.parse(localStorage.getItem('user'))
-        console.log(data);
-        const response = await orderApi.patchApiCall(userJson,
+        const response = await careerCompassApi.patchApiCall(userJson,
             urlPaths.UPDATE_STAR+storedUser.userId+`/${row.id}`);
-        console.log(response)
         const allData = data.map((item) => {
             if (item.id === row.id) {
                 return {...item, starred: !item.starred};
@@ -56,7 +49,6 @@ const TableContainer = () => {
         });
         localStorage.setItem('unArchivedJobs', JSON.stringify(allData));
         setData(allData);
-        console.log(row);
     };
 
 
@@ -110,12 +102,10 @@ const TableContainer = () => {
     ];
 
     const handleView = (rowData) => {
-        console.log('View:', rowData);
         navigate('/details', {state: {rowData}});
     };
 
     const handleEdit = (rowData) => {
-        console.log('Edit:', rowData);
         navigate('/edit', {state: {rowData}});
     };
 
@@ -125,12 +115,10 @@ const TableContainer = () => {
     };
 
     const confirmDelete = async () => {
-        console.log('Delete:', selectedRowData);
         try {
             const storedUser = JSON.parse(localStorage.getItem('userDetails'))
             const userJson = JSON.parse(localStorage.getItem('user'))
-            const response = await orderApi.deleteApiCall(userJson, urlPaths.ARCHIVE_JOB_APPLICATION + storedUser.userId + `/${selectedRowData.id}`);
-            console.log('API Response:', response);
+            const response = await careerCompassApi.deleteApiCall(userJson, urlPaths.ARCHIVE_JOB_APPLICATION + storedUser.userId + `/${selectedRowData.id}`);
             const updatedData = data.filter(item => item.id !== selectedRowData.id);
             localStorage.setItem('unArchivedJobs', JSON.stringify(updatedData));
             const archivedJobs = JSON.parse(localStorage.getItem('archivedJobs'))
@@ -145,7 +133,6 @@ const TableContainer = () => {
 
 
     const handleChange = (newTags) => {
-        console.log(newTags)
         setTags(newTags);
     };
 
@@ -154,17 +141,14 @@ const TableContainer = () => {
     };
 
     useEffect(() => {
-        console.log(data)
         const filtered = tags.length > 0
             ? data.filter((item) => tags.every((tag) => item.jobTags.map(tagObj => tagObj.name).includes(tag)))
             : data;
         setFilteredData(filtered);
-        console.log(filtered);
     }, [tags, data]);
 
     return (
     <div className="search-table-container">
-        {/*{filteredData&&filteredData.length > 0 && */}
             <div className="search-container">
             <button className="search-button" onClick={toggleSearchBar}>
                 <AiOutlineSearch className="search-icon"/>
@@ -183,12 +167,9 @@ const TableContainer = () => {
                     </div>
                 )}
         </div>
-    {/*}*/}
         <div className="table-container">
-            {/*{*/}
                 <Table data={filteredData} columns={columns}
                        iconStyle={{fontSize: '24px', marginRight: '12px'}}/>
-            {/*: ''}*/}
         </div>
         <ConfirmationModal
             show={showDeleteModal}

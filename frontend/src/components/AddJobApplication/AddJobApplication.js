@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import Chips from 'react-chips';
 import './AddJobApplication.css';
-import {orderApi} from "../misc/OrderApi";
+import {careerCompassApi} from "../Utils/CareerCompassApi";
 import {urlPaths} from "../../Constants";
-import { useLocation, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
 import Select from 'react-select';
 
@@ -49,8 +48,8 @@ const AddJobApplication = () => {
             starred: values.starred
         }
         console.log(jobApplication);
-        const response = await orderApi.postApiCall(userJson, urlPaths.CREATE_JOB_APPLICATION, jobApplication);
-        const unarchivedJobs = await orderApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
+        const response = await careerCompassApi.postApiCall(userJson, urlPaths.CREATE_JOB_APPLICATION, jobApplication);
+        const unarchivedJobs = await careerCompassApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
         localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
         console.log(response)
         resetForm();

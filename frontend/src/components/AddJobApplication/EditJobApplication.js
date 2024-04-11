@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import Chips from 'react-chips';
 import './AddJobApplication.css';
-import {orderApi} from "../misc/OrderApi";
+import {careerCompassApi} from "../Utils/CareerCompassApi";
 import {urlPaths} from "../../Constants";
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
 import Select from 'react-select';
 
-const EditForm = () => {
+const EditJobApplication = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const rowData = location.state?.rowData;
@@ -64,15 +63,9 @@ const EditForm = () => {
             starred: values.starred,
             id: rowData.id
         }
-        const response = await orderApi.putApiCall(userJson, urlPaths.UPDATE_JOB_APPLICATION, updatedData);
-        // delete updatedData.jobTagIds;
-        // delete updatedData.userId;
-        const unarchivedJobs = await orderApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
-        console.log(unarchivedJobs)
+        const response = await careerCompassApi.putApiCall(userJson, urlPaths.UPDATE_JOB_APPLICATION, updatedData);
+        const unarchivedJobs = await careerCompassApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
         localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
-        // replaceJobById(rowData.id, {...updatedData,jobTags:getJobTags(tags)});
-        console.log(response);
-        console.log('Updated data:', updatedData);
         navigate('/');
     };
 
@@ -149,14 +142,6 @@ const EditForm = () => {
                                 <ErrorMessage name="status" component="div" className="error-message"/>
                             </div>
                         </div>
-                        {/*<div className="form-group">*/}
-                        {/*    <label htmlFor="tags">Tags</label>*/}
-                        {/*    <Chips*/}
-                        {/*        value={tags}*/}
-                        {/*        onChange={setTags}*/}
-                        {/*        suggestions={allTagsArray}*/}
-                        {/*    />*/}
-                        {/*</div>*/}
                         <div className="form-group">
                             <label htmlFor="tags">Tags</label>
                             <Select
@@ -184,4 +169,4 @@ const EditForm = () => {
     );
 };
 
-export default EditForm;
+export default EditJobApplication;

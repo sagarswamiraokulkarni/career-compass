@@ -1,7 +1,7 @@
 .search-table-container {
     display: flex;
-    flex-direction: column; /* Arrange children in a column */
-    align-items: center; /* Center children horizontally */
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh;
     background-image: url('../../../public/cool-background (2).png');
     /*background-image: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1544&q=80');*/
@@ -14,22 +14,14 @@
 
 .search-container {
     display: flex;
-    align-items: center; /* Align items vertically */
-    margin-bottom: 16px; /* Add margin below the search container */
+    align-items: center;
+    margin-bottom: 16px;
     margin-top: 16px;
 }
 
-/*.search-container {*/
-/*    display: flex;*/
-/*    !*align-items: center;*!*/
-/*    margin-left: 20px;*/
-/*    margin-bottom: 16px;*/
-/*    margin: 20px auto; !* Center the container *!*/
-/*    !*max-width: 800px;*!*/
-/*}*/
 .table-container {
-    margin: 20px auto; /* Center the container */
-    max-width: 800px; /* Set maximum width */
+    margin: 20px auto;
+    max-width: 800px;
 }
 .search-button {
     display: flex;
@@ -60,14 +52,13 @@
     padding: 8px;
 }
 
-/* ... (previous styles remain the same) */
 
 .tags-cell {
     display: flex;
-    flex-wrap: nowrap; /* Change this line */
+    flex-wrap: nowrap;
     gap: 8px;
-    overflow-x: auto; /* Add this line */
-    white-space: nowrap; /* Add this line */
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .tag {
@@ -75,7 +66,7 @@
     border-radius: 16px;
     font-size: 12px;
     color: white;
-    flex-shrink: 0; /* Add this line */
+    flex-shrink: 0;
 }
 
 .tag-0 {
@@ -94,8 +85,6 @@
     background-color: #eb4d4b;
 }
 
-
-/* Actions Icons */
 .action-icons {
     display: flex;
     gap: 8px;
@@ -103,5 +92,5 @@
 
 .action-icon {
     cursor: pointer;
-    font-size: 24px; /* Increase the font-size value */
+    font-size: 24px;
 }

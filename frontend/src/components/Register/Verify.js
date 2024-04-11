@@ -4,7 +4,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Verify.css'
 import {urlPaths} from "../../Constants";
-import {orderApi} from "../misc/OrderApi";
+import {careerCompassApi} from "../Utils/CareerCompassApi";
 function Verify() {
     const { email, hash } = useParams();
     const notify = (message) => toast(message);
@@ -14,7 +14,7 @@ function Verify() {
         const handleVerification = async () => {
             try {
                 console.log("coming here")
-                const response = await orderApi.postApiCallWithoutToken(urlPaths.VALIDATE_VERIFICATION, {
+                const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.VALIDATE_VERIFICATION, {
                     email,
                     verificationStrategyType: 'email',
                     verificationChallenge: hash
