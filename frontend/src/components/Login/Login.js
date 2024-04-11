@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {NavLink, Navigate, useNavigate} from 'react-router-dom';
 import {Modal, Button, Form, Alert} from 'react-bootstrap';
-import {useAuth} from '../context/AuthContext';
+import {useAuth} from '../Context/AuthContext';
 import {careerCompassApi} from '../Utils/CareerCompassApi';
 import {parseJwt, handleLogError} from '../Utils/Helpers';
 import {BsFillEyeFill, BsFillEyeSlashFill} from 'react-icons/bs';
