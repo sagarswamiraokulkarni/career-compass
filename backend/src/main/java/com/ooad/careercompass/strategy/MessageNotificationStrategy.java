@@ -39,7 +39,6 @@ public class MessageNotificationStrategy implements NotificationStrategy{
                     .setTo(user.getPhoneNumber())
                     .setCode(authSecret)
                     .create();
-//            pending, approved, or canceled
             if(verificationCheck.getStatus().equals("approved")){
                 user.setVerifyHash(CareerCompassUtils.getInstance().generateUniqueHash());
                 user.setVerified(true);

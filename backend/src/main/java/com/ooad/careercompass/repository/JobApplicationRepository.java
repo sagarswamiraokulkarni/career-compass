@@ -12,6 +12,4 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
     @Query(value = "SELECT * FROM job_applications WHERE user_id=?1 AND is_deleted=?2", nativeQuery = true)
     ArrayList<JobApplication> getAllCurrentApplicationsByUserIdAndStatus(Integer userId,Boolean status);
 
-//    @Query(value = "SELECT * FROM job_applications WHERE user_id=?1 AND id=?2", nativeQuery = true)
-//    ArrayList<JobApplication> getAllCurrentApplicationsByUserIdAndJobApplicationId(Integer userId,Integer id);
 }

@@ -29,7 +29,6 @@ public class JobApplicationService {
     private final JobApplicationRepository jobApplicationRepository;
     private final JobTagRepository jobTagRepository;
     private final JobApplicationJobTagRepository jobApplicationJobTagRepository;
-//    private final UserService userService;
 private List<JobApplicationsDto> getAllJobApplicationsByUserIdAndArchiveStatus(Integer userId,Boolean archiveStatus){
     ArrayList<JobApplication> jobApplicationsList=jobApplicationRepository.getAllCurrentApplicationsByUserIdAndStatus(userId,archiveStatus);
     List<JobApplicationsDto> jobApplicationsDtoList = CareerCompassUtils.gsonMapperList(jobApplicationsList, JobApplicationsDto.class);

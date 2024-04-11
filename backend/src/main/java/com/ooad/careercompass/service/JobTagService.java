@@ -27,8 +27,6 @@ public class JobTagService {
     private final UserRepository userRepository;
     private final JobApplicationRepository jobApplicationRepository;
     private final JobTagRepository jobTagRepository;
-//    private final JobApplicationJobTagRepository jobApplicationJobTagRepository;
-//    private final UserService userService;
     public List<JobTagDto> getAllTagsByUserId(Integer userId) throws Exception {
         List<JobTag> jobTagList=jobTagRepository.findByUserId(userId);
         List<JobTagDto> jobTagDtoList=new ArrayList<>();
@@ -71,7 +69,6 @@ public class JobTagService {
     }
 
     public void deleteByUserIdAndJobApplicationId(Integer userId,Integer jobApplicationId) throws Exception {
-        // Retrieve the job application by ID
         JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
                 .orElseThrow(() -> new Exception("Job application not found with ID: " + jobApplicationId));
         if(!jobApplication.getUser().getId().equals(userId)){
@@ -81,7 +78,6 @@ public class JobTagService {
         jobApplicationRepository.save(jobApplication);
     }
     public JobApplicationsDto getByUserIdAndJobApplicationId(Integer userId, Integer jobApplicationId) throws Exception {
-        // Retrieve the job application by ID
         JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
                 .orElseThrow(() -> new Exception("Job application not found with ID: " + jobApplicationId));
         if(!jobApplication.getUser().getId().equals(userId)){

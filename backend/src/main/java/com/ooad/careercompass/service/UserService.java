@@ -1,7 +1,6 @@
 package com.ooad.careercompass.service;
 
 import com.ooad.careercompass.repository.UserRepository;
-import com.ooad.careercompass.exception.UserNotFoundException;
 import com.ooad.careercompass.model.User;
 import com.ooad.careercompass.rest.dto.AuthResponse;
 import com.ooad.careercompass.rest.dto.GenericResponse;
@@ -40,10 +39,6 @@ public class UserService {
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-//    public Integer getUserIdByEmail(String email) {
-//        User user= userRepository.findByEmail(email).orElseThrow();
-//        return user.getId();
-//    }
     public AuthResponse getUserLoginAuth(String email,String accessToken){
         User user= userRepository.findByEmail(email).orElseThrow();
         return new AuthResponse(accessToken,user.getId(),user.getEmail(),user.getFirstName(),user.getLastName(),user.getVerifyHash(),user.getRole());
@@ -53,18 +48,10 @@ public class UserService {
     }
 
 
-//    public User validateAndGetUserByEmail(String email) {
-//        return getUserByEmail(email)
-//                .orElseThrow(() -> new UserNotFoundException(String.format("User with email %s not found", email)));
-//    }
-
 
     public User saveUser(User user) {
         return userRepository.save(user);
     }
 
 
-//    public void deleteUser(User user) {
-//        userRepository.delete(user);
-//    }
 }
