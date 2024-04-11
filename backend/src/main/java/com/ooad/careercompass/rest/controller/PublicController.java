@@ -1,11 +1,7 @@
 package com.ooad.careercompass.rest.controller;
-
-import com.ooad.careercompass.CareerCompassApplication;
 import com.ooad.careercompass.rest.dto.GenericResponse;
 import com.ooad.careercompass.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
