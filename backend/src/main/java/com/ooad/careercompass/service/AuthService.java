@@ -1,27 +1,17 @@
 package com.ooad.careercompass.service;
 
 import com.ooad.careercompass.exception.DuplicatedUserInfoException;
-import com.ooad.careercompass.factory.NotificationFactory;
 import com.ooad.careercompass.model.User;
-import com.ooad.careercompass.repository.UserRepository;
 import com.ooad.careercompass.rest.dto.GenericResponse;
 import com.ooad.careercompass.rest.dto.SignUpRequest;
-import com.ooad.careercompass.rest.dto.VerificationRequest;
 import com.ooad.careercompass.security.TokenProvider;
 import com.ooad.careercompass.security.WebSecurityConfig;
-import com.ooad.careercompass.strategy.NotificationStrategy;
 import com.ooad.careercompass.utils.CareerCompassUtils;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RequiredArgsConstructor
 @Service

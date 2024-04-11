@@ -12,7 +12,6 @@ import com.ooad.careercompass.rest.dto.GenericResponse;
 import com.ooad.careercompass.rest.dto.JobApplicationsDto;
 import com.ooad.careercompass.rest.dto.JobTagDto;
 import com.ooad.careercompass.rest.dto.RequestJobApplicationDto;
-import com.ooad.careercompass.utils.ApplicationStatus;
 import com.ooad.careercompass.utils.CareerCompassUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
