@@ -96,7 +96,7 @@ private List<JobApplicationsDto> getAllJobApplicationsByUserIdAndArchiveStatus(I
         GenericResponse genericResponse=new GenericResponse();
         requestJobApplicationDto.setId(null);
         User user=userRepository.findById(requestJobApplicationDto.getUserId()).orElseThrow(()-> new Exception("User not found"));
-//        TODO: Builder Pattern
+//        Done: Builder Pattern
         JobApplication jobApplication=JobApplication.builder().applicationDate(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
                 .company(requestJobApplicationDto.getCompany()).createdAt(new Timestamp(System.currentTimeMillis())).isDeleted(false)
                 .companyUrl(requestJobApplicationDto.getCompanyUrl()).starred(false).position(requestJobApplicationDto.getPosition())

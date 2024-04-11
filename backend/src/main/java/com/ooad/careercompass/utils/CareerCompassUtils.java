@@ -26,6 +26,7 @@ public class CareerCompassUtils {
     private CareerCompassUtils(){
         bCryptPasswordEncoder=new BCryptPasswordEncoder();
     }
+    //        Done: Singleton Pattern
     public static synchronized CareerCompassUtils getInstance(){
         if(careerCompassUtils==null) careerCompassUtils = new CareerCompassUtils();
         return careerCompassUtils;

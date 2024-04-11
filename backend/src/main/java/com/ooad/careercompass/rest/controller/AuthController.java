@@ -36,7 +36,7 @@ public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
 
     @PostMapping("/sendVerificationChallenge")
     public GenericResponse sendVerificationChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
-        //        TODO: FACADE PATTERN
+        //        Done: Facade Pattern
         accountService.checkIfRegistrationIsCompleted(verificationRequest);
         return accountService.sendVerificationChallenge(verificationRequest);
     }
@@ -44,7 +44,7 @@ public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
 
     @PostMapping("/validateChallenge")
     public GenericResponse validateChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
-        //        TODO: FACADE PATTERN
+        //        Done: Facade Pattern
         accountService.checkIfRegistrationIsCompleted(verificationRequest);
         return accountService.validateVerificationChallenge(verificationRequest);
     }

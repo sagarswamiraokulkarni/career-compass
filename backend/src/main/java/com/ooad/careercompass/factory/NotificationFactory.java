@@ -5,6 +5,7 @@ import com.ooad.careercompass.strategy.MessageNotificationStrategy;
 import com.ooad.careercompass.strategy.NotificationStrategy;
 
 public class NotificationFactory {
+    //        Done: Factory Pattern
     public static NotificationStrategy getEmailNotificationStrategy(){
         return new EmailNotificationStrategy();
     }

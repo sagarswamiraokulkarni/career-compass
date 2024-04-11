@@ -44,16 +44,6 @@ CREATE TABLE IF NOT EXISTS job_applications (
                                                 FOREIGN KEY (user_id) REFERENCES users(id)
 );
 ALTER TABLE job_applications AUTO_INCREMENT = 1;
-# TODO: QUERY
-# SELECT * FROM job_applications WHERE user_id=:user_id AND is_deleted=FALSE
-
--- CREATE TABLE IF NOT EXISTS job_application_job_tags (
---   job_application_id INT NOT NULL,
---   job_tag_id INT NOT NULL,
---   PRIMARY KEY (job_application_id, job_tag_id),
---   FOREIGN KEY (job_application_id) REFERENCES job_applications(id),
---   FOREIGN KEY (job_tag_id) REFERENCES job_tags(id)
--- );
 
 CREATE TABLE IF NOT EXISTS job_application_job_tags (
                                                         job_app_tag_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -65,7 +55,7 @@ CREATE TABLE IF NOT EXISTS job_application_job_tags (
 );
 ALTER TABLE job_application_job_tags AUTO_INCREMENT = 1;
 
-# START THE BACKEND AND RUN THE REMAINING
+# START THE BACKEND AND THEN RUN THE REMAINING
 
 INSERT INTO job_applications
 (`user_id`,
