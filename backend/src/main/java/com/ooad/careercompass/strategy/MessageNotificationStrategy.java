@@ -1,14 +1,17 @@
 package com.ooad.careercompass.strategy;
 
+import com.ooad.careercompass.CareerCompassApplication;
 import com.ooad.careercompass.model.User;
 import com.ooad.careercompass.rest.dto.GenericResponse;
 import com.ooad.careercompass.utils.CareerCompassUtils;
 import com.twilio.Twilio;
 import com.twilio.rest.verify.v2.service.Verification;
 import com.twilio.rest.verify.v2.service.VerificationCheck;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MessageNotificationStrategy implements NotificationStrategy{
-
+    private static final Logger logger = LoggerFactory.getLogger(CareerCompassApplication.class);
     private final String strategyType;
 
     public MessageNotificationStrategy(String strategyType) {
@@ -50,6 +53,7 @@ public class MessageNotificationStrategy implements NotificationStrategy{
         } catch (Exception e) {
             genericResponse.setStatus("Error");
             genericResponse.setMessage("Oops! Wrong OTP entered!");
+            logger.info(genericResponse.getMessage());
         }
         return genericResponse;
     }

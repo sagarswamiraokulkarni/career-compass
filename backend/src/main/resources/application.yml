@@ -4,14 +4,6 @@ spring:
   devtools:
     restart:
       enabled: true
-  jpa:
-    show-sql: true
-  properties:
-    hibernate:
-      format_sql: true
-  #  jpa:
-#    hibernate:
-#      ddl-auto: create
 
   datasource:
     url: jdbc:mysql://sql3.freesqldatabase.com:3306/sql3697032
@@ -20,15 +12,12 @@ spring:
 
 app:
   jwt:
-    # Signing key for HS512 algorithm
-    # In http://www.allkeysgenerator.com/ you can generate all kinds of keys
-    secret: v9y$B&E)H@MbQeThWmZq4t7w!z%C*F-JaNdRfUjXn2r5u8x/A?D(G+KbPeShVkYp
+    secret: Ft8!fWk2p$ueNxY6@7mV*Q9JzGbE5RDH&C\hjKL%PO^TrSw4dZv3c(qX)UsIaAg+B
     expiration:
-      minutes: 45
+      minutes: 30
   cors:
     allowed-origins: http://localhost:3000
 
 logging:
   level:
     org.springframework.security: DEBUG
-    # org.hibernate.SQL: DEBUG

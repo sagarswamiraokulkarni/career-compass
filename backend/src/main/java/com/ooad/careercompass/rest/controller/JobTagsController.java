@@ -1,6 +1,4 @@
 package com.ooad.careercompass.rest.controller;
-
-import com.ooad.careercompass.rest.dto.*;
 import com.ooad.careercompass.service.JobTagService;
 import com.ooad.careercompass.rest.dto.GenericResponse;
 import com.ooad.careercompass.rest.dto.JobTagDto;

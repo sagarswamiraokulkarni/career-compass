@@ -1,5 +1,6 @@
 package com.ooad.careercompass.security;
 
+import com.ooad.careercompass.CareerCompassApplication;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -9,6 +10,8 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,7 +33,7 @@ public class TokenProvider {
 
     @Value("${app.jwt.expiration.minutes}")
     private Long jwtExpirationMinutes;
-
+    private static final Logger logger = LoggerFactory.getLogger(CareerCompassApplication.class);
     public String generate(Authentication authentication) {
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 
@@ -70,15 +73,15 @@ public class TokenProvider {
 
             return Optional.of(jws);
         } catch (ExpiredJwtException exception) {
-            log.error("Request to parse expired JWT : {} failed : {}", token, exception.getMessage());
+            logger.error("Request to parse expired JWT : {} failed : {}", token, exception.getMessage());
         } catch (UnsupportedJwtException exception) {
-            log.error("Request to parse unsupported JWT : {} failed : {}", token, exception.getMessage());
+            logger.error("Request to parse unsupported JWT : {} failed : {}", token, exception.getMessage());
         } catch (MalformedJwtException exception) {
-            log.error("Request to parse invalid JWT : {} failed : {}", token, exception.getMessage());
+            logger.error("Request to parse invalid JWT : {} failed : {}", token, exception.getMessage());
         } catch (SignatureException exception) {
-            log.error("Request to parse JWT with invalid signature : {} failed : {}", token, exception.getMessage());
+            logger.error("Request to parse JWT with invalid signature : {} failed : {}", token, exception.getMessage());
         } catch (IllegalArgumentException exception) {
-            log.error("Request to parse empty or null JWT : {} failed : {}", token, exception.getMessage());
+            logger.error("Request to parse empty or null JWT : {} failed : {}", token, exception.getMessage());
         }
         return Optional.empty();
     }
