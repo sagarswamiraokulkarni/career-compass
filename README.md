@@ -153,7 +153,7 @@ JobApplication jobApplication=JobApplication.builder().applicationDate(new Date(
 ## Testing
 - Conducted unit tests and integration tests
 - Achieved over 80% test coverage(94%) for implemented methods
-- Screenshot of test coverage showing 94% for methods.
+- Below is the screenshot of test coverage showing 94% for methods.
   ![Test-Coverage.png](./backend/images/test-case-final-project.png)
 
 ## Issues and Challenges
