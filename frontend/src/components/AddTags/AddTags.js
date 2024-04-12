@@ -66,7 +66,7 @@ const AddTags = () => {
             console.log('Selected tags:', addedTags);
             setAddedTags([]);
             setShowConfirmationModal(false);
-            notify(`Tags has been added`);
+            notify(`Tag has been added`);
         } catch (error) {
             console.error('Error fetching data:', error);
         }

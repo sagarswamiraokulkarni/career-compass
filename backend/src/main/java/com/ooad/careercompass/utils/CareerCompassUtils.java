@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 public class CareerCompassUtils {
     private static CareerCompassUtils careerCompassUtils;
+    public static final String ADMIN = "ADMIN";
+    public static final String USER = "USER";
     public final String TWILIO_ACCOUNT_SID = "AC149c076bc2b866a0c48789efbe10e394";
     public final String TWILIO_AUTH_TOKEN = "e31135e1397345256efbbde63b72dcc3";
     public final String TWILIO_AUTH_SERVICE_SID="VAc536ba7dbf710ba52de7ba66040f363c";

@@ -1,5 +1,6 @@
 package com.ooad.careercompass.security;
 
+import com.ooad.careercompass.utils.CareerCompassUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +34,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/tags","/tags/**","/tracker","/tracker/**").hasAnyAuthority(ADMIN, USER)
+                        .requestMatchers("/tags","/tags/**","/tracker","/tracker/**").hasAnyAuthority(CareerCompassUtils.ADMIN, CareerCompassUtils.USER)
                         .requestMatchers("/public/**", "/auth/**").permitAll()
                         .requestMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
@@ -50,6 +51,4 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    public static final String ADMIN = "ADMIN";
-    public static final String USER = "USER";
 }

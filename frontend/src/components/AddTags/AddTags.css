@@ -13,15 +13,14 @@
     justify-content: center;
     align-items: start;
     min-height: 100vh;
-    background-image: url('../../../public/cool-background (2).png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-image: url('../../../public/cool-background.png');
+    background-size: 200% 200%;
+    animation: gradient 60s ease infinite;
 }
 .add-tags-title {
-    font-size: 24px;
+    font-size: 28px;
     margin-bottom: 20px;
-    color: #333;
+    color: #7c4dff;
 }
 
 .tag-list {
@@ -40,7 +39,6 @@
 }
 
 .remove-tag-btn {
-    /*background-color: transparent;*/
     border: none;
     color: #da1818;
     margin-left: 5px;
@@ -74,7 +72,7 @@
 .confirm-btn {
     padding: 8px 18px;
     font-size: 16px;
-    background-color: #28a745;
+    background-color: #7c4dff;
     color: #fff;
     border: none;
     border-radius: 3px;

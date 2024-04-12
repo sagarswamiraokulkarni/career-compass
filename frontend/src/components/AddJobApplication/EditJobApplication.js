@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import './AddJobApplication.css';
+import './EditJobApplication.css';
 import {careerCompassApi} from "../Utils/CareerCompassApi";
 import {urlPaths} from "../../Constants";
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
@@ -92,7 +92,7 @@ const EditJobApplication = () => {
                             <label htmlFor="starred">Starred</label>
                             {values.starred ? (
                                 <AiFillStar
-                                    className="action-icon"
+                                    className="action-icon action-star"
                                     onClick={() => setFieldValue('starred', !values.starred)}
 
                                 />

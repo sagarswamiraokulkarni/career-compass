@@ -31,7 +31,7 @@ public class AuthService {
         user.setFirstName(signUpRequest.getFirstName());
         user.setLastName(signUpRequest.getLastName());
         user.setEmail(signUpRequest.getEmail());
-        user.setRole(WebSecurityConfig.USER);
+        user.setRole(CareerCompassUtils.USER);
         user.setVerifyHash(CareerCompassUtils.getInstance().generateUniqueHash());
         user.setPhoneNumber(signUpRequest.getPhoneNumber());
         user.setVerified(false);

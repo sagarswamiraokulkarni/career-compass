@@ -251,6 +251,7 @@ function Signup() {
             )}
             {showForm && (
                 <Form onSubmit={handleRegisterSubmit} className="signup-form">
+                    <h2>Sign up</h2>
                     <Form.Group className="mb-3">
                         <Form.Label>First Name*</Form.Label>
                         <Form.Control type="text" name="firstName" value={firstName} onChange={handleInputChange}/>
@@ -296,13 +297,15 @@ function Signup() {
                             Login
                         </NavLink>
                     </div>
+                    {isError && <Alert variant="danger" className="mt-3">{errorMessage}</Alert>}
                 </Form>
             )}
             {showNothing && <div className="email-toast">
                 {toastMsg}</div>}
-            {isError && <Alert variant="danger" className="mt-3">{errorMessage}</Alert>}
+
         </div>
     );
 }
 
 export default Signup;
+

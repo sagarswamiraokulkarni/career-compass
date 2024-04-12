@@ -1,13 +1,12 @@
 .search-table-container {
     display: flex;
     flex-direction: column;
+    justify-content: start;
     align-items: center;
     min-height: 100vh;
-    background-image: url('../../../public/cool-background (2).png');
-    /*background-image: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1544&q=80');*/
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-image: url('../../../public/cool-background.png');
+    background-size: 200% 200%;
+    animation: gradient 60s ease infinite;
 }
 
 
@@ -85,6 +84,21 @@
     background-color: #eb4d4b;
 }
 
+.added-tag:nth-child(odd) {
+    background-color: #007bff;
+}
+.added-tag:nth-child(even) {
+    background-color: #28a745;
+}
+
+.added-tag:nth-child(3n) {
+    background-color: #f0932b;
+}
+
+.added-tag:nth-child(4n) {
+    background-color: #eb4d4b;
+}
+
 .action-icons {
     display: flex;
     gap: 8px;
@@ -93,4 +107,7 @@
 .action-icon {
     cursor: pointer;
     font-size: 24px;
+}
+.action-star{
+    color:gold;
 }

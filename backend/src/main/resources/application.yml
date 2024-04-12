@@ -6,9 +6,9 @@ spring:
       enabled: true
 
   datasource:
-    url: jdbc:mysql://sql3.freesqldatabase.com:3306/sql3697032
-    username: sql3697032
-    password: etGymg6EjA
+    url: jdbc:mysql://database-1.ctao0w4issll.us-east-1.rds.amazonaws.com:3306/careercompass
+    username: admin
+    password: Admin123
 
 app:
   jwt:

@@ -52,7 +52,7 @@ class AuthServiceTest {
         user.setFirstName(signUpRequest.getFirstName());
         user.setLastName(signUpRequest.getLastName());
         user.setPhoneNumber(signUpRequest.getPhoneNumber());
-        user.setRole(WebSecurityConfig.USER);
+        user.setRole(CareerCompassUtils.USER);
         user.setVerifyHash(CareerCompassUtils.getInstance().generateUniqueHash());
         user.setVerified(false);
     }
@@ -83,7 +83,7 @@ class AuthServiceTest {
         assertEquals(signUpRequest.getFirstName(), result.getFirstName());
         assertEquals(signUpRequest.getLastName(), result.getLastName());
         assertEquals(signUpRequest.getPhoneNumber(), result.getPhoneNumber());
-        assertEquals(WebSecurityConfig.USER, result.getRole());
+        assertEquals(CareerCompassUtils.USER, result.getRole());
         assertFalse(result.isVerified());
         assertNotNull(result.getVerifyHash());
     }

@@ -4,6 +4,7 @@ import com.ooad.careercompass.CareerCompassApplication;
 import com.ooad.careercompass.model.User;
 import com.ooad.careercompass.security.WebSecurityConfig;
 import com.ooad.careercompass.service.UserService;
+import com.ooad.careercompass.utils.CareerCompassUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private static final List<User> USERS = Arrays.asList(
-            new User("AdminFN", "AdminLN", "fireflies186@gmail.com", "Admin@123", WebSecurityConfig.ADMIN),
-            new User("UserFN", "UserLN", "cranberries186@gmail.com", "User@123", WebSecurityConfig.USER)
+            new User("AdminFN", "AdminLN", "fireflies186@gmail.com", "Admin@123", CareerCompassUtils.ADMIN),
+            new User("UserFN", "UserLN", "cranberries186@gmail.com", "User@123", CareerCompassUtils.USER)
     );
 }

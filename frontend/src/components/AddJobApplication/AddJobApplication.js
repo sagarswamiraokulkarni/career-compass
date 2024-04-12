@@ -80,7 +80,7 @@ const AddJobApplication = () => {
                             <label htmlFor="starred">Starred</label>
                             {values.starred ? (
                                 <AiFillStar
-                                    className="action-icon"
+                                    className="action-icon action-star"
                                     onClick={() => setFieldValue('starred', !values.starred)}
 
                                 />

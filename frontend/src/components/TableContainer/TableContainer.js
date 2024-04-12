@@ -58,7 +58,7 @@ const TableContainer = () => {
             accessor: 'starred',
             Cell: ({row}) => (
                 <div>
-                    {row.original.starred ? <AiFillStar className="action-icon" onClick={() => handleStar(row.original)}/> :
+                    {row.original.starred ? <AiFillStar className="action-icon action-star" onClick={() => handleStar(row.original)}/> :
                         <AiOutlineStar className="action-icon" onClick={() => handleStar(row.original)}/>}
                 </div>
             )
@@ -81,7 +81,7 @@ const TableContainer = () => {
             Cell: ({value}) => (
                 <div className="tags-cell">
                     {value.map((tag, index) => (
-                        <span key={index} className={`tag tag-${index % 4}`}>
+                        <span key={index} className={`added-tag tag-${index % 4}`}>
               {tag.name}
             </span>
                     ))}
@@ -142,7 +142,7 @@ const TableContainer = () => {
 
     useEffect(() => {
         const filtered = tags.length > 0
-            ? data.filter((item) => tags.every((tag) => item.jobTags.map(tagObj => tagObj.name).includes(tag)))
+            ? data.filter((item) => tags.some((tag) => item.jobTags.map(tagObj => tagObj.name).includes(tag)))
             : data;
         setFilteredData(filtered);
     }, [tags, data]);

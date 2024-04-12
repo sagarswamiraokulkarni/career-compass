@@ -26,7 +26,7 @@ function Verify() {
                         navigate('/login');
                     }, 2000);
                 } else {
-                    notify('Verification failed. Do you want to send verification link again?')
+                    notify('Verification failed. Request a new verification link')
                     setVerificationSuccess(false);
                 }
             } catch (error) {

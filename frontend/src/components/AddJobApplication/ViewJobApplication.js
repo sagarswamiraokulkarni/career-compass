@@ -19,12 +19,10 @@ const ViewJobApplication = () => {
         <div className="row-details">
             <h2>Job Application Details</h2>
             <div className="form-group">
-                {/*<label>*/}
                     Starred:<space> </space>
-                {/*</label>*/}
                 {rowData.starred ? (
                     <AiFillStar
-                        className="action-icon"
+                        className="action-icon action-star"
                     />
                 ) : (
                     <AiOutlineStar
@@ -60,7 +58,7 @@ const ViewJobApplication = () => {
                 <label>Tags:</label>
                 <div className="tags-container">
                     {tagNames.map((tag, index) => (
-                        <span key={index} className="tag">{tag}</span>
+                        <span key={index} className={`added-tag tag-${index % 4}`}>{tag}</span>
                     ))}
                 </div>
             </div>
