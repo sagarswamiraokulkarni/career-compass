@@ -26,12 +26,26 @@ Our goal is to develop a powerful and user-friendly tool that simplifies and str
 
 
 ## Technologies Used
-- React + JavaScript: Frontend development
+- React : Frontend development
 - Java with SpringBoot: Backend development
 - MySQL: Database management system
 
 ## Features
+- User Registration and Verification: Users can register with their personal details and verify their account via email, phone, or WhatsApp.
+- User Login: Registered users can securely log into the application using their credentials.
+- Tag Creation and Management: Users can create, update, and manage tags to categorize their job applications.
+- Job Application Creation: Users can create detailed job application records with information such as company name, role, status, and associated tags.
+- Job Application Management: Users can edit, star/unstar, filter, archive, and unarchive their job applications for effective tracking and organization.
+- Secure Authentication: The application implements secure authentication using bearer tokens to protect user data and ensure authorized access.
+- REST API for Data Access and Manipulation: The backend provides a REST API for seamless data access and manipulation, enabling smooth interaction between the frontend and backend.
+- Data Persistence: User data, including tags and job applications, is persistently stored in a database for reliable access and retrieval.
+- Error Handling: The application handles errors gracefully, providing informative error messages and maintaining a smooth user experience.
+- User-Specific Data Management: Each user's data, such as tags and job applications, is associated with their account, ensuring privacy and personalized management.
 
+
+
+
+## Key Implementations
 ### Frontend
 - Registration: Users can register using their first name, last name, email address, and phone number. 
 They are given the option to verify their account using their email address, phone number, or WhatsApp. 
@@ -52,6 +66,7 @@ When email verification is chosen, a verification link is sent, and upon clickin
 - inbox/userid, createJobApplication, getJobApplication/{userId}/{jobApplicationId}, updateJobApplication, updateJobApplicationStarStatus/{userId}/{jobApplicationId}: These controllers handle sending all job applications created by the user, creating a new job application, retrieving a particular job application, updating a job application, and updating the star status of a job application. The user can access these endpoints accordingly.
 - archiveJobApplication/{userId}/{jobApplicationId}, unarchiveJobApplication/{userId}/{jobApplicationId}: These controllers allow users to archive and unarchive job applications. When a job application is archived, it is no longer actively tracked but remains in the user's records. Unarchiving a job application restores it to the active state.
 
+
 ## Design Patterns
 1. Singleton Pattern:
 ```java
@@ -63,7 +78,7 @@ When email verification is chosen, a verification link is sent, and upon clickin
 - The Singleton Pattern was applied to the CareerCompassUtils class to ensure that only one instance of the class exists throughout the application.
 - The constructor is made private to prevent direct instantiation, and a static synchronized getInstance() method is provided to retrieve the single instance of the class.
 - This pattern is useful for utility classes or classes that need to maintain a global state across the application.
-2. Factory Pattern:
+2. Factory Pattern :
 ```java
 public class NotificationFactory { 
     public static NotificationStrategy getEmailNotificationStrategy(){
@@ -114,7 +129,7 @@ public GenericResponse validateChallenge(@Valid @RequestBody VerificationRequest
 - The facade methods (sendVerificationChallenge, validateChallenge) provide a simplified interface for clients, encapsulating the complexity of the underlying subsystems.
 - This pattern promotes loose coupling and improves maintainability by reducing dependencies between clients and the internal workings of the verification process.
 
-5. Builder Pattern: 
+5. Builder Pattern:
 ```java
 private JobApplication(Builder builder) {
    this.id = builder.id;
@@ -150,16 +165,27 @@ JobApplication jobApplication=JobApplication.builder().applicationDate(new Date(
 - The Builder class allows for step-by-step construction of JobApplication objects, setting each field independently.
 - This pattern enhances readability, reduces the likelihood of errors, and provides a cleaner way to create objects with many optional fields.
 
+## Design Patterns (Defined/ Implemented At)
+The above design patterns defined/implemented can be found at:
+
+1. Singleton Pattern(CareerCompassUtils.java)
+2. Factory Pattern (NotificationFactory.java)
+3. Strategy Pattern (AccountService.java)
+4. Facade Pattern (AuthController.java)
+5. Builder Pattern (JobApplicationService.java)
+
 ## Testing
-- Conducted unit tests and integration tests
-- Achieved over 80% test coverage(94%) for implemented methods
+- Achieved 94% test method coverage for implemented methods
 - Below is the screenshot of test coverage showing 94% for methods.
   ![Test-Coverage.png](./backend/images/test-case-final-project.png)
 
-## Issues and Challenges
-1. Authentication and Authorization: Resolved by implementing JWT-based authentication and role-based authorization.
-2. Email Verification: Handled verification token generation, expiration, and multiple verification attempts.
-
-
-## Conclusion
-CareerCompass has made significant progress in this iteration, with the successful implementation of core features. The chosen technologies and design patterns have contributed to a modular and maintainable codebase. The team has effectively collaborated and communicated throughout the development process.
+## Issues/Challenges Faced and Solutions
+### Issue 1:
+ - Problem: Setting multiple fields of the Job Application object using individual setter methods was cumbersome, error-prone, and led to complex object creation and potential data inconsistencies.
+ - Solution: We overcame this challenge by implementing the Builder Pattern with a fluent interface, which improved code readability, maintainability, and testability by separating the construction logic and ensuring immutable and consistent Job Application objects.
+### Issue2:
+ - Problem: Implementing multiple verification methods (email, WhatsApp, SMS) in the backend resulted in conditional logic and tightly coupled code, making it difficult to maintain and extend the verification functionality. 
+ - Solution: We addressed this issue by applying the Strategy Pattern, encapsulating each verification method into separate strategy classes with a common interface. This decoupled the verification logic, improved code modularity and maintainability, and enabled seamless integration of new verification methods.
+### Issue3:
+ - Problem: Duplicate email registrations led to data inconsistencies and user confusion when multiple users attempted to register with the same email address.
+  - Solution: We tackled this problem by generating a unique hash for each user during the signup process and associating it with the user's email address. This effectively detected and handled duplicate email registrations, ensuring data integrity and a smooth user experience.
