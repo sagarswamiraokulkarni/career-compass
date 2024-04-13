@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: careercompass
+  devtools:
+    restart:
+      enabled: true
+
+  datasource:
+    url: jdbc:mysql://database-1.ctao0w4issll.us-east-1.rds.amazonaws.com:3306/careercompass
+    username: admin
+    password: Admin123
+
+app:
+  jwt:
+    secret: Ft8!fWk2p$ueNxY6@7mV*Q9JzGbE5RDH&C\hjKL%PO^TrSw4dZv3c(qX)UsIaAg+B
+    expiration:
+      minutes: 30
+  cors:
+    allowed-origins: http://localhost:3000
+
+logging:
+  level:
+    org.springframework.security: DEBUG
