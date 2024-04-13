@@ -10,6 +10,7 @@ Our goal is to develop a powerful and user-friendly tool that simplifies and str
 - Status Summary PDF Link:   [Status Summary](./backend/assets/pdfs/Project%207%20Update.pdf)
 - UML Class Diagram Link:   [UML Class Diagram](./backend/assets/images/backend-UML-class-diagram.png)
 - Application Demo Link:   [Application Demo](./backend/assets/videos/OOAD-Interim-Progress-Video.mp4)
+- Application Demo Google Drive Link:   [Application Demo Google Drive link](https://drive.google.com/file/d/1BBZeiM17NJJpyHZFD_-A1ErXi8MAyvWV/view)
 
 ## Getting Started
 1. Clone the repository: `https://github.com/sagarswamiraokulkarni/career-compass.git`
@@ -36,6 +37,7 @@ Our goal is to develop a powerful and user-friendly tool that simplifies and str
 - Below is the video recording of the state of the application:
 - Link - Application Demo (It seems that Google drive has issues loading the video on the browser, so please download the video and watch.)
 - Application Demo Link:   [Application Demo](./backend/assets/videos/OOAD-Interim-Progress-Video.mp4)
+- Application Demo Google Drive Link:   [Application Demo Google Drive link](https://drive.google.com/file/d/1BBZeiM17NJJpyHZFD_-A1ErXi8MAyvWV/view)
 
 ## UML Class Diagram:
 - We intend to create the NotificationFactory class, which will provide the required object instances for SMS, WhatsApp, and Email Notification classes.
