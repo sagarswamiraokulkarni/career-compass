@@ -7,6 +7,7 @@ import {careerCompassApi} from "../Utils/CareerCompassApi";
 import {urlPaths} from "../../Constants";
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
 import Select from 'react-select';
+import Loader from "../Utils/Loader";
 
 const EditJobApplication = () => {
     const location = useLocation();
@@ -17,6 +18,7 @@ const EditJobApplication = () => {
     const tagNames = rowData.jobTags.map(tag => tag.name);
     const unarchivedJobs = JSON.parse(localStorage.getItem('unArchivedJobs'))
     const [tags, setTags] = useState(tagNames || []);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validationSchema = Yup.object().shape({
         starred: Yup.boolean(),
@@ -48,7 +50,7 @@ const EditJobApplication = () => {
         return false;
     };
     const handleSubmit = async (values) => {
-        console.log(values);
+        setIsLoading(true);
         const storedUser = JSON.parse(localStorage.getItem('userDetails'));
         const userJson = JSON.parse(localStorage.getItem('user'));
         const updatedData = {
@@ -56,7 +58,7 @@ const EditJobApplication = () => {
             company: values.companyName,
             position: values.role,
             status: values.status,
-            applicationDate: "2024-04-07",
+            applicationDate: values.appliedOn,
             companyUrl: values.jobUrl,
             notes: values.notes,
             jobTagIds: getTagIds(tags),
@@ -67,11 +69,13 @@ const EditJobApplication = () => {
         const unarchivedJobs = await careerCompassApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
         localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
         navigate('/');
+        setIsLoading(false);
     };
 
     return (
         <div className="add-job-application-container">
         <div className="add-job-application">
+            {isLoading && <Loader />}
             <h2>Edit Job Application</h2>
             <Formik
                 initialValues={{
@@ -79,7 +83,7 @@ const EditJobApplication = () => {
                     companyName: rowData.company || '',
                     jobUrl: rowData.companyUrl || '',
                     role: rowData.position || '',
-                    appliedOn: rowData.applicationDate || '',
+                    appliedOn: rowData.applicationDate ? new Date(rowData.applicationDate).toISOString().slice(0, 10) : '',
                     status: rowData.status || '',
                     notes: rowData.notes || '',
                 }}

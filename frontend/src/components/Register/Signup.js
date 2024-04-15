@@ -9,6 +9,7 @@ import './Signup.css';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {urlPaths} from '../../Constants'
+import Loader from "../Utils/Loader";
 
 function Signup() {
     const Auth = useAuth();
@@ -35,6 +36,7 @@ function Signup() {
     const location = useLocation();
     const [wrongOtpAttempts, setWrongOtpAttempts] = useState(0);
     const message = location.state?.email;
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
@@ -77,6 +79,7 @@ function Signup() {
     }
 
     const handleVerification = async (method,email) => {
+        setIsLoading(true);
         setVerificationMethod(method);
         const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.SEND_VERIFICATION, {
             email,
@@ -116,10 +119,13 @@ function Signup() {
                 setShowOtp(true);
             }
         }
+        setIsLoading(false);
     };
     const handleOtpSubmit = async (e) => {
+        console.log("OTP")
+        setIsLoading(true);
         e.preventDefault();
-            const response = await careerCompassApi.postApiCall(urlPaths.VALIDATE_VERIFICATION, {
+            const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.VALIDATE_VERIFICATION, {
                 email,
                 verificationStrategyType: verificationMethod,
                 verificationChallenge: otp
@@ -130,7 +136,6 @@ function Signup() {
                 setTimeout(() => {
                     navigate('/login');
                 }, 2000);
-                return;
             } else {
                 setWrongOtpAttempts(prevAttempts => prevAttempts + 1);
                 if (wrongOtpAttempts < 2) {
@@ -144,6 +149,7 @@ function Signup() {
                     setshowVerification(true);
                 }
             }
+        setIsLoading(false);
 
     }
     const handleRegisterSubmit = async (e) => {
@@ -168,10 +174,10 @@ function Signup() {
         }
         setIsError(false);
         setErrorMessage('');
-
         const user = {firstName, lastName, password, email, phoneNumber: '+1' + phoneNumber, verifyByPhoneNumber: true};
 
         try {
+            setIsLoading(true);
             const response = await careerCompassApi.getApiCallWithoutToken(urlPaths.CHECK_USER_REGISTRATION_STATUS + email);
             if (response.statusCode == 200) {
                 if (response.data.userAccountPresent && response.data.accountVerified) {
@@ -195,6 +201,8 @@ function Signup() {
             setshowVerification(true);
             setIsError(false);
             setErrorMessage('');
+            setIsLoading(false);
+
         } catch (error) {
             handleLogError(error);
             if (error.response && error.response.data) {
@@ -208,6 +216,7 @@ function Signup() {
                 setIsError(true);
                 setErrorMessage(errorMessage);
             }
+            setIsLoading(false);
         }
     };
 
@@ -218,6 +227,7 @@ function Signup() {
     return (
         <div className="signup-container">
             <ToastContainer/>
+            {isLoading && <Loader />}
             {showVerification && (
                 <div className="verification-options">
                     <Button variant="primary" type="submit" className="btn-block"

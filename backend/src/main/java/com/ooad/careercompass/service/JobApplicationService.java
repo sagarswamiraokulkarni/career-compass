@@ -131,6 +131,7 @@ private List<JobApplicationsDto> getAllJobApplicationsByUserIdAndArchiveStatus(I
         jobApplication.setStatus(requestJobApplicationDto.getStatus());
         jobApplication.setPosition(requestJobApplicationDto.getPosition());
         jobApplication.setStarred(requestJobApplicationDto.getStarred());
+        jobApplication.setApplicationDate(requestJobApplicationDto.getApplicationDate());
         jobApplication=jobApplicationRepository.save(jobApplication);
 
         List<JobApplicationJobTag> jobApplicationJobTagsList=jobApplicationJobTagRepository.getAllAssociatedTagsByJobApplicationId(jobApplication.getId());

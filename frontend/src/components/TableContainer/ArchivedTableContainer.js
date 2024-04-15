@@ -8,6 +8,7 @@ import {careerCompassApi} from "../Utils/CareerCompassApi";
 import {urlPaths} from "../../Constants";
 import {BiSolidArchiveOut} from "react-icons/bi";
 import Select from "react-select";
+import Loader from "../Utils/Loader";
 
 const ArchivedTableContainer = () => {
     const navigate = useNavigate();
@@ -20,6 +21,8 @@ const ArchivedTableContainer = () => {
     const [filteredData, setFilteredData] = useState([]);
     const existingTags = JSON.parse(localStorage.getItem('allTags'))
     const allTags=existingTags.map(tag => tag.name);
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
         setUser(storedUser)
@@ -102,6 +105,7 @@ const ArchivedTableContainer = () => {
 
     const confirmDelete = async () => {
         try {
+            setIsLoading(true);
             const storedUser = JSON.parse(localStorage.getItem('userDetails'))
             const userJson = JSON.parse(localStorage.getItem('user'))
             const response = await careerCompassApi.deleteApiCall(userJson, urlPaths.UNARCHIVE_JOB_APPLICATION + storedUser.userId+`/${selectedRowData.id}`);
@@ -116,6 +120,7 @@ const ArchivedTableContainer = () => {
             console.error('Error fetching data:', error);
         }
         setShowDeleteModal(false);
+        setIsLoading(false);
     };
 
 
@@ -137,6 +142,7 @@ const ArchivedTableContainer = () => {
 
     return (
         <div className="search-table-container">
+            {isLoading && <Loader />}
             <div className="search-container">
                 <button className="search-button" onClick={toggleSearchBar}>
                     <AiOutlineSearch className="search-icon"/>

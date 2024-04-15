@@ -7,6 +7,7 @@ import {urlPaths} from "../../Constants";
 import {  useNavigate } from 'react-router-dom';
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
 import Select from 'react-select';
+import Loader from "../Utils/Loader";
 
 
 const AddJobApplication = () => {
@@ -17,6 +18,7 @@ const AddJobApplication = () => {
     const allTagsArray=allTags.map(tag => tag.name);
     const storedUser = JSON.parse(localStorage.getItem('userDetails'));
     const userJson = JSON.parse(localStorage.getItem('user'));
+    const [isLoading, setIsLoading] = useState(false);
     const validationSchema = Yup.object().shape({
         starred: Yup.boolean(),
         companyName: Yup.string().required('Company Name is required'),
@@ -36,6 +38,7 @@ const AddJobApplication = () => {
         return allTags.filter(tag => tags.includes(tag.name));
     }
     const handleSubmit = async (values, {resetForm}) => {
+        setIsLoading(true);
         const jobApplication = {
             userId: storedUser.userId,
             company: values.companyName,
@@ -47,19 +50,19 @@ const AddJobApplication = () => {
             jobTagIds: getTagIds(tags),
             starred: values.starred
         }
-        console.log(jobApplication);
         const response = await careerCompassApi.postApiCall(userJson, urlPaths.CREATE_JOB_APPLICATION, jobApplication);
         const unarchivedJobs = await careerCompassApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
         localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
-        console.log(response)
         resetForm();
         setTags([]);
         navigate('/');
+        setIsLoading(false);
     };
 
     return (
         <div className="add-job-application-container">
         <div className="add-job-application">
+            {isLoading && <Loader />}
             <h2>Add Job Application</h2>
             <Formik
                 initialValues={{

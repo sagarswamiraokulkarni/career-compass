@@ -7,6 +7,7 @@ import {urlPaths} from "../../Constants";
 import ConfirmationModal from '../TableContainer/ConfirmationModal';
 import {AiOutlineEdit} from "react-icons/ai";
 import EditTagModal from "./EditTagModal";
+import Loader from "../Utils/Loader";
 
 const AddTags = () => {
     const existingTags = JSON.parse(localStorage.getItem('allTags'))
@@ -21,6 +22,7 @@ const AddTags = () => {
     const [editedTagName, setEditedTagName] = useState('');
     const storedUser = JSON.parse(localStorage.getItem('userDetails'));
     const userJson = JSON.parse(localStorage.getItem('user'));
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleAddTag = () => {
         if (newTag.trim() !== '' && !tags.includes(newTag.trim()) && !addedTags.includes(newTag.trim())) {
@@ -55,6 +57,7 @@ const AddTags = () => {
         const userJson = JSON.parse(localStorage.getItem('user'));
         const allTags = JSON.parse(localStorage.getItem('allTags'));
         try {
+            setIsLoading(true);
             await Promise.all(addedTags.map(async (tag) => {
                 const response = await careerCompassApi.postApiCall(userJson, urlPaths.CREATE_TAG, {name: tag, userId:storedUser.userId});
                 console.log('API Response:', response);
@@ -67,13 +70,16 @@ const AddTags = () => {
             setAddedTags([]);
             setShowConfirmationModal(false);
             notify(`Tag has been added`);
+            setIsLoading(false);
         } catch (error) {
             console.error('Error fetching data:', error);
+            setIsLoading(false);
         }
     };
 
     const handleConfirmEdit = async (tag, editedTagName) => {
         try {
+            setIsLoading(true);
             const tagId = existingTags.find(tagObj => tagObj.name === tag)?.id;
             const response = await careerCompassApi.putApiCall(userJson, urlPaths.UPDATE_TAG, {
                 id: tagId,
@@ -100,9 +106,10 @@ const AddTags = () => {
             setEditingTag(null);
             setEditedTagName('');
             notify(`Tag: ${tag} has been changed to ${editedTagName}.`)
-
+            setIsLoading(false);
         } catch (error) {
             console.error('Error updating tag:', error);
+            setIsLoading(false);
         }
     };
     const handleEdit = (tag) => {
@@ -112,6 +119,7 @@ const AddTags = () => {
     return (
         <div className="add-tags-background-container">
         <div className="add-tags-container">
+            {isLoading && <Loader />}
             <ToastContainer/>
             {tags.length>0&&<h2 className="add-tags-title">Existing Tags</h2>}
             <div className="tag-list">

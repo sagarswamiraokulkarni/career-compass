@@ -9,6 +9,8 @@ import './Login.css';
 import { urlPaths } from "../../Constants";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import Loader from "../Utils/Loader";
+
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -21,6 +23,7 @@ function Login() {
     const navigate = useNavigate();
     const [isError, setIsError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -29,6 +32,7 @@ function Login() {
     const handleSubmit = async (values, { setSubmitting }) => {
         const { email, password } = values;
         try {
+            setIsLoading(true);
             const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.AUTHENTICATE,{username:email, password});
             localStorage.setItem('userDetails', JSON.stringify({
                 userId: response.data.userId,
@@ -50,16 +54,18 @@ function Login() {
             localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
             localStorage.setItem('archivedJobs', JSON.stringify(archivedJobs.data));
             navigate('/');
-
+            setIsLoading(false);
 
         } catch (error) {
             handleLogError(error);
             setIsError(true);
+            setIsLoading(false);
         }
     };
 
     return (
         <div className="login-container">
+            {isLoading && <Loader />}
             <Formik
                 initialValues={{ email: '', password: '' }}
                 validationSchema={LoginSchema}

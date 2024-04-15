@@ -14,6 +14,7 @@ import {careerCompassApi} from "../Utils/CareerCompassApi";
 import {urlPaths} from "../../Constants";
 import {IoMdArchive} from "react-icons/io";
 import Select from 'react-select';
+import Loader from "../Utils/Loader";
 
 
 const TableContainer = () => {
@@ -27,6 +28,7 @@ const TableContainer = () => {
     const [filteredData, setFilteredData] = useState([]);
     const existingTags = JSON.parse(localStorage.getItem('allTags'))
     const allTags=existingTags.map(tag => tag.name);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
@@ -37,6 +39,7 @@ const TableContainer = () => {
     }, []);
 
     const handleStar = async (row) => {
+        setIsLoading(true);
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
         const userJson = JSON.parse(localStorage.getItem('user'))
         const response = await careerCompassApi.patchApiCall(userJson,
@@ -49,6 +52,7 @@ const TableContainer = () => {
         });
         localStorage.setItem('unArchivedJobs', JSON.stringify(allData));
         setData(allData);
+        setIsLoading(false);
     };
 
 
@@ -116,6 +120,7 @@ const TableContainer = () => {
 
     const confirmDelete = async () => {
         try {
+            setIsLoading(true);
             const storedUser = JSON.parse(localStorage.getItem('userDetails'))
             const userJson = JSON.parse(localStorage.getItem('user'))
             const response = await careerCompassApi.deleteApiCall(userJson, urlPaths.ARCHIVE_JOB_APPLICATION + storedUser.userId + `/${selectedRowData.id}`);
@@ -129,6 +134,7 @@ const TableContainer = () => {
             console.error('Error fetching data:', error);
         }
         setShowDeleteModal(false);
+        setIsLoading(false);
     };
 
 
@@ -149,6 +155,7 @@ const TableContainer = () => {
 
     return (
     <div className="search-table-container">
+        {isLoading && <Loader />}
             <div className="search-container">
             <button className="search-button" onClick={toggleSearchBar}>
                 <AiOutlineSearch className="search-icon"/>
