@@ -7,7 +7,7 @@ Our goal is to develop a powerful and user-friendly tool that simplifies and str
 2. Pavan Sai Appari (paap9049)
 
 ## Links
-- Status Summary PDF Link:   [Status Summary](./backend/assets/pdfs/Project%207%20Update.pdf)
+- Project Summary PDF Link:   [Project Summary](./backend/assets/pdfs/Project8Update.pdf)
 - UML Class Diagram Link:   [UML Class Diagram](./backend/assets/images/backend-UML-class-diagram.png)
 
 ## Getting Started
@@ -32,18 +32,8 @@ Our goal is to develop a powerful and user-friendly tool that simplifies and str
 - Below is the link for Status Summary of our application:
 - Status Summary PDF Link:   [Status Summary](./backend/assets/pdfs/Project%207%20Update.pdf)
 
-[//]: # (## Video Recording:)
-
-[//]: # (- Below is the video recording of the state of the application:)
-
-[//]: # (- Link - Application Demo &#40;It seems that Google drive has issues loading the video on the browser, so please download the video and watch.&#41;)
-
-[//]: # (- Application Demo Link:   [Application Demo]&#40;./backend/assets/videos/OOAD-Interim-Progress-Video.mp4&#41;)
-
-[//]: # (- Application Demo Google Drive Link:   [Application Demo Google Drive link]&#40;https://drive.google.com/file/d/1BBZeiM17NJJpyHZFD_-A1ErXi8MAyvWV/view&#41;)
-
 ## UML Class Diagram:
-- We intend to create the NotificationFactory class, which will provide the required object instances for SMS, WhatsApp, and Email Notification classes.
+- We intend to create the NotificationFactory class, which will provide the required object instances for SMS, Call, and Email Notification classes.
 - Note: the term 'Notification' is used because in the future, we plan to further develop the project and send different types of notification events to the users.
 - Below is the Image file containing the UML Diagram of the classes(please download the Image from location (`./backend/assets/images/backend-UML-class-diagram.png`) and zoom in, the document is of high quality and all the class diagrams will be clearly visible)
 - UML Class Diagram Link:   [UML Class Diagram](./backend/assets/images/backend-UML-class-diagram.png)
@@ -143,7 +133,7 @@ Feature: User Authentication and Registration
 ## Testing
 - Achieved 94% test method coverage for implemented methods
 - Below is the screenshot of test coverage showing 94% for methods.
-  ![Test-Coverage.png](./backend/images/test-case-final-project.png)
+  ![Test-Coverage.png](./backend/assets/images/test-case-final-project.png)
 
 
 
@@ -153,7 +143,7 @@ Feature: User Authentication and Registration
 - MySQL: Database management system
 
 ## Features
-- User Registration and Verification: Users can register with their personal details and verify their account via email, phone, or WhatsApp.
+- User Registration and Verification: Users can register with their personal details and verify their account via email, phone, or Call.
 - User Login: Registered users can securely log into the application using their credentials.
 - Tag Creation and Management: Users can create, update, and manage tags to categorize their job applications.
 - Job Application Creation: Users can create detailed job application records with information such as company name, role, status, and associated tags.
@@ -169,7 +159,7 @@ Feature: User Authentication and Registration
 - Problem: Setting multiple fields of the Job Application object using individual setter methods was cumbersome, error-prone, and led to complex object creation and potential data inconsistencies.
 - Solution: We overcame this challenge by implementing the Builder Pattern with a fluent interface, which improved code readability, maintainability, and testability by separating the construction logic and ensuring immutable and consistent Job Application objects.
 ### Issue2:
-- Problem: Implementing multiple verification methods (email, WhatsApp, SMS) in the backend resulted in conditional logic and tightly coupled code, making it difficult to maintain and extend the verification functionality.
+- Problem: Implementing multiple verification methods (Email, Call, SMS) in the backend resulted in conditional logic and tightly coupled code, making it difficult to maintain and extend the verification functionality.
 - Solution: We addressed this issue by applying the Strategy Pattern, encapsulating each verification method into separate strategy classes with a common interface. This decoupled the verification logic, improved code modularity and maintainability, and enabled seamless integration of new verification methods.
 
 ## Design Patterns
@@ -192,12 +182,12 @@ public class NotificationFactory {
     public static NotificationStrategy getSMSNotificationStrategy(){
         return new MessageNotificationStrategy("sms");
     }
-    public static NotificationStrategy getWhatsAppNotificationStrategy(){
-        return new MessageNotificationStrategy("whatsapp");
+    public static NotificationStrategy getCallNotificationStrategy(){
+        return new MessageNotificationStrategy("call");
     }
 }
 ```
-- The Factory Pattern was utilized to create notification strategy objects (email, SMS, WhatsApp) based on user preferences.
+- The Factory Pattern was utilized to create notification strategy objects (email, SMS, Call) based on user preferences.
 - The NotificationFactory class provides static methods to retrieve the appropriate notification strategy, abstracting the object creation process and allowing for easy extensibility.
 
 3. Strategy Pattern:
@@ -205,13 +195,13 @@ public class NotificationFactory {
 public NotificationStrategy getNotificationStrategy(String strategyType){
     return switch (strategyType) {
         case "sms" -> NotificationFactory.getSMSNotificationStrategy();
-        case "whatsapp" -> NotificationFactory.getWhatsAppNotificationStrategy();
+        case "call" -> NotificationFactory.getCallNotificationStrategy();
         case "email" -> NotificationFactory.getEmailNotificationStrategy();
         default -> throw new RuntimeException("Invalid verification type");
     };
 }
 ```
-- The Strategy Pattern was implemented for handling different notification strategies (email, SMS, WhatsApp).
+- The Strategy Pattern was implemented for handling different notification strategies (Email, SMS, Call).
 - Each notification strategy is encapsulated in a separate class (EmailNotificationStrategy, MessageNotificationStrategy) that implements the NotificationStrategy interface.
 - This allows for flexible and interchangeable usage of notification strategies without modifying the client code.
 
@@ -279,3 +269,4 @@ The above design patterns defined/implemented can be found at:
 4. Facade Pattern (AuthController.java)
 5. Builder Pattern (JobApplicationService.java)
 
+If in case you wish to view the interim status of our application please view main branch of this repository : [Click Here](https://github.com/sagarswamiraokulkarni/career-compass/tree/main)

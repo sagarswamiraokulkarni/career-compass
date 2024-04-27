@@ -18,8 +18,8 @@ public class CareerCompassUtils {
     public final String TWILIO_ACCOUNT_SID = "AC149c076bc2b866a0c48789efbe10e394";
     public final String TWILIO_AUTH_TOKEN = "e31135e1397345256efbbde63b72dcc3";
     public final String TWILIO_AUTH_SERVICE_SID="VAc536ba7dbf710ba52de7ba66040f363c";
-    public final String MAILJET_API_KEY="23d9f53040a4b4c4eebb28a8e5c22afd";
-    public final String MAILJET_SECRET_KEY="a753c76a9a9efb048ebc1b1ba768a63d";
+    public final String MAILJET_API_KEY="a8b54f9616bd1be21371c2537c485ac4";
+    public final String MAILJET_SECRET_KEY="e1a2bd46098874dbac669e12f9c97d4c";
     private static BCryptPasswordEncoder bCryptPasswordEncoder;
     private static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())

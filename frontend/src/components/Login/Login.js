@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavLink, Navigate, useNavigate} from 'react-router-dom';
 import {Modal, Button, Form, Alert} from 'react-bootstrap';
 import {useAuth} from '../Context/AuthContext';
@@ -29,6 +29,11 @@ function Login() {
         setShowPassword(!showPassword);
     };
 
+    useEffect(() => {
+        if(isLoggedIn){
+            navigate('/');
+        }
+    }, []);
     const handleSubmit = async (values, { setSubmitting }) => {
         const { email, password } = values;
         try {
@@ -62,6 +67,7 @@ function Login() {
             setIsLoading(false);
         }
     };
+
 
     return (
         <div className="login-container">

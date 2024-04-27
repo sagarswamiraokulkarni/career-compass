@@ -37,7 +37,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private static final List<User> USERS = Arrays.asList(
-            new User("AdminFN", "AdminLN", "fireflies186@gmail.com", "Admin@123", CareerCompassUtils.ADMIN),
-            new User("UserFN", "UserLN", "cranberries186@gmail.com", "User@123", CareerCompassUtils.USER)
+            new User("AdminFN", "AdminLN", "fireflies186@gmail.com", "Admin@123", CareerCompassUtils.ADMIN,"+13034347442"),
+            new User("UserFN", "UserLN", "cranberries186@gmail.com", "User@123", CareerCompassUtils.USER,"+13034347441")
     );
 }

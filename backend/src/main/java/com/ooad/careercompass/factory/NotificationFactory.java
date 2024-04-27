@@ -14,7 +14,7 @@ public class NotificationFactory {
         return new MessageNotificationStrategy("sms");
     }
 
-    public static NotificationStrategy getWhatsAppNotificationStrategy(){
-        return new MessageNotificationStrategy("whatsapp");
+    public static NotificationStrategy getCallNotificationStrategy(){
+        return new MessageNotificationStrategy("call");
     }
 }

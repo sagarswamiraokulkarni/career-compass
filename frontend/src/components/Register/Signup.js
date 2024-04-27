@@ -96,22 +96,22 @@ function Signup() {
             setShowNothing(true);
         } else {
             if (method === 'email') {
-                let message = 'Verification mail has been sent to your email.';
+                let message = 'Verification email has been sent';
                 setToastMsg(message);
                 notify(message)
                 setShowForm(false);
                 setshowVerification(false);
                 setShowOtp(false);
                 setShowNothing(true);
-            } else if (method === 'whatsapp') {
-                let message = 'OTP has been sent to your whatsapp.';
+            } else if (method === 'call') {
+                let message = 'You will receive OTP via call shortly';
                 setToastMsg(message);
                 notify(message)
                 setShowForm(false);
                 setshowVerification(false);
                 setShowOtp(true);
             } else {
-                let message = 'OTP has been sent to your mobile.';
+                let message = 'OTP has been sent to your number';
                 setToastMsg(message);
                 notify(message)
                 setShowForm(false);
@@ -243,15 +243,15 @@ function Signup() {
                     </Button>
                     <span className="divider-text">or</span>
                     <Button variant="primary" type="submit" className="btn-block"
-                            onClick={() => handleVerification('whatsapp',email)}>
-                        Verify by Whatsapp
+                            onClick={() => handleVerification('call',email)}>
+                        Verify by Call
                     </Button>
                 </div>
             )}
             {showOtp && (
                 <Form onSubmit={handleOtpSubmit} className="otp-form">
                     <Form.Group className="mb-3">
-                        <Form.Label>Otp</Form.Label>
+                        <Form.Label>Please Enter the OTP:</Form.Label>
                         <Form.Control type="text" name="otp" value={otp} onChange={handleInputChange}/>
                     </Form.Group>
                     <Button variant="primary" type="submit" className="btn-block">

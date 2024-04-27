@@ -33,7 +33,7 @@ public class EmailNotificationStrategy implements NotificationStrategy {
                     .property(Emailv31.MESSAGES, new JSONArray()
                             .put(new JSONObject()
                                     .put(Emailv31.Message.FROM, new JSONObject()
-                                            .put("Email", "sagarswamirao@gmail.com")
+                                            .put("Email", "appari.pavan99@gmail.com")
                                             .put("Name", "CareerCompass"))
                                     .put(Emailv31.Message.TO, new JSONArray()
                                             .put(new JSONObject()

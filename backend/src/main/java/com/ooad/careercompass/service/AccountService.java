@@ -29,7 +29,7 @@ public class AccountService {
         //        Done: Strategy Pattern
         return switch (strategyType) {
             case "sms" -> NotificationFactory.getSMSNotificationStrategy();
-            case "whatsapp" -> NotificationFactory.getWhatsAppNotificationStrategy();
+            case "call" -> NotificationFactory.getCallNotificationStrategy();
             case "email" -> NotificationFactory.getEmailNotificationStrategy();
             default -> throw new RuntimeException("Invalid verification type");
         };

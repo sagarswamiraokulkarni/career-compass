@@ -40,11 +40,11 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
 
-    public User(String firstName, String lastName, String email, String password, String role) {
+    public User(String firstName, String lastName, String email, String password, String role, String phoneNumber) {
         this.firstName=firstName;
         this.lastName=lastName;
         this.email=email;
@@ -53,5 +53,6 @@ public class User {
         this.verifyHash= CareerCompassUtils.getInstance().generateUniqueHash();
         this.isVerified=true;
         this.role=role;
+        this.phoneNumber=phoneNumber;
     }
 }

@@ -30,13 +30,13 @@ public class NotificationFactoryTest {
     }
 
     @Test
-    public void testGetWhatsAppNotificationStrategy() throws NoSuchFieldException, IllegalAccessException {
-        NotificationStrategy strategy = NotificationFactory.getWhatsAppNotificationStrategy();
+    public void testGetCallNotificationStrategy() throws NoSuchFieldException, IllegalAccessException {
+        NotificationStrategy strategy = NotificationFactory.getCallNotificationStrategy();
         assertTrue(strategy instanceof MessageNotificationStrategy);
         MessageNotificationStrategy messageStrategy = (MessageNotificationStrategy) strategy;
         Field strategyTypeField = MessageNotificationStrategy.class.getDeclaredField("strategyType");
         strategyTypeField.setAccessible(true);
         String strategyType = (String) strategyTypeField.get(messageStrategy);
-        assertEquals("whatsapp", strategyType);
+        assertEquals("call", strategyType);
     }
 }
