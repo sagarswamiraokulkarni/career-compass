@@ -31,11 +31,16 @@ Our goal is to develop a powerful and user-friendly tool that simplifies and str
 ## Status Summary:
 - Below is the link for Status Summary of our application:
 - Status Summary PDF Link:   [Status Summary](./backend/assets/pdfs/Project%207%20Update.pdf)
-## Video Recording:
-- Below is the video recording of the state of the application:
-- Link - Application Demo (It seems that Google drive has issues loading the video on the browser, so please download the video and watch.)
-- Application Demo Link:   [Application Demo](./backend/assets/videos/OOAD-Interim-Progress-Video.mp4)
-- Application Demo Google Drive Link:   [Application Demo Google Drive link](https://drive.google.com/file/d/1BBZeiM17NJJpyHZFD_-A1ErXi8MAyvWV/view)
+
+[//]: # (## Video Recording:)
+
+[//]: # (- Below is the video recording of the state of the application:)
+
+[//]: # (- Link - Application Demo &#40;It seems that Google drive has issues loading the video on the browser, so please download the video and watch.&#41;)
+
+[//]: # (- Application Demo Link:   [Application Demo]&#40;./backend/assets/videos/OOAD-Interim-Progress-Video.mp4&#41;)
+
+[//]: # (- Application Demo Google Drive Link:   [Application Demo Google Drive link]&#40;https://drive.google.com/file/d/1BBZeiM17NJJpyHZFD_-A1ErXi8MAyvWV/view&#41;)
 
 ## UML Class Diagram:
 - We intend to create the NotificationFactory class, which will provide the required object instances for SMS, WhatsApp, and Email Notification classes.
