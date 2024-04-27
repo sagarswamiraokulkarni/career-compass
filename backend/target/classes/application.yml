@@ -6,9 +6,9 @@ spring:
       enabled: true
 
   datasource:
-    url: jdbc:mysql://database-1.ctao0w4issll.us-east-1.rds.amazonaws.com:3306/careercompass
+    url: jdbc:mysql://careercompass.ctao0w4issll.us-east-1.rds.amazonaws.com:3306/careercompass
     username: admin
-    password: Admin123
+    password: admin123
 
 app:
   jwt:

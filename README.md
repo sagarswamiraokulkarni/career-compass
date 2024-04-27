@@ -9,8 +9,6 @@ Our goal is to develop a powerful and user-friendly tool that simplifies and str
 ## Links
 - Status Summary PDF Link:   [Status Summary](./backend/assets/pdfs/Project%207%20Update.pdf)
 - UML Class Diagram Link:   [UML Class Diagram](./backend/assets/images/backend-UML-class-diagram.png)
-- Application Demo Link:   [Application Demo](./backend/assets/videos/OOAD-Interim-Progress-Video.mp4)
-- Application Demo Google Drive Link:   [Application Demo Google Drive link](https://drive.google.com/file/d/1BBZeiM17NJJpyHZFD_-A1ErXi8MAyvWV/view)
 
 ## Getting Started
 1. Clone the repository: `https://github.com/sagarswamiraokulkarni/career-compass.git`
@@ -140,7 +138,7 @@ Feature: User Authentication and Registration
 ## Testing
 - Achieved 94% test method coverage for implemented methods
 - Below is the screenshot of test coverage showing 94% for methods.
-  ![Test-Coverage.png](./backend/assets/images/test-case-interim.png)
+  ![Test-Coverage.png](./backend/images/test-case-final-project.png)
 
 
 
@@ -212,7 +210,7 @@ public NotificationStrategy getNotificationStrategy(String strategyType){
 - Each notification strategy is encapsulated in a separate class (EmailNotificationStrategy, MessageNotificationStrategy) that implements the NotificationStrategy interface.
 - This allows for flexible and interchangeable usage of notification strategies without modifying the client code.
 
-3. Facade Pattern:
+4. Facade Pattern:
 ```java
 @PostMapping("/sendVerificationChallenge")
 public GenericResponse sendVerificationChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
@@ -231,7 +229,7 @@ public GenericResponse validateChallenge(@Valid @RequestBody VerificationRequest
 - The facade methods (sendVerificationChallenge, validateChallenge) provide a simplified interface for clients, encapsulating the complexity of the underlying subsystems.
 - This pattern promotes loose coupling and improves maintainability by reducing dependencies between clients and the internal workings of the verification process.
 
-4. Builder Pattern:
+5. Builder Pattern:
 ```java
 private JobApplication(Builder builder) {
    this.id = builder.id;
