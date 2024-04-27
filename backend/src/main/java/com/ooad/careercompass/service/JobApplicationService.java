@@ -101,7 +101,7 @@ private List<JobApplicationsDto> getAllJobApplicationsByUserIdAndArchiveStatus(I
                 .company(requestJobApplicationDto.getCompany()).createdAt(new Timestamp(System.currentTimeMillis())).isDeleted(false)
                 .companyUrl(requestJobApplicationDto.getCompanyUrl()).starred(false).position(requestJobApplicationDto.getPosition())
                 .user(user).position(requestJobApplicationDto.getPosition()).status(requestJobApplicationDto.getStatus())
-                .starred(requestJobApplicationDto.getStarred()).notes(requestJobApplicationDto.getNotes()).build();
+                .starred(requestJobApplicationDto.getStarred()).applicationDate(requestJobApplicationDto.getApplicationDate()).notes(requestJobApplicationDto.getNotes()).build();
         jobApplication=jobApplicationRepository.save(jobApplication);
         List<JobTag> jobTagsList=jobTagRepository.findAllById(requestJobApplicationDto.getJobTagIds());
         for(JobTag jobTag:jobTagsList){

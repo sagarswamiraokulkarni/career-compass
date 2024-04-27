@@ -44,7 +44,7 @@ const AddJobApplication = () => {
             company: values.companyName,
             position: values.role,
             status: values.status,
-            applicationDate: "2024-04-07",
+            applicationDate: values.appliedOn,
             companyUrl: values.jobUrl,
             notes: values.notes,
             jobTagIds: getTagIds(tags),
