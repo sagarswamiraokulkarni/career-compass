@@ -28,10 +28,6 @@ Our goal is to develop a powerful and user-friendly tool that simplifies and str
    - `mvn spring-boot:run`
 4. Access the application at `http://localhost:3000`
 
-## Status Summary:
-- Below is the link for Status Summary of our application:
-- Status Summary PDF Link:   [Status Summary](./backend/assets/pdfs/Project%207%20Update.pdf)
-
 ## UML Class Diagram:
 - We intend to create the NotificationFactory class, which will provide the required object instances for SMS, Call, and Email Notification classes.
 - Note: the term 'Notification' is used because in the future, we plan to further develop the project and send different types of notification events to the users.
