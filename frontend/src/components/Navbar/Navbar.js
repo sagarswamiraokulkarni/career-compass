@@ -43,6 +43,7 @@ function Navbar({onSignupClick}) {
             {userIsAuthenticated() && <Nav className="me-auto">
               <Nav.Link as={Link} to="/" exact
                         className={location.pathname === '/' ? 'active' : ''}>Job Applications</Nav.Link>
+              <Nav.Link as={Link} to="/archivedJobs" exact className={location.pathname === '/archivedJobs' ? 'active' : ''}>Archived Job Applications</Nav.Link>
               <Nav.Link as={Link} to="/addJobApplication" exact
                         className={location.pathname === '/addJobApplication' ? 'active' : ''}
               >Add Job Application</Nav.Link>
@@ -54,7 +55,7 @@ function Navbar({onSignupClick}) {
               {userIsAuthenticated() ? (
                   <>
                     <Nav.Item className="user-name" style={logoutMenuStyle()}>
-                      {`Hey ${getUserName()}`}
+                      {`${getUserName()}`}
                     </Nav.Item>
                     <button as={Link} to="/" onClick={logout} style={logoutMenuStyle()}
                             className="logout-button">

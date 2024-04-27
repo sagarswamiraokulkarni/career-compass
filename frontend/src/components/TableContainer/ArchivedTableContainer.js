@@ -47,9 +47,11 @@ const ArchivedTableContainer = () => {
         {
             Header: 'Starred',
             accessor: 'starred',
-            Cell: ({ row }) => (
+            Cell: ({row}) => (
                 <div>
-                    {row.original.starred ? <AiFillStar className="action-icon"/> : <AiOutlineStar className="action-icon"/>}
+                    {row.original.starred ? <AiFillStar aria-disabled={true} className="action-icon action-star" />
+                        :
+                        <AiOutlineStar aria-disabled={true} className="action-icon" />}
                 </div>
             )
         },
@@ -71,7 +73,7 @@ const ArchivedTableContainer = () => {
             Cell: ({ value }) => (
                 <div className="tags-cell">
                     {value.map((tag, index) => (
-                        <span key={index} className={`tag tag-${index % 4}`}>
+                        <span key={index} className={`added-tag tag-${index % 4}`}>
               {tag.name}
             </span>
                     ))}
