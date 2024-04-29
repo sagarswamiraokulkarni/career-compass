@@ -8,10 +8,10 @@ import Signup from './components/Register/Signup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Verify from "./components/Register/Verify";
 import TableContainer from "./components/TableContainer/TableContainer";
-import ViewJobApplication from "./components/AddJobApplication/ViewJobApplication";
-import EditJobApplication from "./components/AddJobApplication/EditJobApplication";
+import ViewJobApplication from "./components/JobApplication/ViewJobApplication";
+import EditJobApplication from "./components/JobApplication/EditJobApplication";
 import AddTags from "./components/AddTags/AddTags";
-import AddJobApplication from "./components/AddJobApplication/AddJobApplication";
+import AddJobApplication from "./components/JobApplication/AddJobApplication";
 import ArchivedTableContainer from "./components/TableContainer/ArchivedTableContainer";
 
 function App() {
