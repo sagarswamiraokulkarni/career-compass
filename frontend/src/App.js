@@ -10,7 +10,7 @@ import Verify from "./components/Register/Verify";
 import TableContainer from "./components/TableContainer/TableContainer";
 import ViewJobApplication from "./components/JobApplication/ViewJobApplication";
 import EditJobApplication from "./components/JobApplication/EditJobApplication";
-import AddTags from "./components/AddTags/AddTags";
+import AddTags from "./components/Tags/AddTags";
 import AddJobApplication from "./components/JobApplication/AddJobApplication";
 import ArchivedTableContainer from "./components/TableContainer/ArchivedTableContainer";
 
