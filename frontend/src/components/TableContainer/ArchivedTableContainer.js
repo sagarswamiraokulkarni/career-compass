@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Table from './Table';
 import {AiOutlineEye, AiFillStar, AiOutlineStar, AiOutlineSearch} from 'react-icons/ai';
 import './TableContainer.css';
@@ -9,6 +9,7 @@ import {urlPaths} from "../../Constants";
 import {BiSolidArchiveOut} from "react-icons/bi";
 import Select from "react-select";
 import Loader from "../Utils/Loader";
+import moment from "moment/moment";
 
 const ArchivedTableContainer = () => {
     const navigate = useNavigate();
@@ -17,16 +18,15 @@ const ArchivedTableContainer = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState(null);
     const [user, setUser] = useState(null);
-    const [data, setData]=useState([]);
+    const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const existingTags = JSON.parse(localStorage.getItem('allTags'))
-    const allTags=existingTags.map(tag => tag.name);
+    const allTags = existingTags.map(tag => tag.name);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
         setUser(storedUser)
-        const userJson = JSON.parse(localStorage.getItem('user'))
         const archivedJobs = JSON.parse(localStorage.getItem('archivedJobs'));
         const fetchData = async () => {
             try {
@@ -39,66 +39,100 @@ const ArchivedTableContainer = () => {
     }, []);
 
 
-
-
-
-
     const columns = [
         {
             Header: 'Starred',
             accessor: 'starred',
             Cell: ({row}) => (
                 <div>
-                    {row.original.starred ? <AiFillStar aria-disabled={true} className="action-icon action-star" />
+                    {row.original.starred ? <AiFillStar aria-disabled={true} className="action-icon action-star"/>
                         :
-                        <AiOutlineStar aria-disabled={true} className="action-icon" />}
+                        <AiOutlineStar aria-disabled={true} className="action-icon"/>}
                 </div>
             )
         },
         {
             Header: 'Company Name',
             accessor: 'companyUrl',
-            Cell: ({ row }) => (
+            Cell: ({row}) => (
                 <a href={row.original.companyUrl} target="_blank" rel="noopener noreferrer">
                     {row.original.company}
                 </a>
             )
         },
-        { Header: 'Role', accessor: 'position' },
-        { Header: 'Applied On', accessor: 'applicationDate' },
-        { Header: 'Status', accessor: 'status' },
+        {Header: 'Role', accessor: 'position'},
+        {
+            Header: 'Applied On',
+            accessor: 'applicationDate',
+            Cell: ({value}) => moment(value).format('MM-DD-YYYY'),
+        },
+        {Header: 'Status', accessor: 'status'},
         {
             Header: 'Tags',
             accessor: 'jobTags',
-            Cell: ({ value }) => (
-                <div className="tags-cell">
-                    {value.map((tag, index) => (
-                        <span key={index} className={`added-tag tag-${index % 4}`}>
-              {tag.name}
-            </span>
-                    ))}
-                </div>
-            ),
+            Cell: ({value}) => {
+                const cellRef = React.useRef(null);
+                const [isOverflowing, setIsOverflowing] = React.useState(false);
+
+                React.useEffect(() => {
+                    const checkOverflow = () => {
+                        if (cellRef.current) {
+                            const cell = cellRef.current;
+                            const isOverflowing = cell.scrollWidth > cell.clientWidth;
+                            setIsOverflowing(isOverflowing);
+
+                            if (isOverflowing) {
+                                const tags = [...cell.children].filter(child => child.classList.contains('added-tag'));
+                                let visibleWidth = 0;
+                                for (let i = 0; i < tags.length; i++) {
+                                    const tagWidth = tags[i].offsetWidth + 4;
+                                    if (visibleWidth + tagWidth > cell.clientWidth - 30) {
+                                        tags[i].style.opacity = '0.5';
+                                        break;
+                                    }
+                                    visibleWidth += tagWidth;
+                                }
+                            }
+                        }
+                    };
+
+                    checkOverflow();
+                    window.addEventListener('resize', checkOverflow);
+                    return () => window.removeEventListener('resize', checkOverflow);
+                }, [value]);
+
+                if (!value || value.length === 0) {
+                    return <div></div>;
+                }
+
+                return (
+                    <div ref={cellRef} className={`tags-cell ${isOverflowing ? 'overflowing' : ''}`}>
+                        {value.map((tag, index) => (
+                            <span key={index} className={`added-tag tag-${index % 4}`}>
+                        {tag.name}
+                    </span>
+                        ))}
+                        <span className="ellipsis">...</span>
+                    </div>
+                );
+            },
         },
         {
             Header: 'Actions',
             accessor: 'actions',
-            Cell: ({ row }) => (
+            Cell: ({row}) => (
                 <>
-                    <AiOutlineEye onClick={() => handleView(row.original)} className="action-icon" />
-                    <BiSolidArchiveOut onClick={() => handleDelete(row.original)} className="action-icon" />
+                    <AiOutlineEye onClick={() => handleView(row.original)} className="action-icon"/>
+                    <BiSolidArchiveOut onClick={() => handleDelete(row.original)} className="action-icon"/>
                 </>
             )
         }
     ];
 
     const handleView = (rowData) => {
-        navigate('/details', { state: { rowData,showEdit:false } });
+        navigate('/details', {state: {rowData, showEdit: false}});
     };
 
-    const handleEdit = (rowData) => {
-        navigate('/edit', { state: { rowData } });
-    };
 
     const handleDelete = (rowData) => {
         setSelectedRowData(rowData);
@@ -110,8 +144,7 @@ const ArchivedTableContainer = () => {
             setIsLoading(true);
             const storedUser = JSON.parse(localStorage.getItem('userDetails'))
             const userJson = JSON.parse(localStorage.getItem('user'))
-            const response = await careerCompassApi.deleteApiCall(userJson, urlPaths.UNARCHIVE_JOB_APPLICATION + storedUser.userId+`/${selectedRowData.id}`);
-            console.log('API Response:', response);
+            const response = await careerCompassApi.deleteApiCall(userJson, urlPaths.UNARCHIVE_JOB_APPLICATION + storedUser.userId + `/${selectedRowData.id}`);
             const updatedData = data.filter(item => item.id !== selectedRowData.id);
             localStorage.setItem('archivedJobs', JSON.stringify(updatedData));
             const unArchivedJobs = JSON.parse(localStorage.getItem('unArchivedJobs'))
@@ -135,16 +168,15 @@ const ArchivedTableContainer = () => {
     };
 
     useEffect(() => {
-        console.log(data)
         const filtered = tags.length > 0
-            ? data.filter((item) => tags.every((tag) => item.jobTags.map(tagObj => tagObj.name).includes(tag)))
+            ? data.filter((item) => tags.some((tag) => item.jobTags.map(tagObj => tagObj.name).includes(tag)))
             : data;
         setFilteredData(filtered);
     }, [tags, data]);
 
     return (
         <div className="search-table-container">
-            {isLoading && <Loader />}
+            {isLoading && <Loader/>}
             <div className="search-container">
                 <button className="search-button" onClick={toggleSearchBar}>
                     <AiOutlineSearch className="search-icon"/>
@@ -154,8 +186,8 @@ const ArchivedTableContainer = () => {
                     <div className="search-bar">
                         <Select
                             isMulti
-                            options={allTags.map((tag) => ({ value: tag, label: tag }))}
-                            value={tags.map((tag) => ({ value: tag, label: tag }))}
+                            options={allTags.map((tag) => ({value: tag, label: tag}))}
+                            value={tags.map((tag) => ({value: tag, label: tag}))}
                             onChange={(selectedOptions) => handleChange(selectedOptions.map((option) => option.value))}
                             placeholder="Type a tag and press enter..."
                             className="react-select"
@@ -164,7 +196,7 @@ const ArchivedTableContainer = () => {
                 )}
             </div>
             <div className="table-container">
-            <Table data={filteredData} columns={columns} iconStyle={{fontSize: '24px', marginRight: '12px'}}/>
+                <Table data={filteredData} columns={columns} iconStyle={{fontSize: '24px', marginRight: '12px'}}/>
             </div>
             <ConfirmationModal
                 show={showDeleteModal}

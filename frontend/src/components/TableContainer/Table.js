@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { useTable, usePagination } from 'react-table';
+import React, {useState} from 'react';
+import {useTable, usePagination} from 'react-table';
 import './table.css';
 
-const Table = ({ data, columns }) => {
-    const [starredRows, setStarredRows] = useState([]);
+const Table = ({data, columns}) => {
     const [pageSizeOptions, setPageSizeOptions] = useState([5, 10, 20, 30]);
-
 
     const handlePageSizeChange = (event) => {
         setPageSize(Number(event.target.value));
@@ -23,40 +21,38 @@ const Table = ({ data, columns }) => {
         canNextPage,
         canPreviousPage,
         pageOptions,
-        state: { pageIndex, pageSize },
+        state: {pageIndex, pageSize},
         setPageSize,
     } = useTable(
         {
             columns,
             data,
-            initialState: { pageIndex: 0, pageSize: 5 },
+            initialState: {pageIndex: 0, pageSize: 5},
         },
         usePagination
     );
 
     const pageCount = Math.ceil(data.length / pageSize);
 
-
     return (
         <div>
             <table {...getTableProps()} className="table">
                 <thead>
-                {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                {headerGroups.map((headerGroup,headerGroupIndex) => (
+                    <tr {...headerGroup.getHeaderGroupProps()} key={headerGroupIndex}>
+                        {headerGroup.headers.map((column,columnIndex) => (
+                            <th {...column.getHeaderProps()} key={columnIndex}>{column.render('Header')}</th>
                         ))}
                     </tr>
                 ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                {page.map((row) => {
+                {page.map((row,rowIndex) => {
                     prepareRow(row);
-                    const isStarred = starredRows.includes(row.original.id);
                     return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map((cell) => {
-                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                        <tr {...row.getRowProps()} key={rowIndex}>
+                            {row.cells.map((cell,cellIndex) => {
+                                return <td {...cell.getCellProps()} key={cellIndex}>{cell.render('Cell')}</td>;
                             })}
                         </tr>
                     );

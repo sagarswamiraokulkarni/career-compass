@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {NavLink, Navigate, useNavigate} from 'react-router-dom';
-import {Modal, Button, Form, Alert} from 'react-bootstrap';
+import {NavLink, useNavigate, useLocation} from 'react-router-dom';
+import {Button, Form, Alert} from 'react-bootstrap';
 import {useAuth} from '../Context/AuthContext';
 import {careerCompassApi} from '../Utils/CareerCompassApi';
 import {parseJwt, handleLogError} from '../Utils/Helpers';
 import {BsFillEyeFill, BsFillEyeSlashFill} from 'react-icons/bs';
 import './Login.css';
-import { urlPaths } from "../../Constants";
-import { Formik } from 'formik';
+import {urlPaths} from "../../Constants";
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 import Loader from "../Utils/Loader";
-
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -21,24 +20,49 @@ function Login() {
     const Auth = useAuth();
     const isLoggedIn = Auth.userIsAuthenticated();
     const navigate = useNavigate();
+    const location = useLocation();
+    const {state} = location;
+    useEffect(() => {
+        if (state) {
+            setEmail(state.email || '');
+            setPassword(state.password || '');
+            if (state.email && state.password) {
+                handleSubmit({email: state.email, password: state.password}, {setSubmitting: () => {}});
+            }
+        } else {
+            setEmail('');
+            setPassword('');
+        }
+    }, [state]);
     const [isError, setIsError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
 
     useEffect(() => {
-        if(isLoggedIn){
-            navigate('/');
+        if (isLoggedIn) {
+            navigate('/jobs');
         }
     }, []);
-    const handleSubmit = async (values, { setSubmitting }) => {
-        const { email, password } = values;
+    const handleSubmit = async (values, {setSubmitting}) => {
+        const {email, password} = values;
         try {
             setIsLoading(true);
-            const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.AUTHENTICATE,{username:email, password});
+            const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.AUTHENTICATE, {
+                username: email,
+                password
+            });
             localStorage.setItem('userDetails', JSON.stringify({
                 userId: response.data.userId,
                 firstName: response.data.firstName,
@@ -58,7 +82,7 @@ function Login() {
             localStorage.setItem('allTags', JSON.stringify(getAllTags.data));
             localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
             localStorage.setItem('archivedJobs', JSON.stringify(archivedJobs.data));
-            navigate('/');
+            navigate('/jobs');
             setIsLoading(false);
 
         } catch (error) {
@@ -71,13 +95,14 @@ function Login() {
 
     return (
         <div className="login-container">
-            {isLoading && <Loader />}
+            {isLoading && <Loader/>}
             <Formik
-                initialValues={{ email: '', password: '' }}
+                enableReinitialize={true}
+                initialValues={{email: email, password: password}}
                 validationSchema={LoginSchema}
                 onSubmit={handleSubmit}
             >
-                {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                {({values, errors, touched, handleChange, handleBlur, setFieldValue, handleSubmit, isSubmitting}) => (
                     <Form onSubmit={handleSubmit} className="login-form">
                         <h2>Login</h2>
                         <Form.Group className="mb-3">
@@ -85,26 +110,37 @@ function Login() {
                             <Form.Control
                                 type="email"
                                 name="email"
-                                value={values.email}
-                                onChange={handleChange}
+                                value={email}
+                                onChange={(e) => {
+                                    handleEmailChange(e);
+                                    setFieldValue('email', e.target.value);
+                                }}
                                 onBlur={handleBlur}
                                 isInvalid={touched.email && errors.email}
                             />
                             <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Password</Form.Label>
+                        <Form.Group className="mb-3 password-group">
+                            <div className="label-and-forgot">
+                                <Form.Label>Password</Form.Label>
+                                <NavLink to="/forgot-password" className="forgot-password-link">
+                                    Forgot Password?
+                                </NavLink>
+                            </div>
                             <div className="password-input">
                                 <Form.Control
                                     type={showPassword ? "text" : "password"}
                                     name="password"
-                                    value={values.password}
-                                    onChange={handleChange}
+                                    value={password}
+                                    onChange={(e) => {
+                                        handlePasswordChange(e);
+                                        setFieldValue('password', e.target.value);
+                                    }}
                                     onBlur={handleBlur}
                                     isInvalid={touched.password && errors.password}
                                 />
                                 <div className="password-toggle" onClick={togglePasswordVisibility}>
-                                    {showPassword ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
+                                    {showPassword ? <BsFillEyeSlashFill/> : <BsFillEyeFill/>}
                                 </div>
                                 <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
                             </div>
@@ -118,7 +154,8 @@ function Login() {
                                 Sign Up
                             </NavLink>
                         </div>
-                        {isError && <Alert variant="danger" className="mt-3">The email or password provided is incorrect!</Alert>}
+                        {isError && <Alert variant="danger" className="mt-3">The email or password provided is
+                            incorrect!</Alert>}
                     </Form>
                 )}
             </Formik>

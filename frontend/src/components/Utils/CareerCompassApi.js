@@ -14,87 +14,87 @@ export const careerCompassApi = {
     signup
 }
 
-async function postApiCall(userJson,path, body) {
-    try{
-    const response = await instance.post(path, body, {
-        headers: {'Content-type': 'application/json', 'Authorization': bearerAuth(userJson)}
-    })
-    if (response.status == 201||response.status == 200) {
-        return {
-            statusCode: response.status,
-            data: response.data
-        };
-    } else {
-        return{
-            statusCode:response.status,
-            message:response.message
-        }
-    }}
-    catch (e) {
-        return{
-            statusCode:409,
-            message:e.message
-        }
-    }
-}
-
-async function postApiCallWithoutToken(path, body) {
-    try{
+async function postApiCall(userJson, path, body) {
+    try {
         const response = await instance.post(path, body, {
-            headers: {'Content-type': 'application/json'}
+            headers: {'Content-type': 'application/json', 'Authorization': bearerAuth(userJson)}
         })
-
-        if (response.status == 201||response.status == 200) {
+        if (response.status === 201 || response.status === 200) {
             return {
                 statusCode: response.status,
                 data: response.data
             };
         } else {
-            return{
-                statusCode:response.status,
-                message:response.message
+            return {
+                statusCode: response.status,
+                message: response.message
             }
-        }}
-    catch (e) {
-        return{
-            statusCode:409,
-            message:e.message
+        }
+    } catch (e) {
+        return {
+            statusCode: 409,
+            message: e.message
         }
     }
 }
 
-async function patchApiCall(userJson,path) {
-    const response = await instance.patch(path,{},{
+async function postApiCallWithoutToken(path, body) {
+    try {
+        const response = await instance.post(path, body, {
+            headers: {'Content-type': 'application/json'}
+        })
+
+        if (response.status === 201 || response.status === 200) {
+            return {
+                statusCode: response.status,
+                data: response.data
+            };
+        } else {
+            return {
+                statusCode: response.status,
+                message: response.message
+            }
+        }
+    } catch (e) {
+        return {
+            statusCode: 409,
+            message: e.message
+        }
+    }
+}
+
+async function patchApiCall(userJson, path) {
+    const response = await instance.patch(path, {}, {
         headers: {'Authorization': bearerAuth(userJson)}
     })
 
-    if (response.status == 200) {
+    if (response.status === 200) {
         return {
             statusCode: response.status,
             data: response.data
         };
     } else {
-        return{
-            statusCode:response.status,
-            message:response.message
+        return {
+            statusCode: response.status,
+            message: response.message
         }
     }
 }
 
-async function getApiCall(userJson,path) {
+async function getApiCall(userJson, path) {
     const response = await instance.get(path, {
         headers: {'Authorization': bearerAuth(userJson)}
     })
 
-    if (response.status == 200) {
+    if (response.status === 200) {
         return {
             statusCode: response.status,
             data: response.data
         };
     } else {
-        return{
-            statusCode:response.status,
-            message:response.message
+        return {
+            statusCode: response.status,
+            message: response.message
         }
     }
 }
@@ -102,57 +102,57 @@ async function getApiCall(userJson,path) {
 async function getApiCallWithoutToken(path) {
     const response = await instance.get(path)
 
-    if (response.status == 200) {
+    if (response.status === 200) {
         return {
             statusCode: response.status,
             data: response.data
         };
     } else {
-        return{
-            statusCode:response.status,
-            message:response.message
+        return {
+            statusCode: response.status,
+            message: response.message
         }
     }
 }
 
-async function putApiCall(userJson,path, body) {
-    try{
+async function putApiCall(userJson, path, body) {
+    try {
         const response = await instance.put(path, body, {
             headers: {'Content-type': 'application/json', 'Authorization': bearerAuth(userJson)}
         })
-        if (response.status == 201||response.status == 200) {
+        if (response.status === 201 || response.status === 200) {
             return {
                 statusCode: response.status,
                 data: response.data
             };
         } else {
-            return{
-                statusCode:response.status,
-                message:response.message
+            return {
+                statusCode: response.status,
+                message: response.message
             }
-        }}
-    catch (e) {
-        return{
-            statusCode:409,
-            message:e.message
+        }
+    } catch (e) {
+        return {
+            statusCode: 409,
+            message: e.message
         }
     }
 }
 
-async function deleteApiCall(userJson,path) {
+async function deleteApiCall(userJson, path) {
     const response = await instance.delete(path, {
         headers: {'Authorization': bearerAuth(userJson)}
     })
 
-    if (response.status == 200||response.status == 204) {
+    if (response.status === 200 || response.status === 204) {
         return {
             statusCode: response.status,
             data: response.data
         };
     } else {
-        return{
-            statusCode:response.status,
-            message:response.message
+        return {
+            statusCode: response.status,
+            message: response.message
         }
     }
 }
@@ -175,7 +175,6 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(function (config) {
-    // If token is expired, redirect user to login
     if (config.headers.Authorization) {
         const token = config.headers.Authorization.split(' ')[1]
         const data = parseJwt(token)
@@ -187,8 +186,6 @@ instance.interceptors.request.use(function (config) {
 }, function (error) {
     return Promise.reject(error)
 })
-
-// -- Helper functions
 
 function bearerAuth(user) {
     return `Bearer ${user.accessToken}`
