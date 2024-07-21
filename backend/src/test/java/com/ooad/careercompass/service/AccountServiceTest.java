@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import java.util.Optional;
 
@@ -23,11 +24,12 @@ class AccountServiceTest {
     @Mock
     private UserService userService;
     private AccountService accountService;
+    private JavaMailSender javaMailSender;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        accountService = new AccountService(userRepository, userService);
+        accountService = new AccountService(userRepository, userService, javaMailSender);
     }
 
     @Test

@@ -28,11 +28,11 @@ public class AuthController {
         }
     }
 
-@ResponseStatus(HttpStatus.CREATED)
-@PostMapping("/signup")
-public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
-    return authService.signUp(signUpRequest);
-}
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/signup")
+    public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
+        return authService.signUp(signUpRequest);
+    }
 
     @PostMapping("/sendVerificationChallenge")
     public GenericResponse sendVerificationChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
@@ -41,11 +41,32 @@ public GenericResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
         return accountService.sendVerificationChallenge(verificationRequest);
     }
 
-
     @PostMapping("/validateChallenge")
     public GenericResponse validateChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
         //        Done: Facade Pattern
         accountService.checkIfRegistrationIsCompleted(verificationRequest);
         return accountService.validateVerificationChallenge(verificationRequest);
     }
+
+    @PostMapping("/sendForgotPasswordEmailChallenge")
+    public GenericResponse sendForgotPasswordEmailChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
+        //        Done: Facade Pattern
+        accountService.checkIfUserIsRegistered(verificationRequest.getEmail());
+        return accountService.sendForgotPasswordEmailChallenge(verificationRequest);
+    }
+
+    @PostMapping("/validateForgotPasswordEmailChallenge")
+    public GenericResponse validateForgotPasswordEmailChallenge(@Valid @RequestBody VerificationRequest verificationRequest) {
+        //        Done: Facade Pattern
+        accountService.checkIfUserIsRegistered(verificationRequest.getEmail());
+        return accountService.validatePasswordResetEmailLink(verificationRequest);
+    }
+
+    @PostMapping("/resetForgotPasswordEmailChallenge")
+    public GenericResponse resetForgotPasswordEmailChallenge(@Valid @RequestBody ResetRequest resetRequest) {
+        //        Done: Facade Pattern
+        accountService.checkIfUserIsRegistered(resetRequest.getEmail());
+        return accountService.resetPasswordResetEmail(resetRequest);
+    }
+
 }

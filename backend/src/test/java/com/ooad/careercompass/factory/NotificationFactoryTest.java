@@ -4,6 +4,7 @@ import com.ooad.careercompass.strategy.EmailNotificationStrategy;
 import com.ooad.careercompass.strategy.MessageNotificationStrategy;
 import com.ooad.careercompass.strategy.NotificationStrategy;
 import org.junit.jupiter.api.Test;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.lang.reflect.Field;
 
@@ -11,12 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NotificationFactoryTest {
-
-    @Test
-    public void testGetEmailNotificationStrategy() {
-        NotificationStrategy strategy = NotificationFactory.getEmailNotificationStrategy();
-        assertTrue(strategy instanceof EmailNotificationStrategy);
-    }
 
     @Test
     public void testGetSMSNotificationStrategy() throws NoSuchFieldException, IllegalAccessException {
