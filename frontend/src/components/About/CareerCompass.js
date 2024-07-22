@@ -52,6 +52,7 @@ function CareerCompass() {
                             <li>Builder Pattern</li>
                         </ul>
                         <p>Detailed class relationships can be found here:</p>
+                        <p></p>
                         <button className="pdf-button"
                                 onClick={() => window.open('/Project%207%20Update.pdf', '_blank')}>
                             View UML PDF
@@ -60,12 +61,12 @@ function CareerCompass() {
                     <div className="card">
                         <h2>Architecture:</h2>
                         <ul>
-                            <li>Frontend: React-based SPA on AWS S3 and CloudFront</li>
-                            <li>Backend: Java Spring Boot on AWS Lambda</li>
-                            <li>Database: Amazon RDS MySQL instance</li>
+                            <li><b>Frontend:</b> React-based SPA on AWS S3 and CloudFront</li>
+                            <li><b>Backend:</b> Java Spring Boot on AWS Lambda</li>
+                            <li><b>Database:</b> Amazon RDS MySQL instance</li>
                             <li>API Gateway for RESTful requests</li>
                         </ul>
-                        <p></p>
+                        {/*<p></p>*/}
                         <p></p>
                         <p></p>
                         <p></p>

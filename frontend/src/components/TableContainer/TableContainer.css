@@ -4,7 +4,7 @@
     justify-content: start;
     align-items: center;
     min-height: 100vh;
-    background-image: url('../../../public/cool-background.png');
+    background: linear-gradient(to bottom, #e3f2fd, #bbdefb);
     background-size: 200% 200%;
     animation: gradient 60s ease infinite;
 }
@@ -25,7 +25,7 @@
     display: flex;
     align-items: center;
     padding: 8px 16px;
-    background-color: #f0f0f0;
+    background-color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -44,10 +44,12 @@
     margin-left: 16px;
 }
 
-.react-chips {
-    background-color: #f0f0f0;
-    border-radius: 4px;
-    padding: 8px;
+.react-select__control {
+    width: 250px;
+}
+
+.react-select__menu {
+    width: 250px;
 }
 
 .tags-cell {
@@ -95,14 +97,6 @@
 
 .tags-cell.overflowing .ellipsis {
     display: block;
-}
-
-.tag {
-    padding: 4px 8px;
-    border-radius: 16px;
-    font-size: 12px;
-    color: white;
-    flex-shrink: 0;
 }
 
 .tag-0 {
