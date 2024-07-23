@@ -79,6 +79,7 @@ public class EmailNotificationStrategy implements NotificationStrategy {
             user.setVerifyHash(CareerCompassUtils.getInstance().generateUniqueHash());
             user.setPassword(CareerCompassUtils.getInstance().encodeString(password));
             user.setVerified(true);
+            userRepository.save(user);
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(user.getEmail());
             message.setSubject("Career-Compass: Password Reset Successful");
