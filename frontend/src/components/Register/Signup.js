@@ -155,8 +155,18 @@ function Signup() {
                     }, 2000);
                 } else if (!response.data.userAccountPresent && !response.data.accountVerified) {
                     const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.SIGNUP, user);
-                    setToastMsg(`Verification email has been sent to ${email}. Please check your email to verify your account.`);
-                    notify('Verification email has been sent');
+                    const responseValidation = await careerCompassApi.postApiCallWithoutToken(urlPaths.SEND_VERIFICATION, {
+                        email,
+                        verificationStrategyType: 'email',
+                    });
+                    if(responseValidation.statusCode===200){
+                        setToastMsg(`Verification email has been sent to ${email}. Please check your email to verify your account.`);
+                        notify('Verification email has been sent');
+                    }else{
+                        setToastMsg(`Something happened while sending email to ${email}. Please try again later.`);
+                        notify('Verification email has been failed');
+                    }
+
                     setShowForm(false);
                     setShowVerification(false);
                     setShowOtp(false);

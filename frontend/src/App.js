@@ -15,6 +15,7 @@ import AddJobApplication from "./components/JobApplication/AddJobApplication";
 import ViewJobApplication from "./components/JobApplication/ViewJobApplication";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ForgotPassword/ResetPassword";
+import Verify from "./components/Register/Verify";
 
 function App() {
   const [signupKey, setSignupKey] = useState(0);
@@ -37,8 +38,8 @@ function App() {
             <Route path="/edit"  element={<PrivateRoute><EditJobApplication /></PrivateRoute>} />
             <Route path="/addTags"  element={<PrivateRoute><AddTags /></PrivateRoute>} />
             <Route path="/addJobApplication"  element={<PrivateRoute><AddJobApplication /></PrivateRoute>} />
-            <Route path='/verify/:email/:hash' element={<ResetPassword />} />
-            {/*<Route path='/forgot/:email/:hash' element={<Verify />} />*/}
+            <Route path='/verify/:email/:hash' element={<Verify />} />
+            <Route path='/reset-password/:hash/:email' element={<ResetPassword />} />
             {/*<Route path="*" element={<Navigate to="/login" />} />*/}
           </Routes>
         </Router>
