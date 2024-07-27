@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, {useEffect, useState} from "react";
+import {BrowserRouter as Router, Routes, Route, useLocation} from 'react-router-dom';
 import { AuthProvider } from './components/Context/AuthContext';
 import PrivateRoute from './components/Utils/PrivateRoute';
 import Navbar from './components/Navbar/Navbar';
@@ -16,6 +16,10 @@ import ViewJobApplication from "./components/JobApplication/ViewJobApplication";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ForgotPassword/ResetPassword";
 import Verify from "./components/Register/Verify";
+import CareerCompass2 from "./components/About/CareerCompass3";
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ScrollToTop from "./components/Utils/ScrollToTop";
 
 function App() {
   const [signupKey, setSignupKey] = useState(0);
@@ -26,9 +30,10 @@ function App() {
   return (
       <AuthProvider>
         <Router>
+          <ScrollToTop />
           <Navbar onSignupClick={handleSignupClick} />
           <Routes>
-            <Route path='/' element={<CareerCompass />} />
+            <Route path='/' element={<CareerCompass2 />} />
             <Route path='/archivedJobs' element={<PrivateRoute><ArchivedTableContainer /></PrivateRoute>} />
             <Route path='/login' element={<Login/>} />
             <Route path='/signup' element={<Signup key={signupKey} />} />

@@ -71,7 +71,7 @@ function CareerCompass() {
                         <p></p>
                         <p></p>
                         <button className="pdf-button"
-                                onClick={() => window.open('/Project%207%20Update.pdf', '_blank')}>
+                                onClick={() => window.open('/CareerCompassArchitecture.pdf', '_blank')}>
                             View Deployment PDF
                         </button>
                     </div>

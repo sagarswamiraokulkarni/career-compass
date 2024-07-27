@@ -22,7 +22,7 @@
 
     <!-- File appender -->
     <appender name="File_Output" class="ch.qos.logback.core.FileAppender">
-        <file>careercompass.log</file>
+        <file>/tmp/careercompass.log</file>
         <append>false</append>
         <encoder>
             <pattern>%msg</pattern>

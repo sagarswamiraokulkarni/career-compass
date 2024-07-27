@@ -1,0 +1,398 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #3a86ff;
+    --secondary-color: #8338ec;
+    --accent-color: #ff006e;
+    --background-color: #f8f9fa;
+    --text-color: #333333;
+    --card-gradient: linear-gradient(135deg, #3a86ff, #8338ec);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    background: #f7f9fc;
+}
+
+.intro-section {
+    padding: 50px 20px;
+    background: var(--card-gradient);
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.intro-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,122.7C960,117,1056,171,1152,197.3C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"%3E%3C/path%3E%3C/svg%3E') no-repeat bottom;
+    background-size: cover;
+}
+.intro-section h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.intro-section p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.intro-section .buttons {
+    position: relative;
+    z-index: 1;
+    /*margin-top: 20px;*/
+}
+
+.intro-section .buttons .start-now-btn,
+.intro-section .buttons .architecture-btn {
+    background-color: white;
+    color: var(--primary-color);
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.intro-section .buttons .start-now-btn:hover,
+.intro-section .buttons .architecture-btn:hover {
+    /*background-color: #303F9F;*/
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.stackable-cards-section {
+    display: flex;
+    height: 100vh;
+    overflow: visible;
+}
+
+.left-content {
+    flex: 2;
+    padding: 30px;
+    background: white;
+    color: var(--text-color);
+    overflow: auto;
+    position: sticky;
+    top: 0;
+    max-width: 100%;
+    border-right: 1px solid #e0e0e0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.left-content::-webkit-scrollbar {
+    /*display: none;*/
+    width: 8px;
+}
+.left-content::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+.left-content h1,
+.left-content h2 {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    margin-bottom: 20px;
+}
+
+.left-content h1 {
+    font-size: 36px;
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.left-content h2 {
+    font-size: 28px;
+    color: #007bff;
+    /*border-bottom: 2px solid #007bff;*/
+    /*padding-bottom: 5px;*/
+    /*margin-top: 20px;*/
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 10px;
+    margin-top: 30px;
+}
+
+.left-content p {
+    font-family: 'IBM Plex Sans', sans-serif;
+    /*font-size: 18px;*/
+    /*line-height: 1.6;*/
+    /*margin-bottom: 20px;*/
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.left-content ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.left-content ul li {
+    font-size: 18px;
+    /*line-height: 1.6;*/
+    line-height: 1.8;
+    margin-bottom: 10px;
+    position: relative;
+}
+.left-content ul li::before {
+    content: '•';
+    color: var(--accent-color);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.right-content {
+    flex: 2;
+    position: relative;
+    overflow: visible;
+    z-index: 2;
+    height: 100vh;
+}
+
+.cards {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.card {
+    padding: 1.5em;
+    color: white;
+    width: 80%;
+    height: 200px;
+    background: linear-gradient(to right, #0a74e4, #83c1e1);
+    font-size: 18px;
+    line-height: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: absolute;
+    top: 0;
+    left: 10%;
+    will-change: transform;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card-heading {
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    font-size: 24px;
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    cursor: default;
+    pointer-events: none;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border-radius: 5px;
+}
+
+.card ul {
+    margin-top: 50px;
+}
+
+.card li {
+    margin-bottom: 5px;
+}
+
+.card h2 {
+    font-size: 24px;
+    margin-bottom: 0.5em;
+}
+
+.architecture-section {
+    /*padding: 50px 20px;*/
+    /*background: linear-gradient(172deg, #012d64, #001823);*/
+    /*text-align: center;*/
+    padding: 80px 20px;
+    background: linear-gradient(172deg, #012d64, #001823);
+    text-align: center;
+    color: white;
+}
+
+.architecture-section h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.architecture-section p {
+    font-size: 20px;
+    color: #e0e0e0;
+    margin-bottom: 40px;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.architecture-image {
+    max-width: 80%;
+    height: auto;
+    margin: 30px 0;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.architecture-image:hover {
+    transform: scale(1.02);
+}
+
+.architecture-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.architecture-card {
+    flex: 1 1 calc(33.333% - 30px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.architecture-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.architecture-card h3 {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.architecture-card p {
+    font-size: 16px;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+.arch-icon {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 1024px) {
+    .stackable-cards-section {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left-content, .right-content {
+        flex: 1;
+        width: 100%;
+        height: auto;
+    }
+
+    .left-content {
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .card {
+        position: static;
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .architecture-card {
+        flex: 1 1 calc(50% - 30px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .intro-section h1 {
+        font-size: 36px;
+    }
+
+    .intro-section p {
+        font-size: 18px;
+    }
+
+    .left-content h1 {
+        font-size: 30px;
+    }
+
+    .left-content h2 {
+        font-size: 24px;
+    }
+
+    .left-content p, .left-content ul li {
+        font-size: 16px;
+    }
+
+    .card-heading {
+        font-size: 20px;
+    }
+
+    .architecture-section h2 {
+        font-size: 30px;
+    }
+
+    .architecture-section p {
+        font-size: 18px;
+    }
+
+    .architecture-card {
+        flex: 1 1 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .intro-section .buttons .start-now-btn,
+    .intro-section .buttons .architecture-btn {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .card {
+        height: auto;
+        min-height: 200px;
+    }
+
+    .architecture-image {
+        max-width: 100%;
+    }
+}
+
