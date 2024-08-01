@@ -4,7 +4,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './CareerCompass3.css';
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { FaRocket, FaChartLine, FaBriefcase, FaCode, FaServer } from 'react-icons/fa';
+import { FaRocket, FaChartLine, FaBriefcase, FaCode, FaServer, FaDatabase } from 'react-icons/fa';
+import { SiAmazonapigateway } from "react-icons/si";
+import { SiAuthelia } from "react-icons/si";
+import { FaBuildingColumns } from "react-icons/fa6";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,7 +52,7 @@ const CareerCompass2 = () => {
             const numCards = cards.length;
             const cardHeight = 200;
             const cardGap = 30;
-            const visibleHeight = 50;
+            const visibleHeight = 70;
             const totalHeight = (cardHeight + cardGap) * numCards;
 
             gsap.set(cards, {
@@ -93,7 +96,6 @@ const CareerCompass2 = () => {
                 once: true
             });
         } else if (isMobile) {
-            // Reset styles and kill ScrollTrigger for mobile view
             gsap.set(cardsRef.current, { clearProps: "all" });
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         }
@@ -118,9 +120,8 @@ const CareerCompass2 = () => {
                         applications
                         effortlessly.</p>
                     <div className="feature">
-                        <FaChartLine className="feature-icon"/>
                         <div>
-                            <h2>Why CareerCompass?</h2>
+                            <h2><FaChartLine /> <span>Why CareerCompass?</span></h2>
                             <p>In today's competitive job market, managing job applications can be overwhelming.
                                 CareerCompass
                                 is here to alleviate that stress by offering a powerful tool that organizes and
@@ -129,9 +130,8 @@ const CareerCompass2 = () => {
                         </div>
                     </div>
                     <div className="feature">
-                        <FaCode className="feature-icon"/>
                         <div>
-                            <h2>Robust Architecture</h2>
+                            <h2><FaCode/><span> Robust Architecture</span></h2>
                             <p>Our backend is built with industry-standard practices, incorporating key Object-Oriented
                                 Design
                                 Patterns to enhance performance and scalability. We leverage Singleton, Factory,
@@ -148,11 +148,32 @@ const CareerCompass2 = () => {
                 </div>
                 <div className="right-content" ref={wrapperRef}>
                     <div className="cards">
-                        {['Singleton Pattern', 'Factory Pattern', 'Strategy Pattern', 'Facade Pattern', 'Builder Pattern'].map((text, index) => (
+                        {[
+                            {
+                                pattern: 'Singleton Pattern',
+                                description: 'Used to ensure a single instance of utility classes, maintaining global state and providing centralized access to common functions.'
+                            },
+                            {
+                                pattern: 'Factory Pattern',
+                                description: 'Implemented to create different types of notification strategies (email, SMS, call) dynamically, enhancing flexibility in communication methods.'
+                            },
+                            {
+                                pattern: 'Strategy Pattern',
+                                description: 'Applied to select and implement various verification methods, allowing easy switching between different strategies based on user preferences.'
+                            },
+                            {
+                                pattern: 'Facade Pattern',
+                                description: 'Utilized to simplify complex subsystems, providing a unified interface for account verification processes and improving code maintainability.'
+                            },
+                            {
+                                pattern: 'Builder Pattern',
+                                description: 'Employed for constructing complex objects like job applications, offering a flexible and readable way to create objects with many optional parameters.'
+                            }
+                        ].map(({pattern, description}, index) => (
                             <div key={index} className="card" ref={el => cardsRef.current[index] = el}>
-                                <button className="card-heading">{text}:</button>
+                                <button className="card-heading">{pattern}:</button>
                                 <ul>
-                                    <li>{text}</li>
+                                    <li>{description}</li>
                                 </ul>
                             </div>
                         ))}
@@ -160,40 +181,56 @@ const CareerCompass2 = () => {
                 </div>
             </section>
             <section className="architecture-section" ref={architectureSectionRef}>
-                <h2><FaServer/> Architecture</h2>
-                <img src="CareerCompassArchitecture.png" alt="Architecture Diagram" className="architecture-image"/>
-                <p>Our application architecture ensures high scalability, reliability, and maintainability. Here's an
-                    overview of the key components:</p>
-                <div className="architecture-details">
-                    <div className="architecture-card">
-                        <FaBriefcase className="arch-icon"/>
-                        <h3>Client-Side</h3>
-                        <p>Dynamic and responsive user interface built with React.js</p>
+                <div className="architecture-header">
+                    <h2><FaBuildingColumns className="section-icon"/> Architecture</h2>
+                    <p>Our application architecture ensures high scalability, reliability, and maintainability.</p>
+                </div>
+                <div className="architecture-content">
+                    <div className="architecture-image-container">
+                        <div class="architecture-image-wrapper">
+                        <img src="https://career-compass-assets.s3.amazonaws.com/CareerCompassArchitecture.png" alt="Architecture Diagram"
+                             className="architecture-image"/>
+                        </div>
                     </div>
-                    <div className="architecture-card">
-                        <FaServer className="arch-icon"/>
-                        <h3>Server-Side</h3>
-                        <p>Robust backend implemented with Spring Boot for efficient business logic handling</p>
-                    </div>
-                    <div className="architecture-card">
-                        <FaCode className="arch-icon"/>
-                        <h3>Database</h3>
-                        <p>MySQL for persistent data storage, ensuring data integrity and efficient querying</p>
-                    </div>
-                    <div className="architecture-card">
-                        <FaRocket className="arch-icon"/>
-                        <h3>APIs</h3>
-                        <p>RESTful APIs facilitating seamless communication between frontend and backend services</p>
-                    </div>
-                    <div className="architecture-card">
-                        <FaChartLine className="arch-icon"/>
-                        <h3>Authentication</h3>
-                        <p>Secure mechanisms implemented to protect user data and ensure privacy</p>
-                    </div>
-                    <div className="architecture-card">
-                        <FaServer className="arch-icon"/>
-                        <h3>Deployment</h3>
-                        <p>Leveraging AWS services like EC2, RDS, and S3 for robust hosting and data storage</p>
+                    <div className="architecture-details">
+                        {[
+                            {
+                                icon: FaBriefcase,
+                                title: "Client-Side",
+                                description: "Built with React.js, our platform ensures dynamic and responsive user interfaces, enhanced by Amazon CloudFront for fast content delivery from anywhere in the world."
+                            },
+                            {
+                                icon: FaServer,
+                                title: "Server-Side",
+                                description: "The backend is implemented with AWS Lambda, leveraging a serverless architecture to provide scalable and efficient business logic processing."
+                            },
+                            {
+                                icon: FaDatabase,
+                                title: "Database",
+                                description: "We use Amazon DynamoDB for data storage, ensuring high availability, scalability, and fast performance for all database operations."
+                            },
+                            {
+                                icon: SiAmazonapigateway,
+                                title: "APIs",
+                                description: "Our RESTful APIs are managed by Amazon API Gateway, enabling secure and reliable communication between the frontend and backend services."
+                            },
+                            {
+                                icon: SiAuthelia,
+                                title: "Authentication",
+                                description: "User authentication is handled by Amazon Cognito, providing secure access control and identity management to protect user data."
+                            },
+                            {
+                                icon: FaRocket,
+                                title: "Deployment",
+                                description: "Leveraging AWS services like EC2, RDS, and S3 for robust hosting and data storage"
+                            }
+                        ].map((item, index) => (
+                            <div key={index} className="architecture-card">
+                                <item.icon className="arch-icon"/>
+                                <h3>{item.title}</h3>
+                                <p>{item.description}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>

@@ -38,8 +38,15 @@ function Navbar({ onSignupClick }) {
     return (
         <BootstrapNavbar expand="lg" className="custom-navbar">
             <Container>
-                <BootstrapNavbar.Brand as={Link} to="/" className="brand-name">Career-Compass</BootstrapNavbar.Brand>
-                <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
+                <BootstrapNavbar.Brand as={Link} to="/" className="brand-name">
+                    <img
+                        src="/CareerCompass.jpeg"
+                        alt="Career Compass Logo"
+                        style={{height: '40px',width:'40px', marginRight: '10px',marginBottom:'10px'}}
+                    />
+                    Career-Compass
+                </BootstrapNavbar.Brand>
+                <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav"/>
                 <BootstrapNavbar.Collapse id="basic-navbar-nav">
                     {userIsAuthenticated() && <Nav className="me-auto">
                         <Nav.Link as={Link} to="/jobs" onClick={() => handleNavigation()} className={location.pathname === '/jobs' ? 'active' : ''}>Job Applications</Nav.Link>

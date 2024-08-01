@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-:root {
-    --primary-color: #3a86ff;
-    --secondary-color: #8338ec;
-    --accent-color: #ff006e;
-    --background-color: #f8f9fa;
-    --text-color: #333333;
-    --card-gradient: linear-gradient(135deg, #3a86ff, #8338ec);
-}
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,57 +8,38 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.6;
+    background: #f7f9fc;
+    color: #333;
 }
 
 .intro-section {
     padding: 80px 20px;
-    background: var(--card-gradient);
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
     text-align: center;
     color: white;
-    position: relative;
-    overflow: hidden;
-}
-
-.intro-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,122.7C960,117,1056,171,1152,197.3C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"%3E%3C/path%3E%3C/svg%3E') no-repeat bottom;
-    background-size: cover;
 }
 
 .intro-section h1 {
-    font-size: 48px;
+    font-size: 3rem;
     margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
 }
 
 .intro-section p {
-    font-size: 20px;
+    font-size: 1.2rem;
     margin-bottom: 30px;
-    position: relative;
-    z-index: 1;
 }
 
 .intro-section .buttons {
-    position: relative;
-    z-index: 1;
+    margin-top: 30px;
 }
 
 .intro-section .buttons .start-now-btn,
 .intro-section .buttons .architecture-btn {
     background-color: white;
-    color: var(--primary-color);
+    color: #6e8efb;
     border: none;
     padding: 12px 24px;
-    font-size: 18px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     margin: 10px;
@@ -90,15 +62,15 @@ body {
 
 .left-content {
     flex: 2;
-    padding: 30px;
+    padding: 50px;
     background: white;
-    color: var(--text-color);
+    color: #333;
     overflow: auto;
     position: sticky;
     top: 0;
     max-width: 100%;
-    border-right: 1px solid #e0e0e0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #eaeaea;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.05);
 }
 
 .left-content::-webkit-scrollbar {
@@ -106,55 +78,84 @@ body {
 }
 
 .left-content::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
+    background-color: #d1d1d1;
     border-radius: 4px;
 }
 
-.left-content h1,
-.left-content h2 {
-    font-family: 'Poppins', sans-serif;
-    margin-bottom: 20px;
-}
-
 .left-content h1 {
-    font-size: 36px;
-    margin-top: 0;
-    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #6e8efb;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .left-content h2 {
-    font-size: 28px;
-    color: var(--secondary-color);
-    border-bottom: 2px solid var(--secondary-color);
-    padding-bottom: 10px;
-    margin-top: 30px;
+    font-size: 1.8rem;
+    color: #a777e3;
+    margin-top: 40px;
+    margin-bottom: 20px;
 }
 
 .left-content p {
-    font-size: 18px;
-    line-height: 1.8;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.feature {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    color: #6e8efb;
+    margin-right: 20px;
+}
+
+.cta {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.cta h2 {
+    color: white;
     margin-bottom: 20px;
 }
 
-.left-content ul {
-    list-style-type: none;
-    padding-left: 20px;
+.cta-btn {
+    background-color: white;
+    color: #6e8efb;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    margin-top: 20px;
 }
 
-.left-content ul li {
-    font-size: 18px;
-    line-height: 1.8;
-    margin-bottom: 10px;
-    position: relative;
-}
-
-.left-content ul li::before {
-    content: '•';
-    color: var(--accent-color);
-    font-weight: bold;
-    display: inline-block;
-    width: 1em;
-    margin-left: -1em;
+.cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
 .right-content {
@@ -174,9 +175,9 @@ body {
 .card {
     padding: 1.5em;
     color: white;
-    width: 80%;  /* Maintaining the original width */
-    height: 200px;  /* Reverting to the original height */
-    background: var(--card-gradient);
+    width: 80%;
+    height: 200px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
     font-size: 18px;
     line-height: 1.2;
     display: flex;
@@ -186,57 +187,58 @@ body {
     top: 0;
     left: 10%;
     will-change: transform;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
     margin-bottom: 20px;
     transition: all 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 .card-heading {
-    background: transparent;
-    border: 1px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
     color: white;
-    font-size: 24px;
-    padding: 10px 10px;
-    margin-bottom: 10px;
+    font-size: 1.2rem;
+    padding: 10px 15px;
+    margin-bottom: 15px;
     cursor: default;
     pointer-events: none;
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-weight: 600;
 }
 
 .card ul {
-    margin-top: 50px;  /* Adjusted to match original layout */
+    margin-top: 20px;
+    list-style-type: none;
 }
 
 .card li {
-    margin-bottom: 5px;  /* Reverted to original spacing */
+    margin-bottom: 10px;
+    font-size: 1rem;
 }
-
 
 .architecture-section {
     padding: 80px 20px;
-    background: linear-gradient(172deg, #012d64, #001823);
+    background: linear-gradient(172deg, #2c3e50, #3498db);
     text-align: center;
     color: white;
 }
 
 .architecture-section h2 {
-    font-size: 36px;
+    font-size: 2.5rem;
     margin-bottom: 30px;
-    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .architecture-section p {
-    font-size: 20px;
-    color: #e0e0e0;
+    font-size: 1.1rem;
     margin-bottom: 40px;
     line-height: 1.6;
     max-width: 800px;
@@ -247,10 +249,10 @@ body {
 .architecture-image {
     max-width: 80%;
     height: auto;
-    margin: 30px 0;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    margin: 40px 0;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     border-radius: 15px;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .architecture-image:hover {
@@ -262,43 +264,47 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
-    margin-top: 50px;
+    margin-top: 60px;
 }
 
 .architecture-card {
     flex: 1 1 calc(33.333% - 30px);
     background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 30px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
     transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .architecture-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .architecture-card h3 {
-    font-size: 24px;
-    color: white;
-    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #ecf0f1;
+    margin: 20px 0;
 }
 
 .architecture-card p {
-    font-size: 16px;
-    color: #e0e0e0;
+    font-size: 1rem;
+    color: #bdc3c7;
     line-height: 1.6;
 }
 
 .arch-icon {
-    font-size: 36px;
-    margin-bottom: 15px;
-    color: var(--accent-color);
+    font-size: 2.5rem;
+    color: #3498db;
+    margin-bottom: 20px;
 }
 
+/* Media Queries for Responsiveness */
 @media screen and (max-width: 1024px) {
     .stackable-cards-section {
         flex-direction: column;
@@ -314,13 +320,13 @@ body {
     .left-content {
         position: static;
         border-right: none;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #eaeaea;
     }
 
     .card {
         position: static;
         width: 90%;
-        margin: 10px auto;
+        margin: 20px auto;
     }
 
     .architecture-card {
@@ -330,35 +336,35 @@ body {
 
 @media screen and (max-width: 768px) {
     .intro-section h1 {
-        font-size: 36px;
+        font-size: 2.5rem;
     }
 
     .intro-section p {
-        font-size: 18px;
+        font-size: 1rem;
     }
 
     .left-content h1 {
-        font-size: 30px;
+        font-size: 2rem;
     }
 
     .left-content h2 {
-        font-size: 24px;
+        font-size: 1.5rem;
     }
 
     .left-content p, .left-content ul li {
-        font-size: 16px;
+        font-size: 0.9rem;
     }
 
     .card-heading {
-        font-size: 20px;
+        font-size: 1rem;
     }
 
     .architecture-section h2 {
-        font-size: 30px;
+        font-size: 2rem;
     }
 
     .architecture-section p {
-        font-size: 18px;
+        font-size: 0.9rem;
     }
 
     .architecture-card {
@@ -380,5 +386,13 @@ body {
 
     .architecture-image {
         max-width: 100%;
+    }
+
+    .feature {
+        flex-direction: column;
+    }
+
+    .feature-icon {
+        margin-bottom: 15px;
     }
 }
