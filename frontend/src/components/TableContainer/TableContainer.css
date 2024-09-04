@@ -4,8 +4,9 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(to bottom, #e3f2fd, #bbdefb);
+    min-height: 80vh;
+    background: #90CCF4;
+    /*background: linear-gradient(to bottom, #e3f2fd, #bbdefb);*/
     background-size: 200% 200%;
     animation: gradient 60s ease infinite;
     font-family: 'IBM Plex Sans Condensed', sans-serif;

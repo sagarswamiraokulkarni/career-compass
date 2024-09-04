@@ -2,9 +2,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 80vh;
     background-size: 200% 200%;
-    background: linear-gradient(to bottom, #e3f2fd, #bbdefb);
+    background: #90CCF4;
+    /*background: linear-gradient(to bottom, #e3f2fd, #bbdefb);*/
     animation: gradient 60s ease infinite;
     padding: 20px;
 }

@@ -20,6 +20,7 @@ import CareerCompass2 from "./components/About/CareerCompass3";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ScrollToTop from "./components/Utils/ScrollToTop";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [signupKey, setSignupKey] = useState(0);
@@ -47,6 +48,7 @@ function App() {
             <Route path='/reset-password/:hash/:email' element={<ResetPassword />} />
             {/*<Route path="*" element={<Navigate to="/login" />} />*/}
           </Routes>
+          <Footer />
         </Router>
       </AuthProvider>
   );

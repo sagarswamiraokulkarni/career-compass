@@ -1,6 +1,6 @@
 const prod = {
   url: {
-    API_BASE_URL: 'https://someurl.com',
+    API_BASE_URL: 'https://ig5rs61ds0.execute-api.us-east-1.amazonaws.com/devl'
   }
 }
 

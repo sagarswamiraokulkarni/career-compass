@@ -104,77 +104,66 @@ const CareerCompass2 = () => {
     return (
         <>
             <section className="intro-section">
-                <h1>Your Job Search Organized</h1>
+                <h1>Your Ultimate Guide to Career Success</h1>
                 <p>Keep track of your job applications easily and effortlessly. Try it now.</p>
                 <div className="buttons">
-                    <button className="start-now-btn" onClick={handleGetStarted}>Start Now</button>
+                    <button className="start-now-btn" onClick={handleGetStarted}>Get Started</button>
                     <button className="architecture-btn" onClick={handleScrollToArchitecture}>Architecture</button>
                 </div>
             </section>
 
             <section className={`stackable-cards-section ${isMobile ? 'mobile' : ''}`} ref={sectionRef}>
                 <div className="left-content" ref={leftContentRef}>
-                    <h1><FaRocket/> CareerCompass</h1>
-                    <p>CareerCompass is a cutting-edge web application designed to streamline and simplify your job
-                        search journey. Our platform empowers job seekers with a user-friendly interface to manage their
-                        applications
-                        effortlessly.</p>
-                    <div className="feature">
+                    <h1>CareerCompass</h1>
+                    <p>CareerCompass is your ultimate tool for managing and organizing your job search. Designed with job seekers in mind, our web-based application streamlines the process of tracking job applications, helping you stay organized and focused on landing your dream job.</p>
+                    <div className="feature" style={{background:'#F3D250'}}>
                         <div>
-                            <h2><FaChartLine /> <span>Why CareerCompass?</span></h2>
-                            <p>In today's competitive job market, managing job applications can be overwhelming.
-                                CareerCompass
-                                is here to alleviate that stress by offering a powerful tool that organizes and
-                                optimizes your
-                                job search process.</p>
+                            <h2><span>Why CareerCompass?</span></h2>
+                            <p>At CareerCompass, we aim to revolutionize the job search experience by providing a powerful and user-friendly platform. Our goal is to simplify job application management,
+                                making it easier for you to track and manage all your job applications in one place.</p>
                         </div>
                     </div>
-                    <div className="feature">
+                    <div className="feature" style={{background: '#90CCF4'}}>
                         <div>
-                            <h2><FaCode/><span> Robust Architecture</span></h2>
-                            <p>Our backend is built with industry-standard practices, incorporating key Object-Oriented
-                                Design
-                                Patterns to enhance performance and scalability. We leverage Singleton, Factory,
-                                Strategy,
-                                Facade, and Builder patterns within our Spring Boot application, ensuring a robust and
-                                efficient
-                                system that supports our REST APIs.</p>
+                            <h2><span> Built on proven Design Patterns</span></h2>
+                            <p>At CareerCompass, we use essential design patterns to ensure a robust, scalable, and maintainable application. MVC organizes our codebase, Singleton manages resources, and Dependency Injection enhances testability. The Factory, Builder, Strategy, and Observer patterns further improve flexibility and efficiency, ensuring high quality and reliability in our platform.</p>
                         </div>
-                    </div>
-                    <div className="cta">
-                        <h2>Start Your Journey Today!</h2>
-                        <p>Experience a smarter, more organized approach to job searching with CareerCompass.</p>
                     </div>
                 </div>
                 <div className="right-content" ref={wrapperRef}>
+                    <h2>Key Features</h2>
                     <div className="cards">
                         {[
                             {
-                                pattern: 'Singleton Pattern',
-                                description: 'Used to ensure a single instance of utility classes, maintaining global state and providing centralized access to common functions.'
+                                pattern: 'User Registration and Verification',
+                                description: 'Securely register with personal details and verify your account via email, SMS, or phone call.',
+                                bgColor: '#F3D250',
+                                className: 'bg-yellow'
                             },
                             {
-                                pattern: 'Factory Pattern',
-                                description: 'Implemented to create different types of notification strategies (email, SMS, call) dynamically, enhancing flexibility in communication methods.'
+                                pattern: 'Job Application Management',
+                                description: 'Create, edit, star, and archive job applications. Use tags to categorize your applications for easy tracking.',
+                                bgColor: '#90CCF4',
+                                className: 'bg-blue'
                             },
                             {
-                                pattern: 'Strategy Pattern',
-                                description: 'Applied to select and implement various verification methods, allowing easy switching between different strategies based on user preferences.'
+                                pattern: 'Secure Authentication',
+                                description: 'Protect your data with secure login using bearer tokens.',
+                                bgColor: '#F78888',
+                                className: 'bg-red'
                             },
                             {
-                                pattern: 'Facade Pattern',
-                                description: 'Utilized to simplify complex subsystems, providing a unified interface for account verification processes and improving code maintainability.'
+                                pattern: 'REST API Integration',
+                                description: 'Enjoy seamless data access and interaction between the frontend and backend.',
+                                bgColor: '#F3D250',
+                                className: 'bg-yellow'
                             },
-                            {
-                                pattern: 'Builder Pattern',
-                                description: 'Employed for constructing complex objects like job applications, offering a flexible and readable way to create objects with many optional parameters.'
-                            }
-                        ].map(({pattern, description}, index) => (
-                            <div key={index} className="card" ref={el => cardsRef.current[index] = el}>
-                                <button className="card-heading">{pattern}:</button>
-                                <ul>
-                                    <li>{description}</li>
-                                </ul>
+                        ].map(({pattern, description,bgColor,className}, index) => (
+                            <div key={index} className={`card ${className}`} style={{background: bgColor}} ref={el => cardsRef.current[index] = el}>
+                                <button className="card-heading">{pattern}</button>
+                                <span>
+                                    {description}
+                                </span>
                             </div>
                         ))}
                     </div>
@@ -197,22 +186,22 @@ const CareerCompass2 = () => {
                             {
                                 icon: FaBriefcase,
                                 title: "Client-Side",
-                                description: "Built with React.js, our platform ensures dynamic and responsive user interfaces, enhanced by Amazon CloudFront for fast content delivery from anywhere in the world."
+                                description: "Built with React.js and hosted on Amazon S3, our platform delivers fast, responsive interfaces through Amazon CloudFront."
                             },
                             {
                                 icon: FaServer,
                                 title: "Server-Side",
-                                description: "The backend is implemented with AWS Lambda, leveraging a serverless architecture to provide scalable and efficient business logic processing."
+                                description: "Powered by AWS Lambda and Spring Boot, our serverless backend ensures scalable and efficient processing."
                             },
                             {
                                 icon: FaDatabase,
                                 title: "Database",
-                                description: "We use Amazon DynamoDB for data storage, ensuring high availability, scalability, and fast performance for all database operations."
+                                description: "Amazon RDS handles our relational data with high availability, scalability, and secure VPC access."
                             },
                             {
                                 icon: SiAmazonapigateway,
                                 title: "APIs",
-                                description: "Our RESTful APIs are managed by Amazon API Gateway, enabling secure and reliable communication between the frontend and backend services."
+                                description: "Managed by Amazon API Gateway, our APIs provide secure and reliable communication with built-in DDoS protection."
                             },
                             {
                                 icon: SiAuthelia,
@@ -222,7 +211,7 @@ const CareerCompass2 = () => {
                             {
                                 icon: FaRocket,
                                 title: "Deployment",
-                                description: "Leveraging AWS services like EC2, RDS, and S3 for robust hosting and data storage"
+                                description: "AWS services like Route 53, CloudFront, and Lambda ensure robust, scalable, and cost-effective hosting."
                             }
                         ].map((item, index) => (
                             <div key={index} className="architecture-card">

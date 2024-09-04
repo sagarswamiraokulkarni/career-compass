@@ -1,14 +1,20 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Container, Navbar as BootstrapNavbar, Nav } from 'react-bootstrap';
+import { Container, Navbar as BootstrapNavbar, Nav, Spinner } from 'react-bootstrap';
 import { useAuth } from '../Context/AuthContext';
 import './Navbar.css';
 import {useCleanup} from "../Utils/CleanupContext";
+import {careerCompassApi} from "../Utils/CareerCompassApi";
+import {urlPaths} from "../../Constants";
+import {parseJwt} from "../Utils/Helpers";
+import Loader from "../Utils/Loader";
 
 function Navbar({ onSignupClick }) {
+    const Auth = useAuth();
     const { getUser, userIsAuthenticated, userLogout } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const logout = () => {
         cleanup();
         userLogout();
@@ -20,11 +26,33 @@ function Navbar({ onSignupClick }) {
     const enterMenuStyle = () => {
         return userIsAuthenticated() ? { display: 'none' } : { display: 'block' };
     };
-    const handleGuestClick = () => {
+    const handleGuestClick = async () => {
         cleanup();
-        navigate('/login', {
-            state: { email: "fireflies186@gmail.com", password: "123456" }
+        setIsLoading(true);
+        const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.AUTHENTICATE, {
+            username: 'fireflies186@gmail.com',
+            password:'123456'
         });
+        localStorage.setItem('userDetails', JSON.stringify({
+            userId: response.data.userId,
+            firstName: response.data.firstName,
+            email: response.data.email
+        }))
+        const {accessToken} = response.data;
+        const data = parseJwt(accessToken);
+        const authenticatedUser = {data, accessToken};
+        Auth.userLogin(authenticatedUser);
+        const userJson = JSON.parse(localStorage.getItem('user'));
+        const storedUser = JSON.parse(localStorage.getItem('userDetails'));
+        const getAllTags = await careerCompassApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId);
+        const unarchivedJobs = await careerCompassApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
+        const archivedJobs = await careerCompassApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId);
+        localStorage.setItem('allTags', JSON.stringify(getAllTags.data));
+        localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
+        localStorage.setItem('archivedJobs', JSON.stringify(archivedJobs.data));
+        setIsLoading(false);
+        navigate('/jobs');
+
     };
     const logoutMenuStyle = () => {
         return userIsAuthenticated() ? { display: 'block' } : { display: 'none' };
@@ -37,12 +65,13 @@ function Navbar({ onSignupClick }) {
 
     return (
         <BootstrapNavbar expand="lg" className="custom-navbar">
+            {isLoading && <Loader />}
             <Container>
                 <BootstrapNavbar.Brand as={Link} to="/" className="brand-name">
                     <img
                         src="/CareerCompass.jpeg"
                         alt="Career Compass Logo"
-                        style={{height: '40px',width:'40px', marginRight: '10px',marginBottom:'10px'}}
+                        style={{height: '40px',width:'40px', marginRight: '10px',marginBottom:'6px'}}
                     />
                     Career-Compass
                 </BootstrapNavbar.Brand>
@@ -67,7 +96,7 @@ function Navbar({ onSignupClick }) {
                         ) : (
                             <>
                                 <button onClick={handleGuestClick} style={enterMenuStyle()} className="login-button">
-                                    Guest
+                                        <span>Guest</span>
                                 </button>
                                 <Link to="/login" onClick={() => handleNavigation()}  style={{ textDecoration: 'none' }}>
                                     <button onClick={onSignupClick}  style={enterMenuStyle()} className="login-button">

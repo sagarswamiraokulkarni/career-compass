@@ -17,14 +17,14 @@
 
 body {
     font-family: 'IBM Plex Sans Condensed', sans-serif;
-    background: white;
+    background: #ECECEC;
 }
 
 .intro-section {
     padding: 50px 20px;
-    background: var(--card-gradient);
+    background: #5DA2D5;
     text-align: center;
-    color: white;
+    color: black;
     position: relative;
     overflow: hidden;
     border-right: 1px solid #e0e0e0;
@@ -47,7 +47,7 @@ body {
     margin-bottom: 20px;
     position: relative;
     z-index: 1;
-    color: white;
+    color: black;
 }
 
 .intro-section p {
@@ -55,7 +55,7 @@ body {
     margin-bottom: 30px;
     position: relative;
     z-index: 1;
-    color: #f0f0f0;
+    color: black;
 }
 
 .intro-section .buttons {
@@ -95,9 +95,9 @@ body {
 .left-content {
     flex: 2;
     padding: 30px;
-    background: white;
+    background: #ECECEC;
     color: var(--text-color);
-    overflow: auto;
+    overflow: hidden;
     position: sticky;
     top: 0;
     max-width: 100%;
@@ -123,12 +123,12 @@ body {
 .left-content h1 {
     font-size: 32px;
     margin-top: 0;
-    color: var(--primary-color);
+    /*color: var(--primary-color);*/
 }
 
 .left-content h2 {
     font-size: 28px;
-    color: var(--secondary-color);
+    color: black;
     border-bottom: 2px solid var(--accent-color);
     padding-bottom: 10px;
     margin-top: 30px;
@@ -174,9 +174,8 @@ body {
 .feature {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 30px;
-    background: #e8f4fd;
-    padding: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
     border-radius: 10px;
     transition: all 0.3s ease;
 }
@@ -196,7 +195,6 @@ body {
 }
 
 .cta {
-    background: #e8f4fd;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
@@ -220,6 +218,12 @@ body {
     z-index: 2;
     height: 100vh;
 }
+.right-content h2 {
+    margin-top: 20px;
+    font-size: 32px;
+    margin-left: 0px;
+    color: black;
+}
 
 .cards {
     position: relative;
@@ -229,17 +233,17 @@ body {
 
 .card {
     padding: 1.5em;
-    color: white;
+    color: black;
     width: 80%;
     height: 200px;
-    background: var(--card-gradient);
+    /*background: var(--card-gradient);*/
     font-size: 18px;
     line-height: 1.2;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     position: absolute;
-    top: 0;
+    top: 20px;
     left: 10%;
     will-change: transform;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -256,7 +260,7 @@ body {
 .card-heading {
     background: transparent;
     border: 1px solid white;
-    color: white;
+    color: black;
     font-size: 22px;
     padding: 6px 8px;
     margin-bottom: 10px;
@@ -275,6 +279,13 @@ body {
 .card li {
     margin-bottom: 5px;
 }
+.card span {
+    margin-top: 50px;
+}
+
+/*.card li {*/
+/*    margin-bottom: 5px;*/
+/*}*/
 
 .card h2 {
     font-size: 24px;
@@ -362,6 +373,7 @@ body {
     position: relative;
     overflow: hidden;
     border-radius: 10px;
+
 }
 
 .architecture-image {
@@ -371,7 +383,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    background-color: #4a90e2;
+    /*background-color: #4a90e2;*/
 }
 
 .architecture-image-wrapper img:not([src=""]):not([src="#"]) ~ .architecture-image-wrapper::before {
@@ -499,4 +511,16 @@ body {
     .architecture-image {
         max-width: 100%;
     }
+}
+
+.bg-yellow {
+    background: #F3D250;
+}
+
+.bg-blue {
+    background: #90CCF4;
+}
+
+.bg-red {
+    background: #F78888;
 }
