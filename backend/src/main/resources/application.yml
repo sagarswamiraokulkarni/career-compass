@@ -35,7 +35,11 @@ app:
     expiration:
       minutes: 30
   cors:
-    allowed-origins: http://localhost:3000
+    allowed-origins: *
+    allowed-origins: "*"
+    allowed-methods: "*"
+    allowed-headers: "*"
+    allow-credentials: true
 
 logging:
   level:
