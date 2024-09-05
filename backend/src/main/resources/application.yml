@@ -35,7 +35,7 @@ app:
     expiration:
       minutes: 30
   cors:
-    allowed-origins: "*"
+    allowed-origins: http://localhost:3000,https://career-compass.co.in/
     allowed-methods: "*"
     allowed-headers: "*"
     allow-credentials: true
